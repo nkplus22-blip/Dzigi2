@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="bs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Džigi2 Restoran</title>
+  <style>
+    :root {
+      --smedja: #5a3825;
+      --svijetla: #fff8f0;
+      --bijela: #ffffff;
+      --tamna: #3b2415;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--svijetla);
+      color: var(--tamna);
+      line-height: 1.6;
+    }
+
+    header {
+      background-color: var(--bijela);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 60px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    header img {
+      height: 70px;
+    }
+
+    header h1 {
+      color: var(--smedja);
+      font-size: 28px;
+      font-weight: 700;
+    }
+
+    .hero {
+      background: url('ambijent1.jpg') center/cover no-repeat;
+      color: white;
+      text-align: center;
+      padding: 150px 20px;
+      position: relative;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero h2 {
+      font-size: 48px;
+      margin-bottom: 15px;
+      color: #fff;
+    }
+
+    .hero p {
+      font-size: 20px;
+      color: #f0e6dd;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    section {
+      padding: 60px 20px;
+      text-align: center;
+    }
+
+    .about {
+      background-color: var(--bijela);
+    }
+
+    .about h2 {
+      color: var(--smedja);
+      margin-bottom: 20px;
+      font-size: 32px;
+    }
+
+    .about p {
+      max-width: 800px;
+      margin: 0 auto;
+      font-size: 18px;
+    }
+
+    .gallery {
+      background-color: var(--svijetla);
+    }
+
+    .gallery h2 {
+      color: var(--smedja);
+      margin-bottom: 40px;
+      font-size: 32px;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 0 30px;
+    }
+
+    .gallery-grid img {
+      width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .gallery-grid img:hover {
+      transform: scale(1.05);
+    }
+
+    .contact {
+      background-color: var(--bijela);
+    }
+
+    .contact h2 {
+      color: var(--smedja);
+      margin-bottom: 20px;
+      font-size: 32px;
+    }
+
+    .contact p {
+      font-size: 18px;
+      margin: 5px 0;
+    }
+
+    iframe {
+      width: 100%;
+      height: 400px;
+      border: 0;
+      margin-top: 20px;
+      border-radius: 10px;
+    }
+
+    footer {
+      background-color: var(--smedja);
+      color: var(--bijela);
+      text-align: center;
+      padding: 20px 10px;
+      font-size: 15px;
+    }
+
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px;
+      }
+      header img {
+        height: 60px;
+        margin-bottom: 10px;
+      }
+      .hero h2 {
+        font-size: 32px;
+      }
+      .hero p {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <img src="image121.jpg" alt="Logo Džigi2">
+    <h1>Restoran Džigi2</h1>
+  </header>
+
+  <section class="hero">
+    <div class="hero-content">
+      <h2>Dobrodošli u Džigi2</h2>
+      <p>Smješteni u srcu Gradačca, nudimo vrhunsku hranu, domaću atmosferu i nezaboravne trenutke uz bogat meni i prijateljsku uslugu.</p>
+    </div>
+  </section>
+
+  <section class="about">
+    <h2>O nama</h2>
+    <p>Restoran Džigi2 poznat je po spoju tradicionalnih i modernih jela, pripremljenih s pažnjom i kvalitetnim sastojcima. Naš cilj je da svaki gost osjeti toplinu domaće kuhinje i uživa u prijatnom ambijentu. Posjetite nas i uvjerite se zašto smo omiljeno mjesto za okupljanje u Gradačcu!</p>
+  </section>
+
+  <section class="gallery">
+    <h2>Naš ambijent</h2>
+    <div class="gallery-grid">
+      <img src="ambijent1.jpg" alt="Ambijent 1">
+      <img src="ambijent2.jpg" alt="Ambijent 2">
+      <img src="ambijent3.jpg" alt="Ambijent 3">
+      <img src="ambijent4.jpg" alt="Ambijent 4">
+      <img src="ambijent5.jpg" alt="Ambijent 5">
+      <img src="ambijent6.jpg" alt="Ambijent 6">
+      <img src="ambijent7.jpg" alt="Ambijent 7">
+    </div>
+  </section>
+
+  <section class="contact">
+    <h2>Kontakt i radno vrijeme</h2>
+    <p><strong>Telefon za narudžbe i rezervacije:</strong> +387 35 818-817</p>
+    <p><strong>Radno vrijeme:</strong><br>
+      Ponedjeljak - Petak: 08:00 – 23:00<br>
+      Subota i Nedjelja: 13:00 – 23:00
+    </p>
+    <iframe 
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2847.630991252529!2d18.4278!3d44.8812!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x475e7c4b0a6fbd8f%3A0x9f27b8041232b71!2sD%C5%BEigi2!5e0!3m2!1sbs!2sba!4v1730455600000!5m2!1sbs!2sba" 
+      allowfullscreen="" loading="lazy">
+    </iframe>
+  </section>
+
+  <footer>
+    © 2025 Restoran Džigi2 — Sva prava zadržana.
+  </footer>
+
+</body>
+</html>
