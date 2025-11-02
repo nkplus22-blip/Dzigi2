@@ -8,16 +8,12 @@
   <style>
     :root {
       --smedja: #5a3825;
-      --svijetla: rgba(255,248,240,0.6); /* providnija da se motivi vide */
-      --bijela: rgba(255,255,255,0.6);
+      --svijetla: rgba(255,248,240,0.4); /* providna pozadina */
+      --bijela: rgba(255,255,255,0.5);
       --tamna: #3b2415;
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       font-family: 'Poppins', sans-serif;
@@ -27,13 +23,11 @@
       position: relative;
     }
 
-    /* ===== Pokretna pozadina ===== */
+    /* === Pokretni motivi === */
     .floating-icons {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       overflow: hidden;
       z-index: 0;
       pointer-events: none;
@@ -41,21 +35,21 @@
 
     .icon {
       position: absolute;
-      font-size: 32px;
-      color: #8B4513;
-      animation: floatAnim 12s linear infinite;
+      font-size: 36px;
       opacity: 0.8;
+      animation: floatAnim 14s linear infinite;
+      color: rgba(90, 56, 37, 0.8);
     }
 
     @keyframes floatAnim {
       0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-      10% { opacity: 1; }
-      50% { transform: translateY(0) rotate(180deg); opacity: 0.7; }
-      90% { opacity: 1; }
+      20% { opacity: 1; }
+      50% { transform: translateY(0) rotate(180deg); opacity: 0.8; }
+      80% { opacity: 1; }
       100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
     }
 
-    /* ===== Header ===== */
+    /* === Header i meni === */
     header {
       background-color: var(--bijela);
       display: flex;
@@ -66,6 +60,7 @@
       position: sticky;
       top: 0;
       z-index: 10;
+      backdrop-filter: blur(10px);
     }
 
     header img {
@@ -75,9 +70,9 @@
 
     header h1 {
       font-family: 'Fredoka One', cursive;
-      font-size: 32px;
+      font-size: 36px;
       color: var(--smedja);
-      text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.3);
     }
 
     .menu-toggle {
@@ -124,9 +119,7 @@
       transition: color 0.3s;
     }
 
-    nav a:hover {
-      color: #ffd7b5;
-    }
+    nav a:hover { color: #ffd7b5; }
 
     .close-menu {
       position: absolute;
@@ -136,9 +129,7 @@
       cursor: pointer;
     }
 
-    nav.active {
-      right: 0;
-    }
+    nav.active { right: 0; }
 
     .menu-toggle.active span:nth-child(1) {
       transform: rotate(45deg) translateY(8px);
@@ -150,42 +141,38 @@
       transform: rotate(-45deg) translateY(-8px);
     }
 
-    /* ===== Sekcije ===== */
+    /* === Sekcije === */
     .hero {
       background: url('ambijent1.jpg') center/cover no-repeat;
       text-align: center;
       padding: 150px 20px;
       position: relative;
-      z-index: 1;
       color: #fff;
-      text-shadow: 1px 1px 6px rgba(0,0,0,0.7);
+      z-index: 1;
     }
 
     .hero::after {
       content: "";
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       background: rgba(0,0,0,0.4);
       z-index: 0;
     }
 
-    .hero-content {
-      position: relative;
-      z-index: 2;
-    }
+    .hero-content { position: relative; z-index: 2; }
 
     .hero h2 {
       font-size: 48px;
       margin-bottom: 15px;
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.5);
     }
 
     .hero p {
       font-size: 20px;
       max-width: 700px;
       margin: 0 auto;
+      color: #f4ede7;
     }
 
     section {
@@ -193,11 +180,10 @@
       text-align: center;
       position: relative;
       z-index: 1;
+      backdrop-filter: blur(6px);
     }
 
-    .about, .contact {
-      background-color: var(--bijela);
-    }
+    .about, .contact { background-color: var(--bijela); }
 
     .about h2, .contact h2, .gallery h2 {
       color: var(--smedja);
@@ -229,17 +215,7 @@
       transition: transform 0.3s ease;
     }
 
-    .gallery-grid img:hover {
-      transform: scale(1.05);
-    }
-
-    iframe {
-      width: 100%;
-      height: 450px;
-      border: 0;
-      margin-top: 20px;
-      border-radius: 10px;
-    }
+    .gallery-grid img:hover { transform: scale(1.05); }
 
     footer {
       background-color: var(--smedja);
@@ -250,37 +226,26 @@
     }
 
     @media (max-width: 768px) {
-      .menu-toggle {
-        display: flex;
-      }
-      header h1 {
-        font-size: 28px;
-      }
-      .hero h2 {
-        font-size: 34px;
-      }
-      .hero p {
-        font-size: 16px;
-      }
+      .menu-toggle { display: flex; }
+      header h1 { font-size: 28px; }
+      .hero h2 { font-size: 34px; }
+      .hero p { font-size: 16px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Pokretna pozadina -->
+  <!-- Pokretni motivi -->
   <div class="floating-icons" id="floating-icons"></div>
 
   <header>
     <img src="image121.png" alt="Logo Džigi2">
     <h1>Restoran Džigi2</h1>
     <div class="menu-toggle" id="menu-toggle">
-      <span></span>
-      <span></span>
-      <span></span>
+      <span></span><span></span><span></span>
     </div>
   </header>
 
-  <!-- Hamburger navigacija -->
   <nav id="menu">
     <div class="close-menu" id="close-menu">&times;</div>
     <a href="#pocetna">Početna</a>
@@ -318,7 +283,7 @@
 
   <section id="kontakt" class="contact">
     <h2>Kontakt i radno vrijeme</h2>
-    <p><strong>Telefon za narudžbe i rezervacije:</strong> +387 35 818-817</p>
+    <p><strong>Telefon:</strong> +387 35 818-817</p>
     <p><strong>Radno vrijeme:</strong><br>
       Ponedjeljak - Petak: 08:00 – 23:00<br>
       Subota i Nedjelja: 13:00 – 23:00
@@ -326,11 +291,10 @@
   </section>
 
   <section id="lokacija" class="contact">
-    <h2>Naša lokacija</h2>
-    <iframe
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2847.7!2d18.4242375!3d44.8787608!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x475e7c4c45c9b3d7%3A0x66c36c6f9e657cd0!2sRestoran%20D%C5%BEigi%202!5e0!3m2!1sbs!2sba!4v1699150000000!5m2!1sbs!2sba"
-      allowfullscreen="" loading="lazy">
-    </iframe>
+    <h2>Kako do nas</h2>
+    <img src="lokacija.jpg" alt="Lokacija Restoran Džigi2" style="width:100%; max-width:800px; border-radius:10px; margin-bottom:20px;">
+    <p>Naš restoran se nalazi kod kružnog toka u Gradačcu, preko puta CM Cosmetic.  
+    Dođite i uvjerite se da ovo nije samo naš posao — već i vaše zadovoljstvo!</p>
   </section>
 
   <footer>
@@ -338,19 +302,38 @@
   </footer>
 
   <script>
+    // Hamburger meni
     const toggle = document.getElementById('menu-toggle');
     const menu = document.getElementById('menu');
     const closeMenu = document.getElementById('close-menu');
-
     toggle.addEventListener('click', () => {
       toggle.classList.toggle('active');
       menu.classList.toggle('active');
     });
-
     closeMenu.addEventListener('click', () => {
       toggle.classList.remove('active');
       menu.classList.remove('active');
     });
-
     document.querySelectorAll('nav a').forEach(link => {
-      link.addEventListener('click
+      link.addEventListener('click', () => {
+        toggle.classList.remove('active');
+        menu.classList.remove('active');
+      });
+    });
+
+    // Pokretni motivi hrane
+    const icons = ['🍕','🍔','🍰','🍷','🍾','🥃','🍽'];
+    const container = document.getElementById('floating-icons');
+    for (let i = 0; i < 20; i++) {
+      const el = document.createElement('div');
+      el.classList.add('icon');
+      el.textContent = icons[Math.floor(Math.random() * icons.length)];
+      el.style.left = Math.random() * 100 + 'vw';
+      el.style.animationDelay = Math.random() * 10 + 's';
+      el.style.fontSize = 24 + Math.random() * 20 + 'px';
+      container.appendChild(el);
+    }
+  </script>
+
+</body>
+</html>
