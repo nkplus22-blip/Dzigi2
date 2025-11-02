@@ -44,15 +44,39 @@ header h1{font-family:'Fredoka One',cursive;font-size:28px;color:var(--smedja);m
 .menu-toggle{display:none;flex-direction:column;gap:4px;margin-left:auto;cursor:pointer}
 .menu-toggle span{height:3px;background:#111;border-radius:3px;width:26px;display:block}
 
-/* side top actions (vertical layout - right side) */
-#top-actions{
-  position:fixed;
-  right:12px;
-  top:120px;
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-  z-index:50;
+/* compact horizontal action bar on the right */
+#top-actions {
+  position: fixed;
+  right: 10px;
+  top: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+  z-index: 50;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+#top-actions a {
+  background: rgba(255, 255, 255, 0.95);
+  color: #222;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 8px;
+  text-decoration: none;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  transition: all 0.2s ease;
+}
+
+#top-actions a:hover {
+  background: #ffe9d1;
+  transform: scale(1.05);
+}
+
+#top-actions span {
+  color: #555;
+  font-weight: 600;
 }
 .top-action{
   background:var(--smedja);
@@ -136,11 +160,14 @@ footer{position:fixed;left:0;bottom:0;width:100%;background:var(--smedja);color:
 </header>
 
 <!-- Horizontal fixed action bar (top-right) -->
-<div id="top-actions" aria-hidden="false">
-  <button class="top-action" id="goto-drinks">➡ IDI NA PIĆA</button>
-  <button class="top-action" id="goto-salads">➡ IDI NA SALATE</button>
-  <button class="top-action" id="goto-dessert">➡ IDI NA DESERT</button>
-  <button class="top-action" id="goto-order">✅ ZAVRŠENA NARUDŽBA</button>
+<div id="top-actions">
+  <a href="#" id="goto-drinks">➡ PIĆA</a>
+  <span>|</span>
+  <a href="#" id="goto-salads">➡ SALATE</a>
+  <span>|</span>
+  <a href="#" id="goto-dessert">➡ DESERT</a>
+  <span>|</span>
+  <a href="#" id="goto-order">✅ NARUDŽBA</a>
 </div>
 
 <main>
