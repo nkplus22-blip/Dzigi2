@@ -51,10 +51,10 @@
     .icon {
       position: absolute;
       font-size: 40px;
-      opacity: 0.75;
+      opacity: 0.85; /* vidljivije */
       animation: floatAnim 14s linear infinite;
-      color: rgba(90, 56, 37, 0.8);
-      text-shadow: 0 0 8px rgba(255,255,255,0.3);
+      color: rgba(90, 56, 37, 1); /* tamnija boja za jasniji motiv */
+      text-shadow: 0 0 10px rgba(255,255,255,0.5); /* jači sjaj */
     }
 
     @keyframes floatAnim {
@@ -114,7 +114,7 @@
       width: 280px;
       height: 100vh;
       background: var(--smedja);
-      color: var(--bijela);
+      color: #ffffff; /* bijela boja */
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -125,7 +125,7 @@
     }
 
     nav a {
-      color: var(--bijela);
+      color: #ffffff; /* bijela boja */
       text-decoration: none;
       font-size: 20px;
       margin: 15px 0;
@@ -133,6 +133,7 @@
     }
 
     nav a:hover { color: #ffd7b5; }
+
     .close-menu {
       position: absolute;
       top: 10px;
@@ -242,7 +243,7 @@
 
     footer {
       background-color: var(--smedja);
-      color: var(--bijela);
+      color: #ffffff; /* bijela boja */
       text-align: center;
       padding: 20px 10px;
       font-size: 15px;
@@ -307,43 +308,4 @@
     <h2>Kontakt i radno vrijeme</h2>
     <p><strong>Telefon:</strong> +387 35 818-817</p>
     <p><strong>Radno vrijeme:</strong><br>
-      Ponedjeljak - Petak: 08:00 – 23:00<br>
-      Subota i Nedjelja: 13:00 – 23:00
-    </p>
-  </section>
-
-  <section id="lokacija" class="contact">
-    <h2>Kako do nas</h2>
-    <img src="lokacija.jpg" alt="Lokacija Restorana Džigi2">
-    <p>Naš restoran se nalazi kod kružnog toka u Gradačcu, preko puta CM Cosmetic.  
-    Dođite i uvjerite se da ovo nije samo naš posao — već i vaše zadovoljstvo!</p>
-  </section>
-
-  <footer>
-    © 2025 Restoran Džigi2 — Sva prava zadržana.
-  </footer>
-
-  <script>
-    const toggle = document.getElementById('menu-toggle');
-    const menu = document.getElementById('menu');
-    const closeMenu = document.getElementById('close-menu');
-    toggle.addEventListener('click', () => menu.classList.toggle('active'));
-    closeMenu.addEventListener('click', () => menu.classList.remove('active'));
-    document.querySelectorAll('nav a').forEach(link => link.addEventListener('click', () => menu.classList.remove('active')));
-
-    // Pokretni motivi hrane
-    const icons = ['🍕','🍔','🍰','🍷','🍾','🥃','🍽'];
-    const container = document.getElementById('floating-icons');
-    for (let i = 0; i < 30; i++) {
-      const el = document.createElement('div');
-      el.classList.add('icon');
-      el.textContent = icons[Math.floor(Math.random() * icons.length)];
-      el.style.left = Math.random() * 100 + 'vw';
-      el.style.animationDelay = Math.random() * 10 + 's';
-      el.style.fontSize = 24 + Math.random() * 26 + 'px';
-      container.appendChild(el);
-    }
-  </script>
-
-</body>
-</html>
+      Ponedjeljak - Petak: 08:00 –
