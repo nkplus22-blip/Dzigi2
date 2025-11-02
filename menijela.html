@@ -31,148 +31,34 @@ body::before {
   animation:bgshift 25s ease-in-out infinite alternate;
   z-index:-2;
 }
-@keyframes bgshift {
-  0%{transform:translateX(0);}
-  100%{transform:translateX(-10%);}
-}
-.floating-icons {
-  position: fixed;
-  top:0; left:0;
-  width:100%; height:100%;
-  overflow:hidden;
-  z-index:-1;
-  pointer-events:none;
-}
-.icon {
-  position:absolute;
-  font-size: 40px;
-  opacity:0.9;
-  animation: floatAnim 12s linear infinite;
-  color: rgba(90,56,37,0.8);
-  text-shadow:0 0 8px rgba(255,255,255,0.5);
-}
-@keyframes floatAnim {
-  0%{transform:translateY(100vh) rotate(0deg); opacity:0;}
-  20%{opacity:1;}
-  50%{transform:translateY(0) rotate(180deg); opacity:1;}
-  80%{opacity:0.9;}
-  100%{transform:translateY(-100vh) rotate(360deg); opacity:0;}
-}
-header {
-  background-color: var(--bijela);
-  display:flex;
-  align-items:center;
-  justify-content:flex-start;
-  padding:10px 40px;
-  box-shadow:0 2px 8px rgba(0,0,0,0.1);
-  position: sticky;
-  top:0;
-  z-index:10;
-  backdrop-filter: blur(8px);
-}
+@keyframes bgshift {0%{transform:translateX(0);}100%{transform:translateX(-10%);}}
+.floating-icons {position: fixed; top:0; left:0; width:100%; height:100%; overflow:hidden; z-index:-1; pointer-events:none;}
+.icon {position:absolute; font-size: 40px; opacity:0.9; animation: floatAnim 12s linear infinite; color: rgba(90,56,37,0.8); text-shadow:0 0 8px rgba(255,255,255,0.5);}
+@keyframes floatAnim {0%{transform:translateY(100vh) rotate(0deg); opacity:0;} 20%{opacity:1;} 50%{transform:translateY(0) rotate(180deg); opacity:1;} 80%{opacity:0.9;} 100%{transform:translateY(-100vh) rotate(360deg); opacity:0;}}
+header {background-color: var(--bijela); display:flex; align-items:center; justify-content:flex-start; padding:10px 40px; box-shadow:0 2px 8px rgba(0,0,0,0.1); position: sticky; top:0; z-index:10; backdrop-filter: blur(8px);}
 header img { height:70px; margin-right:15px; }
 header h1 { font-family:'Fredoka One', cursive; font-size:40px; color:var(--smedja); text-shadow:2px 2px 6px rgba(0,0,0,0.3);}
 .menu-toggle { display:none; flex-direction:column; justify-content:space-between; width:26px; height:20px; cursor:pointer; margin-left:auto;}
 .menu-toggle span { background:black; height:3px; width:100%; border-radius:2px; transition:0.3s;}
-nav {
-  position: fixed;
-  top:0;
-  right: -280px;
-  width:280px;
-  height:100vh;
-  background: var(--smedja);
-  color:white;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  transition:right 0.4s ease;
-  z-index:15;
-  padding-top:50px;
-}
+nav {position: fixed; top:0; right: -280px; width:280px; height:100vh; background: var(--smedja); color:white; display:flex; flex-direction:column; align-items:center; justify-content:center; transition:right 0.4s ease; z-index:15; padding-top:50px;}
 nav a { color:white; text-decoration:none; font-size:20px; margin:15px 0; transition:0.3s;}
 nav a:hover{ color: var(--accent);}
 .close-menu{ position:absolute; top:10px; right:20px; font-size:36px; cursor:pointer;}
 nav.active{ right:0;}
-main{
-  max-width:1000px;
-  margin:60px auto;
-  padding:20px;
-  background-color: var(--bijela);
-  border-radius:12px;
-  box-shadow:0 8px 20px rgba(0,0,0,0.15);
-}
-h2.category-title{
-  font-family:'Fredoka One', cursive;
-  font-size:28px;
-  color: var(--smedja);
-  border-bottom:2px solid var(--accent);
-  padding-bottom:5px;
-  margin-top:25px;
-}
-.dish{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:10px 15px;
-  margin:5px 0;
-  border-radius:8px;
-  background: rgba(250,240,230,0.6);
-  transition: transform 0.2s, background 0.2s;
-}
-.dish:hover{
-  transform:translateY(-3px);
-  background: rgba(255,223,180,0.8);
-}
+main{max-width:1000px; margin:60px auto; padding:20px; background-color: var(--bijela); border-radius:12px; box-shadow:0 8px 20px rgba(0,0,0,0.15);}
+h2.category-title{font-family:'Fredoka One', cursive; font-size:28px; color: var(--smedja); border-bottom:2px solid var(--accent); padding-bottom:5px; margin-top:25px;}
+.dish{display:flex; justify-content:space-between; align-items:center; padding:10px 15px; margin:5px 0; border-radius:8px; background: rgba(250,240,230,0.6); transition: transform 0.2s, background 0.2s;}
+.dish:hover{transform:translateY(-3px); background: rgba(255,223,180,0.8);}
 .dish-name{ font-size:18px; color: var(--tamna);}
 .dish-price{ font-weight:600; color: var(--smedja);}
-.dish button{
-  padding:5px 12px;
-  background-color: var(--smedja);
-  color:white;
-  border:none;
-  border-radius:6px;
-  cursor:pointer;
-  transition:0.3s;
-}
-.dish button:hover{
-  background-color: var(--accent);
-  color: var(--smedja);
-}
+.dish button{ padding:5px 12px; background-color: var(--smedja); color:white; border:none; border-radius:6px; cursor:pointer; transition:0.3s;}
+.dish button:hover{ background-color: var(--accent); color: var(--smedja);}
 #order-summary{ margin-top:30px; text-align:center;}
 #order-summary p{ font-size:20px; margin-bottom:10px;}
-#order-summary button{
-  padding:10px 25px;
-  font-size:18px;
-  background-color: var(--smedja);
-  color:white;
-  border:none;
-  border-radius:8px;
-  cursor:pointer;
-  transition:0.3s;
-}
-#order-summary button:hover{
-  background-color: var(--accent);
-  color: var(--smedja);
-}
-footer{
-  background-color: var(--smedja);
-  color:white;
-  text-align:center;
-  padding:10px 10px;
-  font-size:15px;
-  position:fixed;
-  bottom:0;
-  left:0;
-  width:100%;
-  z-index:20;
-}
-@media(max-width:768px){
-  header h1{ font-size:28px;}
-  .menu-toggle{ display:flex;}
-  .dish{ flex-direction:column; align-items:flex-start;}
-  .dish button{ margin-top:8px;}
-}
+#order-summary button{ padding:10px 25px; font-size:18px; background-color: var(--smedja); color:white; border:none; border-radius:8px; cursor:pointer; transition:0.3s;}
+#order-summary button:hover{ background-color: var(--accent); color: var(--smedja);}
+footer{ background-color: var(--smedja); color:white; text-align:center; padding:10px 10px; font-size:15px; position:fixed; bottom:0; left:0; width:100%; z-index:20;}
+@media(max-width:768px){header h1{ font-size:28px;} .menu-toggle{ display:flex;} .dish{ flex-direction:column; align-items:flex-start;} .dish button{ margin-top:8px;}}
 </style>
 </head>
 <body>
@@ -182,9 +68,7 @@ footer{
 <header>
   <img src="image121.png" alt="Logo Džigi2">
   <h1>Restoran Džigi2</h1>
-  <div class="menu-toggle" id="menu-toggle">
-    <span></span><span></span><span></span>
-  </div>
+  <div class="menu-toggle" id="menu-toggle"><span></span><span></span><span></span></div>
 </header>
 
 <nav id="menu">
@@ -232,77 +116,58 @@ for(let i=0;i<30;i++){
 
 // Menu data
 const menuData=[
-  {category:"JAJA",dishes:[
-    {name:"Omlet sa sirom i šunkom",price:8.50},
-    {name:"Omlet (Goveđi pršut, sir, kajmak)",price:9.50},
-    {name:"Jaje na oko (Svježi sir, kajmak)",price:7.00},
-    {name:"Uštipci (Sir, kajmak)",price:10.00}
+  {category:"JAJA",dishes:[{name:"Omlet sa sirom i šunkom",price:8.50},{name:"Omlet (Goveđi pršut, sir, kajmak)",price:9.50},{name:"Jaje na oko (Svježi sir, kajmak)",price:7.00},{name:"Uštipci (Sir, kajmak)",price:10.00}]},
+  {category:"ČORBA",dishes:[{name:"Ponuda dana",price:6.00}]},
+  {category:"PAŠTETE",dishes:[{name:"Pileća 100g",price:5.00},{name:"Riblja 100g",price:5.00}]},
+  {category:"PREDJELA",dishes:[{name:"Plata za 2 osobe 400G (Goveđi pršut, svježi sir, sudžuka, edamer, pureća šunka, pileća šunka)",price:25.00},{name:"Selekcija sireva (Livada sir, travnički sir, gorgonzola sir, mozzarela sir, koziji sir)",price:30.00}]},
+  {category:"UMACI",dishes:[{name:"Gorgonzola sos",price:5.00},{name:"Šampinjon sos",price:3.00},{name:"4 vrste sira",price:4.00}]},
+  {category:"PRILOZI",dishes:[{name:"Grilllovano povrće",price:5.00},{name:"Riža sa povrćem",price:3.00},{name:"Pomfrit",price:4.00},{name:"Pekarski krompir",price:4.00},{name:"Pire",price:3.00},{name:"Tjestenina",price:3.00},{name:"Kus-Kus",price:3.00}]},
+  {category:"JELA PO NARUDŽBI - JUNEĆE MESO",dishes:[{name:"Miješano meso 800G (Juneća kremenadla, pljeskavica, sudžukica, ćevapi, pileći ražnjići, pileći file)",price:30.00},{name:"Pljeskavica u lepini 150G",price:13.00},{name:"Punjena pljeskavica 350G (Sir trapist, goveđi pršut, pureća šunka)",price:20.00},{name:"Pljeskavica 300G",price:17.00},{name:"Leskovačka pljeskavica BIG 600G",price:30.00},{name:"Kardiovaskularna pljeskavica 200G (Iz krušne peći)",price:25.00},{name:"Kremenadle",price:25.00},{name:"Ćevapi velika porcija",price:10.00},{name:"Ćevapi srednja porcija",price:7.00},{name:"Ćevapi mala porcija",price:6.00},{name:"Ćevapi u kajmaku",price:11.00},{name:"Ćevapi u kajmaku",price:11.00},{name:"Ćevapi u dubokom tanjuru (Poliv)",price:11.00},{name:"Ćevapi u domaćoj lepinji (Iz krušne peći sa punomasnim kajmakom)",price:13.00},{name:"Mesni uštipci",price:10.00},{name:"Pohovani mozak",price:20.00},{name:"Pohovani škembići/tripice",price:12.00}]},
+  {category:"JELA PO NARUDŽBI - PILEĆE MESO",dishes:[{name:"Pohovana piletina (prezla)",price:12.00},{name:"Punjena piletina (Sir trapist, pureća šunka, goveđi pršut)",price:17.00},{name:"Pileći ražnjići",price:10.00},{name:"Pileći otkošteni barak/2kom",price:13.00},{name:"Grilovana pileća prsa", price:13.00},{name:"Chicken nuggets", price:10.00},{name:"Piletina u lepini", price:10.00},{name:"Piletina sa 4 vrste sira", price:15.00},{name:"Timbola iz krušne peći", price:20.00}]},
+  {category:"PIZZA",dishes:[{name:"Margherita (Sir, paradajz sos)", price:11.00},{name:"Proscuitto (Sir, paradajz sos, pureća šunka)", price:12.00},{name:"Romana (Sir, goveđi pršut, paradajz sos)", price:13.00},{name:"Capricciusa (Sir, pureća šunka, gljive, paradajz sos)", price:12.00},{name:"Vegeteriana (Sir, gljive, kukuruz, paradajz sos)", price:10.00},{name:"Tono/Tuna (Paradajz sos, sir, tuna, luk)", price:13.00},{name:"Quattro Formaggi (Paradajz sos, mozzarella, edamer, gorgonzola, parmezan)", price:12.00},{name:"Bijela Pizza (Bijeli sos, piletina, sir, gljive)", price:10.00},{name:"DŽIGI2 PIZZA (Goveđi pršut, šunka, sir, sos, gljive, parmezan)", price:15.00},{name:"Tabaskino (Pileće ili juneće meso)", price:10.00}]},
+  {category:"RIBE/FISH",dishes:[
+    {name:"Pastrmka Velika porcija 1KG",price:52.00},{name:"Pastrmka Mala porcija 250G",price:18.00},
+    {name:"Šaran Velika porcija 1KG",price:60.00},{name:"Šaran Mala porcija 300G",price:22.00},
+    {name:"Lignje 300G",price:20.00},{name:"Lignje punjene",price:23.00},
+    {name:"Riblja plata 1KG",price:58.00},{name:"Oslić 300G",price:13.00},
+    {name:"Brancin Velika porcija 1KG",price:62.00},{name:"Brancin Mala porcija 250G",price:24.00},
+    {name:"Orada Velika porcija 1KG",price:62.00},{name:"Orada Mala porcija 250G",price:24.00},
+    {name:"Som Velika porcija 1KG",price:70.00},{name:"Som Mala porcija 250G",price:25.00},
+    {name:"Smuđ Velika porcija 1KG",price:70.00},{name:"Smuđ Mala porcija",price:25.00}
   ]},
-  {category:"ČORBA",dishes:[
-    {name:"Ponuda dana",price:6.00}
+  {category:"HAMBURGERI",dishes:[
+    {name:"Hamburger sa hrskavom piletinom i ljutim ajvarom (salata po želji)",price:8.00},
+    {name:"Cheesburger",price:6.00},{name:"Double Quadburger (sir, salata, umak)",price:16.00},
+    {name:"Hamburger Classic",price:4.50},{name:"Hamburger i pomfrit",price:6.50}
   ]},
-  {category:"PAŠTETE",dishes:[
-    {name:"Pileća 100g",price:5.00},
-    {name:"Riblja 100g",price:5.00}
+  {category:"JANJETINA/LAMB MEAT",dishes:[ // istaknuto
+    {name:"Janjetina Velika porcija 1KG",price:50.00},{name:"Janjetina Mala porcija 300G",price:20.00}
+  ],highlight:true},
+  {category:"TELETINA/VEAL MEAT",dishes:[ // istaknuto
+    {name:"Teletina Velika porcija 1KG",price:55.00},{name:"Teletina Mala porcija 300G",price:25.00}
+  ],highlight:true},
+  {category:"JELA PO NARUDŽBI OD TELEĆEG MESA",dishes:[
+    {name:"Pariška šnicla",price:18.00},{name:"Bečka šnicla",price:20.00},{name:"Natur šnicla",price:17.00},
+    {name:"Kremenadle Velika porcija",price:25.00},{name:"Kremenadle Mala porcija",price:15.00},
+    {name:"Ražnjići Velika porcija",price:20.00},{name:"Ražnjići Mala porcija",price:10.00},
+    {name:"Kuhana teleća koljenica 300G",price:30.00},{name:"Teletina ispod sača",price:25.00},
+    {name:"Punjena teleća šnicla (Sir, punomasni kajmak, pureća šunka)",price:28.00},
+    {name:"Teleća mućkalica Velika porcija",price:15.00},{name:"Teleća mućkalica Mala porcija",price:8.00},
+    {name:"Kujruk na moderan način 200G",price:20.00},{name:"Teleći jezik u umaku od paradajza (Po ponudi kuhara!)",price:15.00}
   ]},
-  {category:"PREDJELA",dishes:[
-    {name:"Plata za 2 osobe 400G (Goveđi pršut, svježi sir, sudžuka, edamer, pureća šunka, pileća šunka)",price:25.00},
-    {name:"Selekcija sireva (Livada sir, travnički sir, gorgonzola sir, mozzarela sir, koziji sir)",price:30.00}
-  ]},
-  {category:"UMACI",dishes:[
-    {name:"Gorgonzola sos",price:5.00},
-    {name:"Šampinjon sos",price:3.00},
-    {name:"4 vrste sira",price:4.00}
-  ]},
-  {category:"PRILOZI",dishes:[
-    {name:"Grilllovano povrće",price:5.00},
-    {name:"Riža sa povrćem",price:3.00},
-    {name:"Pomfrit",price:4.00},
-    {name:"Pekarski krompir",price:4.00},
-    {name:"Pire",price:3.00},
-    {name:"Tjestenina",price:3.00},
-    {name:"Kus-Kus",price:3.00}
-  ]},
-  {category:"JELA PO NARUDŽBI - JUNEĆE MESO",dishes:[
-    {name:"Miješano meso 800G (Juneća kremenadla, pljeskavica, sudžukica, ćevapi, pileći ražnjići, pileći file)",price:30.00},
-    {name:"Pljeskavica u lepini 150G",price:13.00},
-    {name:"Punjena pljeskavica 350G (Sir trapist, goveđi pršut, pureća šunka)",price:20.00},
-    {name:"Pljeskavica 300G",price:17.00},
-    {name:"Leskovačka pljeskavica BIG 600G",price:30.00},
-    {name:"Kardiovaskularna pljeskavica 200G (Iz krušne peći)",price:25.00},
-    {name:"Kremenadle",price:25.00},
-    {name:"Ćevapi velika porcija",price:10.00},
-    {name:"Ćevapi srednja porcija",price:7.00},
-    {name:"Ćevapi mala porcija",price:6.00},
-    {name:"Ćevapi u kajmaku",price:11.00},
-    {name:"Ćevapi u dubokom tanjuru (Poliv)",price:11.00},
-    {name:"Ćevapi u domaćoj lepinji (Iz krušne peći sa punomasnim kajmakom)",price:13.00},
-    {name:"Mesni uštipci",price:10.00},
-    {name:"Pohovani mozak",price:20.00},
-    {name:"Pohovani škembići/tripice",price:12.00}
-  ]},
-  {category:"JELA PO NARUDŽBI - PILEĆE MESO",dishes:[
-    {name:"Pohovana piletina (prezla)",price:12.00},
-    {name:"Punjena piletina (Sir trapist, pureća šunka, goveđi pršut)",price:17.00},
-    {name:"Pileći ražnjići",price:10.00},
-    {name:"Pileći otkošteni barak/2kom",price:13.00},
-    {name:"Grilovana pileća prsa", price:13.00},
-    {name:"Chicken nuggets", price:10.00},
-    {name:"Piletina u lepini", price:10.00},
-    {name:"Piletina sa 4 vrste sira", price:15.00},
-    {name:"Timbola iz krušne peći", price:20.00}
-  ]},
-  {category:"PIZZA",dishes:[
-    {name:"Margherita (Sir, paradajz sos)", price:11.00},
-    {name:"Proscuitto (Sir, paradajz sos, pureća šunka)", price:12.00},
-    {name:"Romana (Sir, goveđi pršut, paradajz sos)", price:13.00},
-    {name:"Capricciusa (Sir, pureća šunka, gljive, paradajz sos)", price:12.00},
-    {name:"Vegeteriana (Sir, gljive, kukuruz, paradajz sos)", price:10.00},
-    {name:"Tono/Tuna (Paradajz sos, sir, tuna, luk)", price:13.00},
-    {name:"Quattro Formaggi (Paradajz sos, mozzarella, edamer, gorgonzola, parmezan)", price:12.00},
-    {name:"Bijela Pizza (Bijeli sos, piletina, sir, gljive)", price:10.00},
-    {name:"DŽIGI2 PIZZA (Goveđi pršut, šunka, sir, sos, gljive, parmezan)", price:15.00},
-    {name:"Tabaskino (Pileće ili juneće meso)", price:10.00}
+  {category:"TJESTENINA/PASTA",dishes:[
+    {name:"Carbonara Velika porcija",price:14.00},{name:"Carbonara Mala porcija",price:8.00},
+    {name:"Pesto pasta",price:15.00},
+    {name:"Bolognese Velika porcija",price:13.00},{name:"Bolognese Mala porcija",price:7.00},
+    {name:"Spaghetti pomadoro Velika porcija",price:10.00},{name:"Spaghetti pomadoro Mala porcija",price:6.00},
+    {name:"Spaghetti sa gljivama i piletinom Velika porcija",price:12.00},{name:"Spaghetti sa gljivama i piletinom Mala porcija",price:6.00},
+    {name:"Spaghetti sa 4 vrste sira Velika porcija",price:13.00},{name:"Spaghetti sa 4 vrste sira Mala porcija",price:8.00},
+    {name:"Spaghetti sa domaćim sirom i vrhnjem Velika porcija",price:10.00},{name:"Spaghetti sa domaćim sirom i vrhnjem Mala porcija",price:6.00},
+    {name:"Tagtaele sa biftekom",price:25.00},
+    {name:"Chicken pasta Velika porcija",price:13.00},{name:"Chicken pasta Mala porcija",price:7.00},
+    {name:"Tagtaele sa morskim plodovima Velika porcija",price:17.00},{name:"Tagtaele sa morskim plodovima Mala porcija",price:9.00},
+    {name:"Lazanje",price:12.00},
+    {name:"Tagtaele sa špinatom/blitvom Velika porcija",price:10.00},{name:"Tagtaele sa špinatom/blitvom Mala porcija",price:8.00}
   ]}
 ];
 
@@ -315,6 +180,7 @@ menuData.forEach(cat=>{
   const h2 = document.createElement('h2');
   h2.classList.add('category-title');
   h2.textContent = cat.category;
+  if(cat.highlight){ h2.style.fontWeight='700'; h2.style.fontSize='32px'; } // istaknuto TELETINA/JANJETINA
   menuContainer.appendChild(h2);
 
   cat.dishes.forEach(dish=>{
@@ -346,15 +212,11 @@ menuData.forEach(cat=>{
 
 // WhatsApp order
 document.getElementById('order-btn').addEventListener('click', ()=>{
-  if(order.length === 0){
-    alert("Molimo odaberite bar jedno jelo.");
-    return;
-  }
+  if(order.length === 0){ alert("Molimo odaberite bar jedno jelo."); return; }
   let text = "Narudžba:\n";
   order.forEach(item=>{ text += "- "+item.name+" ("+item.price.toFixed(2)+" KM)\n"; });
   text += "Ukupno: "+totalPrice.toFixed(2)+" KM";
-  // Promijeni broj ispod sa svojim WhatsApp brojem
-  const phone = "38761015241";
+  const phone = "38761015241"; // tvoj broj
   const url = "https://api.whatsapp.com/send?phone="+phone+"&text="+encodeURIComponent(text);
   window.open(url, "_blank");
 });
