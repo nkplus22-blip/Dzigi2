@@ -8,8 +8,8 @@
   <style>
     :root {
       --smedja: #5a3825;
-      --svijetla: rgba(255,248,240,0.25);
-      --bijela: rgba(255,255,255,0.35);
+      --svijetla: rgba(255,248,240,0.15);
+      --bijela: rgba(255,255,255,0.2);
       --tamna: #3b2415;
     }
 
@@ -23,14 +23,14 @@
       position: relative;
     }
 
-    /* animirani gradient pozadine */
+    /* Animirana providna pozadina */
     body::before {
       content: "";
       position: fixed;
       inset: 0;
-      background: linear-gradient(120deg, rgba(255,255,255,0.1), rgba(255,200,150,0.05), rgba(255,255,255,0.1));
+      background: linear-gradient(120deg, rgba(255,255,255,0.1), rgba(255,200,150,0.08), rgba(255,255,255,0.1));
       animation: bgshift 20s ease-in-out infinite alternate;
-      z-index: -1;
+      z-index: -2;
     }
 
     @keyframes bgshift {
@@ -44,27 +44,28 @@
       top: 0; left: 0;
       width: 100%; height: 100%;
       overflow: hidden;
-      z-index: 0;
+      z-index: -1;
       pointer-events: none;
     }
 
     .icon {
       position: absolute;
       font-size: 36px;
-      opacity: 0.8;
+      opacity: 0.6;
       animation: floatAnim 14s linear infinite;
-      color: rgba(90, 56, 37, 0.8);
+      color: rgba(90, 56, 37, 0.65);
+      filter: blur(0.5px);
     }
 
     @keyframes floatAnim {
       0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-      20% { opacity: 1; }
+      20% { opacity: 0.8; }
       50% { transform: translateY(0) rotate(180deg); opacity: 0.8; }
       80% { opacity: 1; }
       100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
     }
 
-    /* === Header i meni === */
+    /* === Header === */
     header {
       background-color: var(--bijela);
       display: flex;
@@ -75,22 +76,19 @@
       position: sticky;
       top: 0;
       z-index: 10;
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(8px);
     }
 
-    header img {
-      height: 70px;
-      margin-right: 15px;
-    }
+    header img { height: 70px; margin-right: 15px; }
 
     header h1 {
       font-family: 'Fredoka One', cursive;
       font-size: 40px;
       color: var(--smedja);
       text-shadow: 2px 2px 6px rgba(0,0,0,0.3);
-      letter-spacing: 1px;
     }
 
+    /* === Meni === */
     .menu-toggle {
       display: none;
       flex-direction: column;
@@ -99,7 +97,6 @@
       height: 20px;
       cursor: pointer;
       margin-left: auto;
-      z-index: 20;
     }
 
     .menu-toggle span {
@@ -136,7 +133,6 @@
     }
 
     nav a:hover { color: #ffd7b5; }
-
     .close-menu {
       position: absolute;
       top: 10px;
@@ -147,16 +143,6 @@
 
     nav.active { right: 0; }
 
-    .menu-toggle.active span:nth-child(1) {
-      transform: rotate(45deg) translateY(8px);
-    }
-    .menu-toggle.active span:nth-child(2) {
-      opacity: 0;
-    }
-    .menu-toggle.active span:nth-child(3) {
-      transform: rotate(-45deg) translateY(-8px);
-    }
-
     /* === Sekcije === */
     .hero {
       background: url('ambijent1.jpg') center/cover no-repeat;
@@ -165,7 +151,6 @@
       position: relative;
       color: #fff;
       z-index: 1;
-      overflow: hidden;
     }
 
     .hero::after {
@@ -173,7 +158,7 @@
       position: absolute;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      background: rgba(0,0,0,0.4);
+      background: rgba(0,0,0,0.45);
       z-index: 0;
     }
 
@@ -182,7 +167,7 @@
     .hero h2 {
       font-size: 50px;
       margin-bottom: 15px;
-      text-shadow: 2px 2px 6px rgba(0,0,0,0.5);
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.6);
       animation: fadeDown 1.5s ease;
     }
 
@@ -204,30 +189,12 @@
       100% { opacity: 1; }
     }
 
-    /* Efekat "pare" */
-    .steam {
-      position: absolute;
-      bottom: 10%;
-      left: 50%;
-      width: 15px;
-      height: 80px;
-      background: radial-gradient(ellipse at center, rgba(255,255,255,0.4) 0%, transparent 70%);
-      animation: steamRise 6s linear infinite;
-      opacity: 0.5;
-    }
-
-    @keyframes steamRise {
-      0% { transform: translateY(0) scale(0.8); opacity: 0.5; }
-      50% { opacity: 1; }
-      100% { transform: translateY(-100px) scale(1.2); opacity: 0; }
-    }
-
     section {
       padding: 60px 20px;
       text-align: center;
       position: relative;
+      backdrop-filter: blur(5px);
       z-index: 1;
-      backdrop-filter: blur(6px);
     }
 
     .about, .contact { background-color: var(--bijela); }
@@ -263,6 +230,15 @@
     }
 
     .gallery-grid img:hover { transform: scale(1.05); }
+
+    /* === Lokacija (slika umjesto mape) === */
+    #lokacija img {
+      width: 90%;
+      max-width: 1000px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      margin: 20px 0;
+    }
 
     footer {
       background-color: var(--smedja);
@@ -307,14 +283,12 @@
     <div class="hero-content">
       <h2>Dobrodošli u Džigi2</h2>
       <p>Smješteni u srcu Gradačca, nudimo vrhunsku hranu, domaću atmosferu i nezaboravne trenutke uz bogat meni i prijateljsku uslugu.</p>
-      <div class="steam" style="left:48%; animation-delay:0s;"></div>
-      <div class="steam" style="left:52%; animation-delay:2s;"></div>
     </div>
   </section>
 
   <section id="meni" class="about">
     <h2>O nama</h2>
-    <p>Restoran Džigi2 poznat je po spoju tradicionalnih i modernih jela, pripremljenih s pažnjom i kvalitetnim sastojcima. Naš cilj je da svaki gost osjeti toplinu domaće kuhinje i uživa u prijatnom ambijentu. Posjetite nas i uvjerite se zašto smo omiljeno mjesto za okupljanje u Gradačcu!</p>
+    <p>Restoran Džigi2 poznat je po spoju tradicionalnih i modernih jela, pripremljenih s pažnjom i kvalitetnim sastojcima. Naš cilj je da svaki gost osjeti toplinu domaće kuhinje i uživa u prijatnom ambijentu.</p>
   </section>
 
   <section id="galerija" class="gallery">
@@ -325,8 +299,6 @@
       <img src="ambijent3.jpg" alt="Ambijent 3">
       <img src="ambijent4.jpg" alt="Ambijent 4">
       <img src="ambijent5.jpg" alt="Ambijent 5">
-      <img src="ambijent6.jpg" alt="Ambijent 6">
-      <img src="ambijent7.jpg" alt="Ambijent 7">
     </div>
   </section>
 
@@ -341,7 +313,7 @@
 
   <section id="lokacija" class="contact">
     <h2>Kako do nas</h2>
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2847.645249771424!2d18.42784967603809!3d44.88118317107126!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x475e7c4b0a6fbd8f%3A0x9f27b8041232b71!2sRestoran%20%E2%80%9ED%C5%BEigi%202%E2%80%9C!5e0!3m2!1sbs!2sba!4v1730534000000!5m2!1sbs!2sba" width="100%" height="400" style="border:0; border-radius:10px;" allowfullscreen="" loading="lazy"></iframe>
+    <img src="lokacija.jpg" alt="Lokacija Restorana Džigi2">
     <p>Naš restoran se nalazi kod kružnog toka u Gradačcu, preko puta CM Cosmetic.  
     Dođite i uvjerite se da ovo nije samo naš posao — već i vaše zadovoljstvo!</p>
   </section>
@@ -373,13 +345,13 @@
     // Pokretni motivi hrane
     const icons = ['🍕','🍔','🍰','🍷','🍾','🥃','🍽'];
     const container = document.getElementById('floating-icons');
-    for (let i = 0; i < 25; i++) {
+    for (let i = 0; i < 30; i++) {
       const el = document.createElement('div');
       el.classList.add('icon');
       el.textContent = icons[Math.floor(Math.random() * icons.length)];
       el.style.left = Math.random() * 100 + 'vw';
       el.style.animationDelay = Math.random() * 10 + 's';
-      el.style.fontSize = 24 + Math.random() * 20 + 'px';
+      el.style.fontSize = 24 + Math.random() * 26 + 'px';
       container.appendChild(el);
     }
   </script>
