@@ -4,11 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Džigi2 Restoran</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --smedja: #5a3825;
-      --svijetla: #fff8f0;
-      --bijela: #ffffff;
+      --svijetla: rgba(255,248,240,0.85);
+      --bijela: rgba(255,255,255,0.85);
       --tamna: #3b2415;
     }
 
@@ -23,6 +24,7 @@
       background-color: var(--svijetla);
       color: var(--tamna);
       overflow-x: hidden;
+      position: relative;
     }
 
     /* ===== Pokretna pozadina ===== */
@@ -40,8 +42,8 @@
     .icon {
       position: absolute;
       font-size: 32px;
-      color: #8B4513; /* tamnije smeđa da se vidi na svijetloj pozadini */
-      animation: floatAnim 10s linear infinite;
+      color: #8B4513;
+      animation: floatAnim 12s linear infinite;
       opacity: 0.8;
     }
 
@@ -53,12 +55,12 @@
       100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
     }
 
-    /* ===== Header + Hamburger ===== */
+    /* ===== Header ===== */
     header {
       background-color: var(--bijela);
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: flex-start;
       padding: 10px 40px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
       position: sticky;
@@ -68,12 +70,14 @@
 
     header img {
       height: 70px;
+      margin-right: 15px;
     }
 
     header h1 {
+      font-family: 'Fredoka One', cursive;
+      font-size: 32px;
       color: var(--smedja);
-      font-size: 26px;
-      font-weight: 700;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
     }
 
     .menu-toggle {
@@ -83,6 +87,7 @@
       width: 26px;
       height: 20px;
       cursor: pointer;
+      margin-left: auto;
       z-index: 20;
     }
 
@@ -97,8 +102,8 @@
     nav {
       position: fixed;
       top: 0;
-      right: -260px;
-      width: 260px;
+      right: -280px;
+      width: 280px;
       height: 100vh;
       background: var(--smedja);
       color: var(--bijela);
@@ -108,6 +113,7 @@
       justify-content: center;
       transition: right 0.4s ease;
       z-index: 15;
+      padding-top: 50px;
     }
 
     nav a {
@@ -120,6 +126,14 @@
 
     nav a:hover {
       color: #ffd7b5;
+    }
+
+    .close-menu {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-size: 36px;
+      cursor: pointer;
     }
 
     nav.active {
@@ -139,11 +153,12 @@
     /* ===== Sekcije ===== */
     .hero {
       background: url('ambijent1.jpg') center/cover no-repeat;
-      color: white;
       text-align: center;
       padding: 150px 20px;
       position: relative;
       z-index: 1;
+      color: #fff;
+      text-shadow: 1px 1px 6px rgba(0,0,0,0.7);
     }
 
     .hero::after {
@@ -153,7 +168,8 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.5);
+      background: rgba(0,0,0,0.4);
+      z-index: 0;
     }
 
     .hero-content {
@@ -164,12 +180,10 @@
     .hero h2 {
       font-size: 48px;
       margin-bottom: 15px;
-      color: #fff;
     }
 
     .hero p {
       font-size: 20px;
-      color: #f0e6dd;
       max-width: 700px;
       margin: 0 auto;
     }
@@ -179,10 +193,12 @@
       text-align: center;
       position: relative;
       z-index: 1;
+      text-shadow: 0px 0px 3px rgba(255,255,255,0.7);
     }
 
     .about, .contact {
       background-color: var(--bijela);
+      text-shadow: none;
     }
 
     .about h2, .contact h2, .gallery h2 {
@@ -240,7 +256,7 @@
         display: flex;
       }
       header h1 {
-        font-size: 22px;
+        font-size: 28px;
       }
       .hero h2 {
         font-size: 34px;
@@ -268,9 +284,11 @@
 
   <!-- Hamburger navigacija -->
   <nav id="menu">
+    <div class="close-menu" id="close-menu">&times;</div>
     <a href="#pocetna">Početna</a>
     <a href="#meni">O nama</a>
     <a href="#galerija">Galerija</a>
+    <a href="menijela.html">Meni jela</a>
     <a href="#kontakt">Kontakt</a>
     <a href="#lokacija">Lokacija</a>
   </nav>
@@ -311,8 +329,8 @@
 
   <section id="lokacija" class="contact">
     <h2>Naša lokacija</h2>
-    <iframe 
-      src="https://www.google.com/maps?q=Restoran+D%C5%BEigi+2,+Grada%C4%8Dac&output=embed" 
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2847.743544024218!2d18.4275292!3d44.8809512!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x475e7c4c45c9b3d7%3A0x66c36c6f9e657cd0!2sRestoran%20D%C5%BEigi%202!5e0!3m2!1sbs!2sba!4v1730678900000!5m2!1sbs!2sba"
       allowfullscreen="" loading="lazy">
     </iframe>
   </section>
@@ -322,14 +340,20 @@
   </footer>
 
   <script>
-    // Hamburger meni (otvaranje i zatvaranje klikom)
     const toggle = document.getElementById('menu-toggle');
     const menu = document.getElementById('menu');
+    const closeMenu = document.getElementById('close-menu');
+
     toggle.addEventListener('click', () => {
       toggle.classList.toggle('active');
       menu.classList.toggle('active');
     });
-    // Klik na link zatvara meni
+
+    closeMenu.addEventListener('click', () => {
+      toggle.classList.remove('active');
+      menu.classList.remove('active');
+    });
+
     document.querySelectorAll('nav a').forEach(link => {
       link.addEventListener('click', () => {
         toggle.classList.remove('active');
@@ -337,7 +361,7 @@
       });
     });
 
-    // Pokretni emoji motivi (tamnije i vidljivije)
+    // Pokretni emoji motivi
     const icons = ['🍕','🍔','🍰','🍽','🍾','🍷','🥃'];
     const container = document.getElementById('floating-icons');
 
@@ -347,12 +371,12 @@
       icon.textContent = icons[Math.floor(Math.random() * icons.length)];
       icon.style.left = Math.random() * 100 + 'vw';
       icon.style.animationDuration = 8 + Math.random() * 8 + 's';
-      icon.style.fontSize = 24 + Math.random() * 28 + 'px';
+      icon.style.fontSize = 24 + Math.random() * 36 + 'px';
       container.appendChild(icon);
       setTimeout(() => icon.remove(), 16000);
     }
 
-    setInterval(createIcon, 600);
+    setInterval(createIcon, 500);
   </script>
 
 </body>
