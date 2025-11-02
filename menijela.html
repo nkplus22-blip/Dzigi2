@@ -354,7 +354,7 @@ document.getElementById('order-btn').addEventListener('click', ()=>{
   order.forEach(item=>{ text += "- "+item.name+" ("+item.price.toFixed(2)+" KM)\n"; });
   text += "Ukupno: "+totalPrice.toFixed(2)+" KM";
   // Promijeni broj ispod sa svojim WhatsApp brojem
-  const phone = "38735818817";
+  const phone = "38761015241";
   const url = "https://api.whatsapp.com/send?phone="+phone+"&text="+encodeURIComponent(text);
   window.open(url, "_blank");
 });
