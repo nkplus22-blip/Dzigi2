@@ -8,8 +8,8 @@
   <style>
     :root {
       --smedja: #5a3825;
-      --svijetla: rgba(255,248,240,0.4); /* providna pozadina */
-      --bijela: rgba(255,255,255,0.5);
+      --svijetla: rgba(255,248,240,0.25);
+      --bijela: rgba(255,255,255,0.35);
       --tamna: #3b2415;
     }
 
@@ -21,6 +21,21 @@
       color: var(--tamna);
       overflow-x: hidden;
       position: relative;
+    }
+
+    /* animirani gradient pozadine */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(120deg, rgba(255,255,255,0.1), rgba(255,200,150,0.05), rgba(255,255,255,0.1));
+      animation: bgshift 20s ease-in-out infinite alternate;
+      z-index: -1;
+    }
+
+    @keyframes bgshift {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-10%); }
     }
 
     /* === Pokretni motivi === */
@@ -70,9 +85,10 @@
 
     header h1 {
       font-family: 'Fredoka One', cursive;
-      font-size: 36px;
+      font-size: 40px;
       color: var(--smedja);
       text-shadow: 2px 2px 6px rgba(0,0,0,0.3);
+      letter-spacing: 1px;
     }
 
     .menu-toggle {
@@ -149,6 +165,7 @@
       position: relative;
       color: #fff;
       z-index: 1;
+      overflow: hidden;
     }
 
     .hero::after {
@@ -163,9 +180,10 @@
     .hero-content { position: relative; z-index: 2; }
 
     .hero h2 {
-      font-size: 48px;
+      font-size: 50px;
       margin-bottom: 15px;
       text-shadow: 2px 2px 6px rgba(0,0,0,0.5);
+      animation: fadeDown 1.5s ease;
     }
 
     .hero p {
@@ -173,6 +191,35 @@
       max-width: 700px;
       margin: 0 auto;
       color: #f4ede7;
+      animation: fadeIn 2.2s ease;
+    }
+
+    @keyframes fadeDown {
+      0% { opacity: 0; transform: translateY(-20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    /* Efekat "pare" */
+    .steam {
+      position: absolute;
+      bottom: 10%;
+      left: 50%;
+      width: 15px;
+      height: 80px;
+      background: radial-gradient(ellipse at center, rgba(255,255,255,0.4) 0%, transparent 70%);
+      animation: steamRise 6s linear infinite;
+      opacity: 0.5;
+    }
+
+    @keyframes steamRise {
+      0% { transform: translateY(0) scale(0.8); opacity: 0.5; }
+      50% { opacity: 1; }
+      100% { transform: translateY(-100px) scale(1.2); opacity: 0; }
     }
 
     section {
@@ -260,6 +307,8 @@
     <div class="hero-content">
       <h2>Dobrodošli u Džigi2</h2>
       <p>Smješteni u srcu Gradačca, nudimo vrhunsku hranu, domaću atmosferu i nezaboravne trenutke uz bogat meni i prijateljsku uslugu.</p>
+      <div class="steam" style="left:48%; animation-delay:0s;"></div>
+      <div class="steam" style="left:52%; animation-delay:2s;"></div>
     </div>
   </section>
 
@@ -292,7 +341,7 @@
 
   <section id="lokacija" class="contact">
     <h2>Kako do nas</h2>
-    <img src="lokacija.jpg" alt="Lokacija Restoran Džigi2" style="width:100%; max-width:800px; border-radius:10px; margin-bottom:20px;">
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2847.645249771424!2d18.42784967603809!3d44.88118317107126!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x475e7c4b0a6fbd8f%3A0x9f27b8041232b71!2sRestoran%20%E2%80%9ED%C5%BEigi%202%E2%80%9C!5e0!3m2!1sbs!2sba!4v1730534000000!5m2!1sbs!2sba" width="100%" height="400" style="border:0; border-radius:10px;" allowfullscreen="" loading="lazy"></iframe>
     <p>Naš restoran se nalazi kod kružnog toka u Gradačcu, preko puta CM Cosmetic.  
     Dođite i uvjerite se da ovo nije samo naš posao — već i vaše zadovoljstvo!</p>
   </section>
@@ -324,7 +373,7 @@
     // Pokretni motivi hrane
     const icons = ['🍕','🍔','🍰','🍷','🍾','🥃','🍽'];
     const container = document.getElementById('floating-icons');
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 25; i++) {
       const el = document.createElement('div');
       el.classList.add('icon');
       el.textContent = icons[Math.floor(Math.random() * icons.length)];
