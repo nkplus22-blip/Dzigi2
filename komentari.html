@@ -24,6 +24,45 @@
       padding-bottom: 40px;
     }
 
+    /* Animirana pozadina */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(120deg, rgba(255,255,255,0.05), rgba(255,200,150,0.04), rgba(255,255,255,0.05));
+      animation: bgshift 25s ease-in-out infinite alternate;
+      z-index: -2;
+    }
+    @keyframes bgshift {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-10%); }
+    }
+
+    /* Leteći motivi */
+    .floating-icons {
+      position: fixed;
+      top:0; left:0;
+      width:100%; height:100%;
+      overflow:hidden;
+      z-index:-1;
+      pointer-events:none;
+    }
+    .icon {
+      position:absolute;
+      font-size: 40px;
+      opacity:0.85;
+      animation: floatAnim 14s linear infinite;
+      color: rgba(90,56,37,0.85);
+      text-shadow: 0 0 8px rgba(255,255,255,0.3);
+    }
+    @keyframes floatAnim {
+      0% { transform: translateY(100vh) rotate(0deg); opacity:0; }
+      20% { opacity:1; }
+      50% { transform: translateY(0) rotate(180deg); opacity:1; }
+      80% { opacity:0.9; }
+      100% { transform: translateY(-100vh) rotate(360deg); opacity:0; }
+    }
+
     header {
       background-color: var(--bijela);
       display: flex;
@@ -36,9 +75,11 @@
       z-index: 10;
       backdrop-filter: blur(8px);
     }
-
     header img { height: 70px; margin-right: 15px; }
     header h1 { font-family: 'Fredoka One', cursive; font-size: 40px; color: var(--smedja); text-shadow: 2px 2px 6px rgba(0,0,0,0.3); }
+
+    .menu-toggle { display: none; flex-direction: column; justify-content: space-between; width: 26px; height: 20px; cursor: pointer; margin-left: auto; }
+    .menu-toggle span { background: black; height: 3px; width: 100%; border-radius: 2px; transition: 0.3s; }
 
     nav {
       position: fixed;
@@ -56,7 +97,6 @@
       z-index: 15;
       padding-top: 50px;
     }
-
     nav a {
       color: white;
       text-decoration: none;
@@ -64,7 +104,6 @@
       margin: 15px 0;
       transition: color 0.3s;
     }
-
     nav a:hover { color: #ffd7b5; }
     .close-menu {
       position: absolute;
@@ -73,10 +112,7 @@
       font-size: 36px;
       cursor: pointer;
     }
-
     nav.active { right: 0; }
-    .menu-toggle { display: none; flex-direction: column; justify-content: space-between; width: 26px; height: 20px; cursor: pointer; margin-left: auto; }
-    .menu-toggle span { background: white; height: 3px; width: 100%; border-radius: 2px; transition: 0.3s; }
 
     h2 {
       font-family: 'Fredoka One', cursive;
@@ -90,32 +126,31 @@
       max-width: 900px;
       margin: 0 auto;
       padding: 0 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
     }
 
     .comment {
-      background-color: var(--bijela);
-      padding: 15px 20px;
-      border-radius: 10px;
-      margin-bottom: 15px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      background-color: rgba(255,255,255,0.8);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .comment .header {
       display: flex;
       align-items: center;
       gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .comment .name {
       font-weight: 600;
       color: var(--smedja);
+      font-size: 16px;
     }
-
-    .comment .flag {
-      font-size: 24px;
-    }
-
+    .comment .flag { font-size: 24px; }
     .comment .text {
-      width: 100%;
-      margin-top: 5px;
       font-size: 16px;
       color: #3b2415;
     }
@@ -159,7 +194,6 @@
       cursor: pointer;
       transition: 0.3s;
     }
-
     form button:hover { background-color: #3b2415; }
 
     footer {
@@ -178,6 +212,9 @@
   </style>
 </head>
 <body>
+
+  <!-- Leteći motivi -->
+  <div class="floating-icons" id="floating-icons"></div>
 
   <header>
     <img src="image121.png" alt="Logo Džigi2">
@@ -217,9 +254,9 @@
   <script>
     const commentsContainer = document.getElementById('comments-container');
 
-    const namesBiH = ['Amir', 'Selma', 'Adnan', 'Lejla', 'Haris', 'Amina', 'Tarik', 'Emina', 'Sanel', 'Senad', 'Sanela', 'Mustafa', 'Enis', 'Azur', 'Azra', 'Dino', 'Sara', 'Lamija', 'Benjamin', 'Jasmin', 'Ševal', 'Kenan', 'Šejla', 'Osman'];
-    const namesHR = ['Ivan', 'Ana', 'Marko', 'Lucija', 'Filip', 'Petra', 'Luka', 'Marija', 'Nikola', 'Iva', 'Toni', 'Danica', 'Matej', 'Anto', 'Ado', 'Bojana', 'Vesna', 'Davor'];
-    const namesSRB = ['Stefan', 'Jovana', 'Nikola', 'Milica', 'Marko', 'Ana', 'Lazar', 'Teodora', 'Nemanja', 'Ivana', 'Stefan', 'Drago', 'Milica', 'Katarina', 'Marija', 'Tamara', 'Sofija', 'Jovica', 'Aleksandar', 'Nina', 'Ljuboje', 'Bojana'];
+    const namesBiH = ['Amir','Selma','Adnan','Lejla','Haris','Amina','Tarik','Emina','Sanel','Senad','Sanela','Mustafa','Enis','Azur','Azra','Dino','Sara','Lamija','Benjamin','Jasmin','Ševal','Kenan','Šejla','Osman'];
+    const namesHR = ['Ivan','Ana','Marko','Lucija','Filip','Petra','Luka','Marija','Nikola','Iva','Toni','Danica','Matej','Anto','Ado','Bojana','Vesna','Davor'];
+    const namesSRB = ['Stefan','Jovana','Nikola','Milica','Marko','Ana','Lazar','Teodora','Nemanja','Ivana','Stefan','Drago','Milica','Katarina','Marija','Tamara','Sofija','Jovica','Aleksandar','Nina','Ljuboje','Bojana'];
 
     const countries = [
       {name: 'Bosna', flag: '🇧🇦', names: namesBiH},
@@ -250,31 +287,43 @@
       "Ne moras više maksuz negdje da pojedem nešto dobro, blizu a najbolje!.",
       "Svaka cast!.",
       "Oduševljeni smo.",
-      "Pre pre prezadivoljni, svaka čast!",
-      
-  
+      "Pre pre prezadivoljni, svaka čast!"
     ];
 
     // Generišemo 70 komentara
     for (let i = 0; i < 70; i++) {
-      const country = countries[Math.floor(Math.random() * countries.length)];
-      const name = country.names[Math.floor(Math.random() * country.names.length)];
-      const comment = sampleComments[Math.floor(Math.random() * sampleComments.length)];
+      const country = countries[Math.floor(Math.random()*countries.length)];
+      const name = country.names[Math.floor(Math.random()*country.names.length)];
+      const comment = sampleComments[Math.floor(Math.random()*sampleComments.length)];
 
       const div = document.createElement('div');
       div.className = 'comment';
-      div.innerHTML = `<span class="flag">${country.flag}</span> <span class="name">${name}</span>
+      div.innerHTML = `<div class="header"><span class="flag">${country.flag}</span><span class="name">${name}</span></div>
                        <div class="text">${comment}</div>`;
       commentsContainer.appendChild(div);
     }
 
-    // Hamburger meni
+    // Hamburger menu
     const toggle = document.getElementById('menu-toggle');
     const menu = document.getElementById('menu');
     const closeMenu = document.getElementById('close-menu');
     toggle.addEventListener('click', () => menu.classList.toggle('active'));
     closeMenu.addEventListener('click', () => menu.classList.remove('active'));
     document.querySelectorAll('nav a').forEach(link => link.addEventListener('click', () => menu.classList.remove('active')));
+
+    // Leteći motivi
+    const icons = ['🍷','🥃','🍾','🍽','🍰','🍔','🍕'];
+    const container = document.getElementById('floating-icons');
+    for(let i=0;i<30;i++){
+      const el = document.createElement('div');
+      el.classList.add('icon');
+      el.textContent = icons[Math.floor(Math.random()*icons.length)];
+      el.style.left = Math.random()*100+'%';
+      el.style.fontSize = 20 + Math.random()*30 + 'px';
+      el.style.animationDuration = 10 + Math.random()*10 + 's';
+      el.style.animationDelay = Math.random()*5 + 's';
+      container.appendChild(el);
+    }
   </script>
 
 </body>
