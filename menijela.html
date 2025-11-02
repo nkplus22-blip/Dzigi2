@@ -9,8 +9,9 @@
     :root {
       --smedja: #5a3825;
       --svijetla: rgba(255,248,240,0.01);
-      --bijela: rgba(255,255,255,0.8);
+      --bijela: rgba(255,255,255,0.9);
       --tamna: #3b2415;
+      --accent: #ffd7b5;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -22,7 +23,7 @@
       overflow-x: hidden;
       position: relative;
       min-height: 100vh;
-      padding-bottom: 60px; /* prostor za footer */
+      padding-bottom: 60px;
     }
 
     /* Animirana pozadina */
@@ -105,7 +106,7 @@
       margin: 15px 0;
       transition: color 0.3s;
     }
-    nav a:hover { color: #ffd7b5; }
+    nav a:hover { color: var(--accent); }
     .close-menu {
       position: absolute;
       top: 10px;
@@ -116,27 +117,71 @@
     nav.active { right: 0; }
 
     main {
-      max-width: 900px;
+      max-width: 1000px;
       margin: 60px auto;
-      padding: 0 20px;
+      padding: 20px;
       background-color: var(--bijela);
       border-radius: 12px;
       box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-      opacity: 0;
-      transform: translateY(30px);
-      animation: fadeInUp 1.5s forwards 0.3s;
     }
 
-    main p {
-      font-size: 18px;
-      line-height: 1.6;
-      color: var(--tamna);
+    h2.category-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: 28px;
+      color: var(--smedja);
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 5px;
+      margin-top: 25px;
+    }
+
+    .dish {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 15px;
+      margin: 5px 0;
+      border-radius: 8px;
+      background: rgba(250,240,230,0.6);
+      transition: transform 0.2s, background 0.2s;
+    }
+    .dish:hover {
+      transform: translateY(-3px);
+      background: rgba(255,223,180,0.8);
+    }
+    .dish-name { font-size: 18px; color: var(--tamna); }
+    .dish-price { font-weight: 600; color: var(--smedja); }
+    .dish button {
+      padding: 5px 12px;
+      background-color: var(--smedja);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .dish button:hover {
+      background-color: var(--accent);
+      color: var(--smedja);
+    }
+
+    #order-summary {
+      margin-top: 30px;
       text-align: center;
-      padding: 30px 20px;
     }
-
-    @keyframes fadeInUp {
-      to { opacity:1; transform: translateY(0); }
+    #order-summary p { font-size: 20px; margin-bottom: 10px; }
+    #order-summary button {
+      padding: 10px 25px;
+      font-size: 18px;
+      background-color: var(--smedja);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    #order-summary button:hover {
+      background-color: var(--accent);
+      color: var(--smedja);
     }
 
     footer {
@@ -154,14 +199,14 @@
 
     @media (max-width: 768px) {
       header h1 { font-size: 28px; }
-      main p { font-size: 16px; }
       .menu-toggle { display: flex; }
+      .dish { flex-direction: column; align-items: flex-start; }
+      .dish button { margin-top: 8px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Leteći motivi -->
   <div class="floating-icons" id="floating-icons"></div>
 
   <header>
@@ -182,41 +227,153 @@
   </nav>
 
   <main>
-    <p>
-      Meni naših jela i pića će uskoro biti dostupan i na našoj web stranici. 
-      Također online narudžbe i rezervacije će uskoro biti dostupne na web stranici! 
-      Do tada možete sve to obaviti pozivom na +387 35 818-817. 
-      Hvala Vam na strpljenju i razumijevanju! Radujemo se Vašem dolasku. Vaš Džigi2!!
-    </p>
+    <!-- Jelovnik -->
+    <div id="menu-container"></div>
+
+    <div id="order-summary">
+      <p>Ukupno: <span id="total-price">0</span> KM</p>
+      <button id="order-btn">Naruči</button>
+    </div>
   </main>
 
   <footer>
     © 2025 Restoran Džigi2 — Sva prava zadržana.
   </footer>
 
-  <script>
-    // Hamburger menu
-    const toggle = document.getElementById('menu-toggle');
-    const menu = document.getElementById('menu');
-    const closeMenu = document.getElementById('close-menu');
-    toggle.addEventListener('click', () => menu.classList.toggle('active'));
-    closeMenu.addEventListener('click', () => menu.classList.remove('active'));
-    document.querySelectorAll('nav a').forEach(link => link.addEventListener('click', () => menu.classList.remove('active')));
+<script>
+  // Hamburger menu
+  const toggle = document.getElementById('menu-toggle');
+  const menu = document.getElementById('menu');
+  const closeMenu = document.getElementById('close-menu');
+  toggle.addEventListener('click', () => menu.classList.toggle('active'));
+  closeMenu.addEventListener('click', () => menu.classList.remove('active'));
+  document.querySelectorAll('nav a').forEach(link => link.addEventListener('click', () => menu.classList.remove('active')));
 
-    // Leteći motivi
-    const icons = ['🍷','🥃','🍾','🍽','🍰','🍔','🍕'];
-    const container = document.getElementById('floating-icons');
-    for(let i=0;i<30;i++){
-      const el = document.createElement('div');
-      el.classList.add('icon');
-      el.textContent = icons[Math.floor(Math.random()*icons.length)];
-      el.style.left = Math.random()*100+'%';
-      el.style.fontSize = 30 + Math.random()*30 + 'px';
-      el.style.animationDuration = 8 + Math.random()*10 + 's';
-      el.style.animationDelay = Math.random()*5 + 's';
-      container.appendChild(el);
-    }
-  </script>
+  // Leteći motivi
+  const icons = ['🍷','🥃','🍾','🍽','🍰','🍔','🍕'];
+  const container = document.getElementById('floating-icons');
+  for(let i=0;i<30;i++){
+    const el = document.createElement('div');
+    el.classList.add('icon');
+    el.textContent = icons[Math.floor(Math.random()*icons.length)];
+    el.style.left = Math.random()*100+'%';
+    el.style.fontSize = 30 + Math.random()*30 + 'px';
+    el.style.animationDuration = 8 + Math.random()*10 + 's';
+    el.style.animationDelay = Math.random()*5 + 's';
+    container.appendChild(el);
+  }
 
-</body>
-</html>
+  // Jelovnik
+  const menuData = [
+    {category:"JAJA", dishes:[
+      {name:"Omlet sa sirom i šunkom", price:8.50},
+      {name:"Omlet (Goveđi pršut, sir, kajmak)", price:9.50},
+      {name:"Jaje na oko (Svježi sir, kajmak)", price:7.00},
+      {name:"Uštipci (Sir, kajmak)", price:10.00}
+    ]},
+    {category:"ČORBA", dishes:[
+      {name:"Ponuda dana", price:6.00}
+    ]},
+    {category:"PAŠTETE", dishes:[
+      {name:"Pileća 100g", price:5.00},
+      {name:"Riblja 100g", price:5.00}
+    ]},
+    {category:"PREDJELA", dishes:[
+      {name:"Plata za 2 osobe 400G (Goveđi pršut, svježi sir, sudžuka, edamer, pureća šunka, pileća šunka)", price:25.00},
+      {name:"Selekcija sireva (Livada sir, travnički sir, gorgonzola sir, mozzarela sir, koziji sir)", price:30.00}
+    ]},
+    {category:"UMACI", dishes:[
+      {name:"Gorgonzola sos", price:5.00},
+      {name:"Šampinjon sos", price:3.00},
+      {name:"4 vrste sira", price:4.00}
+    ]},
+    {category:"PRILOZI", dishes:[
+      {name:"Grilllovano povrće", price:5.00},
+      {name:"Riža sa povrćem", price:3.00},
+      {name:"Pomfrit", price:4.00},
+      {name:"Pekarski krompir", price:4.00},
+      {name:"Pire", price:3.00},
+      {name:"Tjestenina", price:3.00},
+      {name:"Kus-Kus", price:3.00}
+    ]},
+    {category:"JELA PO NARUDŽBI - JUNEĆE MESO", dishes:[
+      {name:"Miješano meso 800G (Juneća kremenadla, pljeskavica, sudžukica, ćevapi, pileći ražnjići, pileći file)", price:30.00},
+      {name:"Pljeskavica u lepini 150G", price:13.00},
+      {name:"Punjena pljeskavica 350G (Sir trapist, goveđi pršut, pureća šunka)", price:20.00},
+      {name:"Pljeskavica 300G", price:17.00},
+      {name:"Leskovačka pljeskavica BIG 600G", price:30.00},
+      {name:"Kardiovaskularna pljeskavica 200G (Iz krušne peći)", price:25.00},
+      {name:"Kremenadle", price:25.00},
+      {name:"Ćevapi velika porcija", price:10.00},
+      {name:"Ćevapi srednja porcija", price:7.00},
+      {name:"Ćevapi mala porcija", price:6.00},
+      {name:"Ćevapi u kajmaku", price:11.00},
+      {name:"Ćevapi u dubokom tanjuru (Poliv)", price:11.00},
+      {name:"Ćevapi u domaćoj lepinji (Iz krušne peći sa punomasnim kajmakom)", price:13.00},
+      {name:"Mesni uštipci", price:10.00},
+      {name:"Pohovani mozak", price:20.00},
+      {name:"Pohovani škembići/tripice", price:12.00}
+    ]},
+    {category:"JELA PO NARUDŽBI - PILEĆE MESO", dishes:[
+      {name:"Pohovana piletina (prezla)", price:12.00},
+      {name:"Punjena piletina (Sir trapist, pureća šunka, goveđi pršut)", price:17.00},
+      {name:"Pileći ražnjići", price:10.00},
+      {name:"Pileći otkošteni barak/2kom", price:13.00},
+      {name:"Grilovana pileća prsa", price:13.00},
+      {name:"Chicken nuggets", price:10.00},
+      {name:"Piletina u lepini", price:10.00},
+      {name:"Piletina sa 4 vrste sira", price:15.00},
+      {name:"Timbola iz krušne peći", price:20.00}
+    ]},
+    {category:"PIZZA", dishes:[
+      {name:"Margherita (Sir, paradajz sos)", price:11.00},
+      {name:"Proscuitto (Sir, paradajz sos, pureća šunka)", price:12.00},
+      {name:"Romana (Sir, goveđi pršut, paradajz sos)", price:13.00},
+      {name:"Capricciusa (Sir, pureća šunka, gljive, paradajz sos)", price:12.00},
+      {name:"Vegeteriana (Sir, gljive, kukuruz, paradajz sos)", price:10.00},
+      {name:"Tono/Tuna (Paradajz sos, sir, tuna, luk)", price:13.00},
+      {name:"Quattro Formaggi (Paradajz sos, mozzarella, edamer, gorgonzola, parmezan)", price:12.00},
+      {name:"Bijela Pizza (Bijeli sos, piletina, sir, gljive)", price:10.00},
+      {name:"DŽIGI2 PIZZA (Goveđi pršut, šunka, sir, sos, gljive, parmezan)", price:15.00},
+      {name:"Tabaskino (Pileće ili juneće meso)", price:10.00}
+    ]}
+  ];
+
+  const menuContainer = document.getElementById('menu-container');
+  let order = [];
+
+  menuData.forEach(section => {
+    const h2 = document.createElement('h2');
+    h2.textContent = section.category;
+    h2.classList.add('category-title');
+    menuContainer.appendChild(h2);
+
+    section.dishes.forEach(dish => {
+      const div = document.createElement('div');
+      div.classList.add('dish');
+
+      const name = document.createElement('span');
+      name.textContent = dish.name;
+      name.classList.add('dish-name');
+
+      const price = document.createElement('span');
+      price.textContent = dish.price.toFixed(2) + ' KM';
+      price.classList.add('dish-price');
+
+      const btn = document.createElement('button');
+      btn.textContent = 'Odaberi';
+      btn.addEventListener('click', () => {
+        order.push(dish);
+        updateTotal();
+      });
+
+      div.appendChild(name);
+      div.appendChild(price);
+      div.appendChild(btn);
+      menuContainer.appendChild(div);
+    });
+  });
+
+  function updateTotal(){
+    const total = order.reduce((sum,d)=>sum+d.price,0);
+    document.getElementById('total-price').textContent = total.toFixed(2);
