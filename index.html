@@ -8,8 +8,8 @@
   <style>
     :root {
       --smedja: #5a3825;
-      --svijetla: rgba(255,248,240,0.85);
-      --bijela: rgba(255,255,255,0.85);
+      --svijetla: rgba(255,248,240,0.65); /* još providnija */
+      --bijela: rgba(255,255,255,0.75);
       --tamna: #3b2415;
     }
 
@@ -44,13 +44,13 @@
       font-size: 32px;
       color: #8B4513;
       animation: floatAnim 12s linear infinite;
-      opacity: 0.8;
+      opacity: 0.85;
     }
 
     @keyframes floatAnim {
       0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
       10% { opacity: 1; }
-      50% { transform: translateY(0) rotate(180deg); opacity: 0.7; }
+      50% { transform: translateY(0) rotate(180deg); opacity: 0.8; }
       90% { opacity: 1; }
       100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
     }
@@ -75,7 +75,7 @@
 
     header h1 {
       font-family: 'Fredoka One', cursive;
-      font-size: 32px;
+      font-size: 34px;
       color: var(--smedja);
       text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
     }
@@ -102,25 +102,25 @@
     nav {
       position: fixed;
       top: 0;
-      right: -280px;
-      width: 280px;
+      right: -300px;
+      width: 300px;
       height: 100vh;
       background: var(--smedja);
       color: var(--bijela);
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
+      padding-top: 60px;
       transition: right 0.4s ease;
       z-index: 15;
-      padding-top: 50px;
     }
 
     nav a {
       color: var(--bijela);
       text-decoration: none;
       font-size: 20px;
-      margin: 15px 0;
+      margin: 20px 0;
       transition: color 0.3s;
     }
 
@@ -130,10 +130,11 @@
 
     .close-menu {
       position: absolute;
-      top: 10px;
-      right: 20px;
-      font-size: 36px;
+      top: 15px;
+      right: 25px;
+      font-size: 34px;
       cursor: pointer;
+      color: var(--bijela);
     }
 
     nav.active {
@@ -237,7 +238,7 @@
 
     iframe {
       width: 100%;
-      height: 400px;
+      height: 450px;
       border: 0;
       margin-top: 20px;
       border-radius: 10px;
@@ -320,9 +321,9 @@
 
   <section id="kontakt" class="contact">
     <h2>Kontakt i radno vrijeme</h2>
-    <p><strong>Telefon za narudžbe i rezervacije:</strong> +387 35 818-817</p>
+    <p><strong>Telefon za narudžbe i rezervacije:</strong> +387 35 818‑817</p>
     <p><strong>Radno vrijeme:</strong><br>
-      Ponedjeljak - Petak: 08:00 – 23:00<br>
+      Ponedjeljak ‑ Petak: 08:00 – 23:00<br>
       Subota i Nedjelja: 13:00 – 23:00
     </p>
   </section>
@@ -330,7 +331,7 @@
   <section id="lokacija" class="contact">
     <h2>Naša lokacija</h2>
     <iframe
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2847.743544024218!2d18.4275292!3d44.8809512!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x475e7c4c45c9b3d7%3A0x66c36c6f9e657cd0!2sRestoran%20D%C5%BEigi%202!5e0!3m2!1sbs!2sba!4v1730678900000!5m2!1sbs!2sba"
+      src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d503.0!2d18.4242375!3d44.8787608!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sRestoran%20D%C5%BEigi%202%20Grada%C4%8Dac!5e0!3m2!1sbs!2sba!4v1699150000000!5m2!1sbs!2sba"
       allowfullscreen="" loading="lazy">
     </iframe>
   </section>
