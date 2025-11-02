@@ -9,7 +9,7 @@
     :root {
       --smedja: #5a3825;
       --svijetla: rgba(255,248,240,0.01); /* providnije */
-      --bijela: rgba(255,255,255,0.05); /* providnije */
+      --bijela: rgba(255,255,255,0.2); /* bijela boja */
       --tamna: #3b2415;
     }
 
@@ -51,16 +51,16 @@
     .icon {
       position: absolute;
       font-size: 40px;
-      opacity: 0.85; /* vidljivije */
+      opacity: 0.85;
       animation: floatAnim 14s linear infinite;
-      color: rgba(90, 56, 37, 1); /* tamnija boja za jasniji motiv */
-      text-shadow: 0 0 10px rgba(255,255,255,0.5); /* jači sjaj */
+      color: rgba(90, 56, 37, 0.85);
+      text-shadow: 0 0 8px rgba(255,255,255,0.3);
     }
 
     @keyframes floatAnim {
       0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
       20% { opacity: 1; }
-      50% { transform: translateY(0) rotate(180deg); }
+      50% { transform: translateY(0) rotate(180deg); opacity: 1; }
       80% { opacity: 0.9; }
       100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
     }
@@ -100,7 +100,7 @@
     }
 
     .menu-toggle span {
-      background: var(--smedja);
+      background: white; /* bijela boja */
       height: 3px;
       width: 100%;
       border-radius: 2px;
@@ -114,7 +114,7 @@
       width: 280px;
       height: 100vh;
       background: var(--smedja);
-      color: #ffffff; /* bijela boja */
+      color: white; /* bijela boja */
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -125,7 +125,7 @@
     }
 
     nav a {
-      color: #ffffff; /* bijela boja */
+      color: white; /* bijela boja */
       text-decoration: none;
       font-size: 20px;
       margin: 15px 0;
@@ -243,7 +243,7 @@
 
     footer {
       background-color: var(--smedja);
-      color: #ffffff; /* bijela boja */
+      color: white; /* bijela boja */
       text-align: center;
       padding: 20px 10px;
       font-size: 15px;
@@ -308,4 +308,26 @@
     <h2>Kontakt i radno vrijeme</h2>
     <p><strong>Telefon:</strong> +387 35 818-817</p>
     <p><strong>Radno vrijeme:</strong><br>
-      Ponedjeljak - Petak: 08:00 –
+      Ponedjeljak - Petak: 08:00 – 23:00<br>
+      Subota i Nedjelja: 13:00 – 23:00
+    </p>
+  </section>
+
+  <section id="lokacija" class="contact">
+    <h2>Kako do nas</h2>
+    <img src="lokacija.jpg" alt="Lokacija Restorana Džigi2">
+    <p>Naš restoran se nalazi kod kružnog toka u Gradačcu, preko puta CM Cosmetic.  
+    Dođite i uvjerite se da ovo nije samo naš posao — već i vaše zadovoljstvo!</p>
+  </section>
+
+  <footer>
+    © 2025 Restoran Džigi2 — Sva prava zadržana.
+  </footer>
+
+  <script>
+    const toggle = document.getElementById('menu-toggle');
+    const menu = document.getElementById('menu');
+    const closeMenu = document.getElementById('close-menu');
+    toggle.addEventListener('click', () => menu.classList.toggle('active'));
+    closeMenu.addEventListener('click', () => menu.classList.remove('active'));
+    document.querySelectorAll('nav a').forEach(link => link.addEventListener('click', () => menu.classList.remove('active')));
