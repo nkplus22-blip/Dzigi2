@@ -234,7 +234,7 @@ footer {
     <p>Popunite formu ispod ili nas pozovite na <strong>+387 35 818-817</strong>.<br>
     Nalazimo se kod kružnog toka u Gradačcu, preko puta CM Cosmetic.</p>
 
-    <form action="#" method="post">
+    <form id="rezForma">
       <label for="ime">Ime i prezime:</label>
       <input type="text" id="ime" name="ime" placeholder="Vaše ime i prezime" required>
 
@@ -301,6 +301,24 @@ for(let i=0;i<25;i++){
   el.style.fontSize = (20+Math.random()*30)+'px';
   container.appendChild(el);
 }
+
+// WhatsApp poruka
+document.getElementById('rezForma').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const ime = document.getElementById('ime').value;
+  const telefon = document.getElementById('telefon').value;
+  const email = document.getElementById('email').value;
+  const datum = document.getElementById('datum').value;
+  const vrijeme = document.getElementById('vrijeme').value;
+  const osobe = document.getElementById('osobe').value;
+  const mjesto = document.getElementById('mjesto').value;
+  const napomena = document.getElementById('napomena').value;
+
+  const poruka = `Zdravo, želio bih rezervisati sto:%0A%0A👤 Ime: ${ime}%0A📞 Telefon: ${telefon}%0A📧 Email: ${email}%0A📅 Datum: ${datum}%0A🕒 Vrijeme: ${vrijeme}%0A👥 Broj osoba: ${osobe}%0A🏷 Zona: ${mjesto}%0A📝 Napomena: ${napomena}`;
+  
+  const broj = "38735818817"; // <<--- OVDJE STAVI SVOJ BROJ BEZ + ZNAKA
+  window.open(`https://wa.me/${broj}?text=${poruka}`, '_blank');
+});
 </script>
 
 </body>
