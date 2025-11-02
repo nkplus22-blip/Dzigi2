@@ -40,14 +40,15 @@
     .icon {
       position: absolute;
       font-size: 32px;
+      color: #8B4513; /* tamnije smeđa da se vidi na svijetloj pozadini */
       animation: floatAnim 10s linear infinite;
-      opacity: 0.9;
+      opacity: 0.8;
     }
 
     @keyframes floatAnim {
       0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
       10% { opacity: 1; }
-      50% { transform: translateY(0) rotate(180deg); opacity: 0.8; }
+      50% { transform: translateY(0) rotate(180deg); opacity: 0.7; }
       90% { opacity: 1; }
       100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
     }
@@ -268,10 +269,9 @@
   <!-- Hamburger navigacija -->
   <nav id="menu">
     <a href="#pocetna">Početna</a>
-    <a href="#meni">Meni jela</a>
+    <a href="#meni">O nama</a>
     <a href="#galerija">Galerija</a>
     <a href="#kontakt">Kontakt</a>
-    <a href="#rezervacije">Rezervacije</a>
     <a href="#lokacija">Lokacija</a>
   </nav>
 
@@ -311,8 +311,8 @@
 
   <section id="lokacija" class="contact">
     <h2>Naša lokacija</h2>
-    <iframe
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2847.687179197048!2d18.4275336!3d44.8808987!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x475e7c4c45c9b3d7%3A0x66c36c6f9e657cd0!2sRestoran%20D%C5%BEigi%202!5e0!3m2!1sbs!2sba!4v1730564000000!5m2!1sbs!2sba"
+    <iframe 
+      src="https://www.google.com/maps?q=Restoran+D%C5%BEigi+2,+Grada%C4%8Dac&output=embed" 
       allowfullscreen="" loading="lazy">
     </iframe>
   </section>
@@ -322,15 +322,22 @@
   </footer>
 
   <script>
-    // Hamburger meni
+    // Hamburger meni (otvaranje i zatvaranje klikom)
     const toggle = document.getElementById('menu-toggle');
     const menu = document.getElementById('menu');
     toggle.addEventListener('click', () => {
       toggle.classList.toggle('active');
       menu.classList.toggle('active');
     });
+    // Klik na link zatvara meni
+    document.querySelectorAll('nav a').forEach(link => {
+      link.addEventListener('click', () => {
+        toggle.classList.remove('active');
+        menu.classList.remove('active');
+      });
+    });
 
-    // Pokretni emoji motivi
+    // Pokretni emoji motivi (tamnije i vidljivije)
     const icons = ['🍕','🍔','🍰','🍽','🍾','🍷','🥃'];
     const container = document.getElementById('floating-icons');
 
@@ -340,12 +347,12 @@
       icon.textContent = icons[Math.floor(Math.random() * icons.length)];
       icon.style.left = Math.random() * 100 + 'vw';
       icon.style.animationDuration = 8 + Math.random() * 8 + 's';
-      icon.style.fontSize = 24 + Math.random() * 24 + 'px';
+      icon.style.fontSize = 24 + Math.random() * 28 + 'px';
       container.appendChild(icon);
       setTimeout(() => icon.remove(), 16000);
     }
 
-    setInterval(createIcon, 800);
+    setInterval(createIcon, 600);
   </script>
 
 </body>
