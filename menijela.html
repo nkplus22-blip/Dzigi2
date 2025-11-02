@@ -44,9 +44,15 @@ header h1{font-family:'Fredoka One',cursive;font-size:28px;color:var(--smedja);m
 .menu-toggle{display:none;flex-direction:column;gap:4px;margin-left:auto;cursor:pointer}
 .menu-toggle span{height:3px;background:#111;border-radius:3px;width:26px;display:block}
 
-/* side top actions (horizontal) */
+/* side top actions (vertical layout - right side) */
 #top-actions{
-  position:fixed;right:12px;top:14px;display:flex;gap:8px;z-index:50;
+  position:fixed;
+  right:12px;
+  top:120px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  z-index:50;
 }
 .top-action{
   background:var(--smedja);
