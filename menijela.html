@@ -19,7 +19,7 @@ body{
   background:var(--svijetla);
   color:var(--tamna);
   min-height:100vh;
-  padding-bottom:80px;
+  padding-bottom:120px;
   overflow-x:hidden;
   position:relative;
 }
@@ -91,13 +91,6 @@ header h1{font-family:'Fredoka One',cursive;font-size:28px;color:var(--smedja);m
 }
 .top-action:hover{transform:translateY(-3px);background:var(--accent);color:var(--smedja)}
 
-/* side mobile fallback: hide top-actions on very small screens? we'll keep and let it wrap */
-@media(max-width:520px){
-  #top-actions{right:8px;top:8px;gap:6px;font-size:13px}
-  header h1{font-size:20px}
-  .menu-toggle{display:flex}
-}
-
 /* Main card */
 main{
   max-width:1100px;
@@ -120,12 +113,13 @@ main{
 .dish button{padding:6px 12px;border-radius:7px;border:none;background:var(--smedja);color:white;cursor:pointer;font-weight:600;transition:all .12s;margin-top:6px}
 .dish button:hover{background:var(--accent);color:var(--smedja)}
 
-/* group for size buttons - keeps them in one line */
+/* group for size buttons */
 .size-buttons{display:flex;gap:10px;margin-left:12px;align-items:center;flex-shrink:0;}
 
 /* order summary */
 #order-summary{margin-top:28px;text-align:center;padding:18px 12px}
 #order-summary p{font-size:20px;margin-bottom:10px}
+#order-summary input, #order-summary select{padding:6px 10px;margin:6px 6px 12px 6px;border-radius:6px;border:1px solid #ccc;font-size:16px;width:200px;max-width:100%}
 #order-summary button{padding:10px 22px;font-size:18px;border-radius:10px;border:none;background:var(--smedja);color:white;cursor:pointer}
 #order-summary button:hover{background:var(--accent);color:var(--smedja)}
 
@@ -142,6 +136,8 @@ footer{position:fixed;left:0;bottom:0;width:100%;background:var(--smedja);color:
   .dish{flex-direction:column;align-items:flex-start}
   .size-buttons{margin-left:0}
   #top-actions{position:fixed;left:8px;right:8px;top:8px;display:flex;flex-wrap:wrap;justify-content:center}
+  header h1{font-size:20px}
+  .menu-toggle{display:flex}
 }
 </style>
 </head>
@@ -161,6 +157,8 @@ footer{position:fixed;left:0;bottom:0;width:100%;background:var(--smedja);color:
 
 <!-- Horizontal fixed action bar (top-right) -->
 <div id="top-actions">
+  <a href="#" id="goto-food">➡ HRANA</a>
+  <span>|</span>
   <a href="#" id="goto-drinks">➡ PIĆA</a>
   <span>|</span>
   <a href="#" id="goto-salads">➡ SALATE</a>
@@ -171,16 +169,25 @@ footer{position:fixed;left:0;bottom:0;width:100%;background:var(--smedja);color:
 </div>
 
 <main>
-  <h2 class="category-title">HRANA</h2>
+  <h2 class="category-title" id="food">HRANA</h2>
 
   <div id="menu-container"></div>
 
-  <!-- Placeholder PIĆA section (user will fill later) -->
-  <h2 id="drinks" class="category-title" style="margin-top:34px">PIĆA (sekcija za napuniti)</h2>
-  <p style="color:#666;margin:8px 0 18px">Sekcija pića nije još popunjena — pošaljite mi listu pića i ja ću ih ubaciti (ima podrške za male/velike porcije i ista funkcionalnost).</p>
+  <h2 id="drinks" class="category-title">PIĆA</h2>
+  <h2 id="salads" class="category-title">SALATE</h2>
+  <h2 id="desserts" class="category-title">DESERTI</h2>
 
   <!-- Order summary -->
   <div id="order-summary" aria-live="polite">
+    <p>Odaberite mjesto:</p>
+    <select id="table-select">
+      <option value="">-- Odaberi mjesto --</option>
+      <option value="Unutrašnji dio">Unutrašnji dio</option>
+      <option value="Terasa">Terasa</option>
+      <option value="Bašta">Bašta</option>
+    </select>
+    <p>Broj osoba:</p>
+    <input type="number" id="person-count" min="1" max="20" value="1">
     <p>Ukupno: <span id="total-price">0.00</span> KM</p>
     <button id="order-btn">Naruči putem WhatsApp</button>
   </div>
@@ -191,14 +198,11 @@ footer{position:fixed;left:0;bottom:0;width:100%;background:var(--smedja);color:
 <script>
 /* --- Hamburger (mobile) --- */
 const toggle = document.getElementById('menu-toggle');
-const menu = document.getElementById('menu'); // nav present in earlier drafts; if not present this is no-op
 if(toggle){
-  toggle.addEventListener('click', ()=> {
-    if(menu) menu.classList.toggle('active');
-  });
+  toggle.addEventListener('click', ()=> { document.body.classList.toggle('menu-open'); });
 }
 
-/* --- Floating icons population --- */
+/* --- Floating icons --- */
 const icons = ['🍷','🥃','🍾','🍽','🍰','🍔','🍕','☕','🥗','🍹'];
 const floating = document.getElementById('floating-icons');
 for(let i=0;i<26;i++){
@@ -213,199 +217,48 @@ for(let i=0;i<26;i++){
   floating.appendChild(d);
 }
 
-/* --- Menu data (complete) --- */
-/* Everything you provided is represented below. For items with large/small portion,
-   the object includes price (large) and smallPrice (small). */
+/* --- Menu data --- */
 const menuData = [
-  { category: "JAJA", dishes: [
-    { name:"Omlet sa sirom i šunkom", price:8.50 },
-    { name:"Omlet (Goveđi pršut, sir, kajmak)", price:9.50 },
-    { name:"Jaje na oko (Svježi sir, kajmak)", price:7.00 },
-    { name:"Uštipci (Sir, kajmak)", price:10.00 }
-  ]},
-  { category: "ČORBA", dishes: [
-    { name:"Ponuda dana", price:6.00 }
-  ]},
-  { category: "PAŠTETE", dishes: [
-    { name:"Pileća 100g", price:5.00 },
-    { name:"Riblja 100g", price:5.00 }
-  ]},
-  { category: "PREDJELA", dishes: [
-    { name:"Plata za 2 osobe 400G (Goveđi pršut, svježi sir, sudžuka, edamer, pureća šunka, pileća šunka)", price:25.00 },
-    { name:"Selekcija sireva (Livada sir, travnički sir, gorgonzola sir, mozzarela sir, koziji sir)", price:30.00 }
-  ]},
-  { category: "UMACI", dishes: [
-    { name:"Gorgonzola sos", price:5.00 },
-    { name:"Šampinjon sos", price:3.00 },
-    { name:"4 vrste sira", price:4.00 }
-  ]},
-  { category: "PRILOZI", dishes: [
-    { name:"Grilovano povrće", price:5.00 },
-    { name:"Riža sa povrćem", price:3.00 },
-    { name:"Pomfrit", price:4.00 },
-    { name:"Pekarski krompir", price:4.00 },
-    { name:"Pire", price:3.00 },
-    { name:"Tjestenina", price:3.00 },
-    { name:"Kus-Kus", price:3.00 }
-  ]},
-  { category: "JELA PO NARUDŽBI - JUNEĆE MESO", dishes: [
-    { name:"Miješano meso 800G (Juneća kremenadla, pljeskavica, sudžukica, ćevapi, pileći ražnjići, pileći file)", price:30.00 },
-    { name:"Pljeskavica u lepini 150G", price:13.00 },
-    { name:"Punjena pljeskavica 350G (Sir trapist, goveđi pršut, pureća šunka)", price:20.00 },
-    { name:"Pljeskavica 300G", price:17.00 },
-    { name:"Leskovačka pljeskavica BIG 600G", price:30.00 },
-    { name:"Kardiovaskularna pljeskavica 200G (Iz krušne peći)", price:25.00 },
-    { name:"Kremenadle", price:25.00 },
-    { name:"Ćevapi velika porcija", price:10.00 },
-    { name:"Ćevapi srednja porcija", price:7.00 },
-    { name:"Ćevapi mala porcija", price:6.00 },
-    { name:"Ćevapi u kajmaku", price:11.00 },
-    { name:"Ćevapi u dubokom tanjuru (Poliv)", price:11.00 },
-    { name:"Ćevapi u domaćoj lepinji (Iz krušne peći sa punomasnim kajmakom)", price:13.00 },
-    { name:"Mesni uštipci", price:10.00 },
-    { name:"Pohovani mozak", price:20.00 },
-    { name:"Pohovani škembići/tripice", price:12.00 }
-  ]},
-  { category: "JELA PO NARUDŽBI - PILEĆE MESO", dishes: [
-    { name:"Pohovana piletina (prezla)", price:12.00 },
-    { name:"Punjena piletina (Sir trapist, pureća šunka, goveđi pršut)", price:17.00 },
-    { name:"Pileći ražnjići", price:10.00 },
-    { name:"Pileći otkošteni barak/2kom", price:13.00 },
-    { name:"Grilovana pileća prsa", price:13.00 },
-    { name:"Chicken nuggets", price:10.00 },
-    { name:"Piletina u lepini", price:10.00 },
-    { name:"Piletina sa 4 vrste sira", price:15.00 },
-    { name:"Timbola iz krušne peći", price:20.00 }
-  ]},
-  { category: "PIZZA", dishes: [
-    { name:"Margherita (Sir, paradajz sos)", price:11.00 },
-    { name:"Proscuitto (Sir, paradajz sos, pureća šunka)", price:12.00 },
-    { name:"Romana (Sir, goveđi pršut, paradajz sos)", price:13.00 },
-    { name:"Capricciusa (Sir, pureća šunka, gljive, paradajz sos)", price:12.00 },
-    { name:"Vegeteriana (Sir, gljive, kukuruz, paradajz sos)", price:10.00 },
-    { name:"Tono/Tuna (Paradajz sos, sir, tuna, luk)", price:13.00 },
-    { name:"Quattro Formaggi (Paradajz sos, mozzarella, edamer, gorgonzola, parmezan)", price:12.00 },
-    { name:"Bijela Pizza (Bijeli sos, piletina, sir, gljive)", price:10.00 },
-    { name:"DŽIGI2 PIZZA (Goveđi pršut, šunka, sir, sos, gljive, parmezan)", price:15.00 },
-    { name:"Tabaskino (Pileće ili juneće meso)", price:10.00 }
-  ]},
-  { category: "RIBE/FISH", dishes: [
-    { name:"Pastrmka", price:52.00, size:["Velika","Mala"], smallPrice:18.00 },
-    { name:"Šaran", price:60.00, size:["Velika","Mala"], smallPrice:22.00 },
-    { name:"Lignje 300G", price:20.00 },
-    { name:"Lignje punjene", price:23.00 },
-    { name:"Riblja plata 1KG", price:58.00 },
-    { name:"Oslić 300G", price:13.00 },
-    { name:"Brancin", price:62.00, size:["Velika","Mala"], smallPrice:24.00 },
-    { name:"Orada", price:62.00, size:["Velika","Mala"], smallPrice:24.00 },
-    { name:"Som", price:70.00, size:["Velika","Mala"], smallPrice:25.00 },
-    { name:"Smuđ", price:70.00, size:["Velika","Mala"], smallPrice:25.00 }
-  ]},
-  { category: "HAMBURGERI", dishes: [
-    { name:"Hamburger sa hrskavom piletinom i ljutim ajvarom (salata po želji)", price:8.00 },
-    { name:"Cheesburger", price:6.00 },
-    { name:"Double Quadburger (sir, salata, umak)", price:16.00 },
-    { name:"Hamburger Classic", price:4.50 },
-    { name:"Hamburger i pomfrit", price:6.50 }
-  ]},
-  { category: "JANJETINA/LAMB MEAT", strong:true, dishes: [
-    { name:"Janjetina", price:50.00, size:["Velika","Mala"], smallPrice:20.00 }
-  ]},
-  { category: "TELETINA/VEAL MEAT", strong:true, dishes: [
-    { name:"Teletina", price:55.00, size:["Velika","Mala"], smallPrice:25.00 }
-  ]},
-  { category: "JELA PO NARUDŽBI OD TELEĆEG MESA", dishes: [
-    { name:"Pariška šnicla", price:18.00 },
-    { name:"Bečka šnicla", price:20.00 },
-    { name:"Natur šnicla", price:17.00 },
-    { name:"Kremenadle", price:25.00, size:["Velika","Mala"], smallPrice:15.00 },
-    { name:"Ražnjići", price:20.00, size:["Velika","Mala"], smallPrice:10.00 },
-    { name:"Kuhana teleća koljenica 300G", price:30.00 },
-    { name:"Teletina ispod sača", price:25.00 },
-    { name:"Punjena teleća šnicla (Sor, punomasni kajmak, pureća šunka)", price:28.00 },
-    { name:"Teleća mućkalica", price:15.00, size:["Velika","Mala"], smallPrice:8.00 },
-    { name:"Kujruk na moderan način 200G", price:20.00 },
-    { name:"Teleći jezik u umaku od paradajza", price:15.00 }
-  ]},
-  { category: "TJESTENINA/PASTA", dishes: [
-    { name:"Carbonara", price:14.00, size:["Velika","Mala"], smallPrice:8.00 },
-    { name:"Pesto pasta", price:15.00 },
-    { name:"Bolognese", price:13.00, size:["Velika","Mala"], smallPrice:7.00 },
-    { name:"Spaghetti pomadoro", price:10.00, size:["Velika","Mala"], smallPrice:6.00 },
-    { name:"Spaghetti sa gljivama i piletinom", price:12.00, size:["Velika","Mala"], smallPrice:6.00 },
-    { name:"Spaghetti sa 4 vrste sira", price:13.00, size:["Velika","Mala"], smallPrice:8.00 },
-    { name:"Spaghetti sa domaćim sirom i vrhnjem", price:10.00, size:["Velika","Mala"], smallPrice:6.00 },
-    { name:"Tagtaele sa biftekom", price:25.00 },
-    { name:"Chicken pasta", price:13.00, size:["Velika","Mala"], smallPrice:7.00 },
-    { name:"Tagtaele sa morskim plodovima", price:17.00, size:["Velika","Mala"], smallPrice:9.00 },
-    { name:"Lazanje", price:12.00 },
-    { name:"Tagtaele sa špinatom/blitvom", price:10.00, size:["Velika","Mala"], smallPrice:8.00 }
-  ]},
-
-  /* The new categories you provided: biftek, hljebovi, sendvici, salate, salate i namazi, deserti, palacinke */
-  { category: "BIFTEK / RAMSTEK", dishes: [
-    { name:"Biftek / Ramstek (prilozi i umaci po želji)", price:27.00 }
-  ]},
-  { category: "HLJEBOVI", dishes: [
-    { name:"Domaći hljeb/Heljda", price:2.00 },
-    { name:"Domaći hljeb/Kukurzni", price:2.00 },
-    { name:"Integralni", price:2.00 },
-    { name:"Lepinice iz krušne peći", price:2.00 },
-    { name:"Uštipci", price:2.00 }
-  ]},
-  { category: "TOPLI SENDVIČI", dishes: [
-    { name:"Pileći sendvič (Pileći)", price:8.00 },
-    { name:"Juneći sendvič", price:10.00 },
-    { name:"Pileći sendvič (Šunka)", price:6.00 },
-    { name:"Pureći sendvič (Šunka)", price:6.00 },
-    { name:"Sendvič sa suhim mesom", price:8.00 }
-  ]},
-  /* Salads - we'll put an anchor on the big salads heading */
-  { category: "OBROK SALATA", id:"salads", dishes: [
-    { name:"Fitness salata (slanutak, piletina, paprika, paradajz, krastavica, mrkva, kukuruz, crveni kupus, rukola, brejsing, jogurt)", price:8.00 },
-    { name:"Cezar salata (Pileći file, zelena salata, parmezan, tost hljeb, majonez, maslinovo ulje, limun sok, bijeli luk, senf)", price:12.00 },
-    { name:"Salata sa tunjevinom (Zelena salata, tunjevina, makaroni, crveni kupus, rukola, kukuruz, paradajz)", price:13.00 },
-    { name:"Grčka salata (Feta sir, crveni luk, krastavica, paradajz, paprike, maslina, grah, peršun, maslinovo ulje, dresing, crveni kupus, avokado)", price:10.00 },
-    { name:"Biftek salata (Zelena salata, rukola, paradajz, parmezan, krastavice, senf, orasi, crveni luk, dresing)", price:25.00 },
-    { name:"Mediteran salata (Piletina, avokado, masline, zelena salata, paradajz, limun sok, bučino ulje)", price:12.00 }
-  ]},
-  { category: "SALATE I NAMAZI", dishes: [
-    { name:"Kupus", price:3.00 },
-    { name:"Paradajz", price:3.00 },
-    { name:"Krastavice", price:3.00 },
-    { name:"Miješana", price:3.50 },
-    { name:"Luk salata", price:2.00 },
-    { name:"Šopska salata", price:5.00 },
-    { name:"Zelena", price:3.00 },
-    { name:"Crveni Kupus", price:3.00 },
-    { name:"Sezonska salata", price:3.00 },
-    { name:"Ljuta pečena paprika", price:5.00 },
-    { name:"Kisele krastavice", price:3.00 },
-    { name:"Pečene roge paprike (Suncokretovo sjeme, bijeli luk, balzamiko)", price:6.00 },
-    { name:"Majoneza", price:2.00 },
-    { name:"Kečep", price:2.00 },
-    { name:"Senf", price:2.00 },
-    { name:"Ajvar", price:4.00 },
-    { name:"Tartar", price:3.50 }
-  ]},
-  { category: "DESERTI", id:"desserts", dishes: [
-    { name:"Snickers torta", price:5.00 },
-    { name:"Brownie", price:4.00 },
-    { name:"Plazma torta", price:5.00 },
-    { name:"Mileram torta", price:5.00 },
-    { name:"Voćni kolač", price:3.00 },
-    { name:"Trileće", price:4.00 }
-  ]},
-  { category: "PALAČINKE I SLATKO", dishes: [
-    { name:"Palačinci (Nutella, džem, med, orasi)", price:5.00 },
-    { name:"Nutella pizza", price:8.00 },
-    { name:"Dubai pizza", price:10.00 },
-    { name:"Rafaelo pizza", price:10.00 },
-    { name:"Hurmašice", price:3.00 },
-    { name:"Baklava", price:5.00 },
-    { name:"Jabukovača", price:3.00 },
-    { name:"Tufahije", price:3.00 }
-  ]}
+  {
+    category:"HRANA",
+    id:"food",
+    strong:true,
+    dishes:[
+      {name:"Ćevapi",size:true,price:7.50,smallPrice:4.50},
+      {name:"Pljeskavica",size:true,price:8.00,smallPrice:5.00},
+      {name:"Pomfrit",price:3.50}
+    ]
+  },
+  {
+    category:"PIĆA",
+    id:"drinks",
+    strong:false,
+    dishes:[
+      {name:"Coca-Cola",size:true,price:3.00,smallPrice:1.50},
+      {name:"Fanta",size:true,price:3.00,smallPrice:1.50},
+      {name:"Voda 0.5l",price:1.50}
+    ]
+  },
+  {
+    category:"SALATE",
+    id:"salads",
+    strong:false,
+    dishes:[
+      {name:"Grčka salata",price:5.50},
+      {name:"Šopska salata",price:4.50},
+      {name:"Povrtna salata",price:4.00}
+    ]
+  },
+  {
+    category:"DESERTI",
+    id:"desserts",
+    strong:false,
+    dishes:[
+      {name:"Palačinka čokolada",price:3.50},
+      {name:"Tiramisu",price:4.50},
+      {name:"Sladoled",price:3.00}
+    ]
+  }
 ];
 
 /* --- Render menu --- */
@@ -418,7 +271,6 @@ function renderMenu(){
   menuData.forEach(cat=>{
     const heading = document.createElement('h2');
     heading.textContent = cat.category;
-    // if category object has id property, set it (for anchor)
     if(cat.id) heading.id = cat.id;
     heading.className = cat.strong ? 'category-title-strong' : 'category-title';
     menuContainer.appendChild(heading);
@@ -432,36 +284,24 @@ function renderMenu(){
       name.textContent = dish.name;
       row.appendChild(name);
 
-      // sizes (large + small)
       if(dish.size && Array.isArray(dish.size)){
         const sizeWrap = document.createElement('div');
         sizeWrap.className = 'size-buttons';
-
         const btnLarge = document.createElement('button');
         btnLarge.textContent = `Velika (${dish.price.toFixed(2)} KM)`;
         btnLarge.onclick = ()=>{ addToOrder(dish.name + " - Velika porcija", dish.price); };
-
         const btnSmall = document.createElement('button');
         btnSmall.textContent = `Mala (${dish.smallPrice.toFixed(2)} KM)`;
         btnSmall.onclick = ()=>{ addToOrder(dish.name + " - Mala porcija", dish.smallPrice); };
-
-        sizeWrap.appendChild(btnLarge);
-        sizeWrap.appendChild(btnSmall);
+        sizeWrap.appendChild(btnLarge); sizeWrap.appendChild(btnSmall);
         row.appendChild(sizeWrap);
       } else {
-        // single price item
-        const price = document.createElement('div');
-        price.className = 'dish-price';
-        price.textContent = dish.price.toFixed(2) + " KM";
-
-        const btn = document.createElement('button');
-        btn.textContent = "Odaberi";
+        const price = document.createElement('div'); price.className='dish-price';
+        price.textContent=dish.price.toFixed(2) + " KM";
+        const btn = document.createElement('button'); btn.textContent="Odaberi";
         btn.onclick = ()=>{ addToOrder(dish.name, dish.price); };
-
-        row.appendChild(price);
-        row.appendChild(btn);
+        row.appendChild(price); row.appendChild(btn);
       }
-
       menuContainer.appendChild(row);
     });
   });
@@ -473,53 +313,27 @@ function addToOrder(name, price){
   document.getElementById('total-price').textContent = totalPrice.toFixed(2);
 }
 
-/* render first time */
 renderMenu();
 
 /* --- Order button (WhatsApp) --- */
 document.getElementById('order-btn').addEventListener('click', ()=>{
   if(order.length === 0){ alert('Molimo odaberite bar jedno jelo.'); return; }
-  let text = "Narudžba:%0A";
+  const table = document.getElementById('table-select').value || "Nije odabrano";
+  const persons = document.getElementById('person-count').value || "1";
+  let text = `Narudžba:%0AMjesto: ${table}%0ABroj osoba: ${persons}%0A`;
   order.forEach(it => { text += `- ${it.name} (${it.price.toFixed(2)} KM)%0A`; });
   text += `Ukupno: ${totalPrice.toFixed(2)} KM`;
-  const phone = "38761015241"; // <-- promijeni na svoj broj (bez +), npr. 38761015241
+  const phone = "38761015241"; // tvoj broj
   const url = `https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(text)}`;
   window.open(url, "_blank");
 });
 
-/* --- Top action button behaviour --- */
-document.getElementById('goto-drinks').addEventListener('click', ()=>{
-  const el = document.getElementById('drinks');
-  if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
-  else alert('Sekcija PIĆA još nije popunjena.');
-});
-document.getElementById('goto-salads').addEventListener('click', ()=>{
-  const el = document.getElementById('salads') || document.querySelector('[id="salads"]');
-  if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
-  else {
-    // if OBROK SALATA not found as id, try find heading text
-    const h = Array.from(document.querySelectorAll('.category-title')).find(x => x.textContent.includes('SALATA'));
-    if(h) h.scrollIntoView({behavior:'smooth', block:'start'});
-  }
-});
-document.getElementById('goto-dessert').addEventListener('click', ()=>{
-  const el = document.getElementById('desserts') || document.querySelector('[id="desserts"]');
-  if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
-  else {
-    const h = Array.from(document.querySelectorAll('.category-title')).find(x => x.textContent.includes('DESERT') || x.textContent.includes('PALAČINKE'));
-    if(h) h.scrollIntoView({behavior:'smooth', block:'start'});
-  }
-});
-document.getElementById('goto-order').addEventListener('click', ()=>{
-  document.getElementById('order-summary').scrollIntoView({behavior:'smooth', block:'center'});
-});
-
-/* --- simple safeguard: ensure anchors exist after render --- */
-window.addEventListener('load', ()=>{
-  // ensure salads anchor exists (already set on OBROK SALATA)
-});
-
-/* --- end script --- */
+/* --- Top action buttons --- */
+document.getElementById('goto-food').addEventListener('click', ()=>{ document.getElementById('food')?.scrollIntoView({behavior:'smooth',block:'start'}); });
+document.getElementById('goto-drinks').addEventListener('click', ()=>{ document.getElementById('drinks')?.scrollIntoView({behavior:'smooth',block:'start'}); });
+document.getElementById('goto-salads').addEventListener('click', ()=>{ document.getElementById('salads')?.scrollIntoView({behavior:'smooth',block:'start'}); });
+document.getElementById('goto-dessert').addEventListener('click', ()=>{ document.getElementById('desserts')?.scrollIntoView({behavior:'smooth',block:'start'}); });
+document.getElementById('goto-order').addEventListener('click', ()=>{ document.getElementById('order-summary').scrollIntoView({behavior:'smooth',block:'center'}); });
 </script>
 </body>
 </html>
