@@ -492,21 +492,38 @@ const menuData = [
     { name:"ZABRANJENO TOČENJE ALKOHOLNIH PIĆA OSOBAMA MLAĐIM OD 18 GODINA!", price:0.00, warning:true }
   ]
   },
-    
-];
+    <script>
+const menuContainer = document.getElementById('menu-container');
+let order = [];
+let totalPrice = 0;
 
+/* --- Floating icons --- */
+const icons = ['🍷','🥃','🍾','🍽','🍰','🍔','🍕','☕','🥗','🍹'];
+const floating = document.getElementById('floating-icons');
+for(let i=0;i<26;i++){
+  const d = document.createElement('div');
+  d.className = 'icon';
+  d.textContent = icons[Math.floor(Math.random()*icons.length)];
+  d.style.left = Math.random()*100 + '%';
+  d.style.top = Math.random()*100 + '%';
+  d.style.fontSize = (20 + Math.random()*40) + 'px';
+  d.style.animationDuration = (8 + Math.random()*10) + 's';
+  d.style.animationDelay = (Math.random()*6) + 's';
+  floating.appendChild(d);
+}
+
+/* --- Render menu --- */
 function renderMenu(){
   menuContainer.innerHTML = '';
-  menuData.forEach(cat=>{
-    // Heading kategorije
+  menuData.forEach(cat => {
     const heading = document.createElement('h2');
     heading.textContent = cat.category;
     if(cat.id) heading.id = cat.id;
     heading.className = cat.strong ? 'category-title-strong' : 'category-title';
     menuContainer.appendChild(heading);
 
-    cat.dishes.forEach(dish=>{
-      // Ako je dish upozorenje (npr. zabrana alkohola)
+    cat.dishes.forEach(dish => {
+      // Upozorenje
       if(dish.warning){
         const warning = document.createElement('p');
         warning.textContent = dish.name;
@@ -514,10 +531,10 @@ function renderMenu(){
         warning.style.fontWeight = '700';
         warning.style.margin = '6px 0';
         menuContainer.appendChild(warning);
-        return; // preskoči dugme
+        return;
       }
 
-      // Ako dish ima podnaslov
+      // Podnaslov
       if(dish.subtitle){
         const subtitle = document.createElement('h3');
         subtitle.textContent = dish.subtitle;
@@ -535,51 +552,31 @@ function renderMenu(){
       name.className = 'dish-name';
       name.textContent = dish.name;
       row.appendChild(name);
-     
-    } else {
-        // Single price item
-        const price = document.createElement('div');
-        price.className = 'dish-price';
-        price.textContent = dish.price.toFixed(2) + " KM";
 
-        const btn = document.createElement('button');
-        btn.textContent = "Odaberi";
-        btn.onclick = ()=>{ addToOrder(dish.name, dish.price); };
-
-        row.appendChild(price);
-        row.appendChild(btn);
-      }
-
-      menuContainer.appendChild(row);
-    });
-  });
-}
-
-      // sizes (large + small)
+      // Velika/mala porcija
       if(dish.size && Array.isArray(dish.size)){
         const sizeWrap = document.createElement('div');
         sizeWrap.className = 'size-buttons';
 
         const btnLarge = document.createElement('button');
         btnLarge.textContent = `Velika (${dish.price.toFixed(2)} KM)`;
-        btnLarge.onclick = ()=>{ addToOrder(dish.name + " - Velika porcija", dish.price); };
+        btnLarge.onclick = () => { addToOrder(dish.name + " - Velika porcija", dish.price); };
 
         const btnSmall = document.createElement('button');
         btnSmall.textContent = `Mala (${dish.smallPrice.toFixed(2)} KM)`;
-        btnSmall.onclick = ()=>{ addToOrder(dish.name + " - Mala porcija", dish.smallPrice); };
+        btnSmall.onclick = () => { addToOrder(dish.name + " - Mala porcija", dish.smallPrice); };
 
         sizeWrap.appendChild(btnLarge);
         sizeWrap.appendChild(btnSmall);
         row.appendChild(sizeWrap);
       } else {
-        // single price item
         const price = document.createElement('div');
         price.className = 'dish-price';
         price.textContent = dish.price.toFixed(2) + " KM";
 
         const btn = document.createElement('button');
         btn.textContent = "Odaberi";
-        btn.onclick = ()=>{ addToOrder(dish.name, dish.price); };
+        btn.onclick = () => { addToOrder(dish.name, dish.price); };
 
         row.appendChild(price);
         row.appendChild(btn);
@@ -590,58 +587,47 @@ function renderMenu(){
   });
 }
 
+/* --- Add to order --- */
 function addToOrder(name, price){
   order.push({name, price});
   totalPrice = +(totalPrice + price).toFixed(2);
   document.getElementById('total-price').textContent = totalPrice.toFixed(2);
 }
 
-/* render first time */
+/* --- Render first time --- */
 renderMenu();
 
-/* --- Order button (WhatsApp) --- */
-document.getElementById('order-btn').addEventListener('click', ()=>{
+/* --- WhatsApp narudžba --- */
+document.getElementById('order-btn').addEventListener('click', () => {
   if(order.length === 0){ alert('Molimo odaberite bar jedno jelo.'); return; }
   let text = "Narudžba:%0A";
   order.forEach(it => { text += `- ${it.name} (${it.price.toFixed(2)} KM)%0A`; });
   text += `Ukupno: ${totalPrice.toFixed(2)} KM`;
-  const phone = "38761015241"; // <-- promijeni na svoj broj (bez +), npr. 38761015241
+  const phone = "38761015241";
   const url = `https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(text)}`;
   window.open(url, "_blank");
 });
 
-/* --- Top action button behaviour --- */
+/* --- Top action buttons --- */
 document.getElementById('goto-drinks').addEventListener('click', ()=>{
   const el = document.getElementById('drinks');
   if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
-  else alert('Sekcija PIĆA još nije popunjena.');
 });
 document.getElementById('goto-salads').addEventListener('click', ()=>{
-  const el = document.getElementById('salads') || document.querySelector('[id="salads"]');
+  const el = document.getElementById('salads');
   if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
-  else {
-    // if OBROK SALATA not found as id, try find heading text
-    const h = Array.from(document.querySelectorAll('.category-title')).find(x => x.textContent.includes('SALATA'));
-    if(h) h.scrollIntoView({behavior:'smooth', block:'start'});
-  }
 });
 document.getElementById('goto-dessert').addEventListener('click', ()=>{
-  const el = document.getElementById('desserts') || document.querySelector('[id="desserts"]');
+  const el = document.getElementById('desserts');
   if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
-  else {
-    const h = Array.from(document.querySelectorAll('.category-title')).find(x => x.textContent.includes('DESERT') || x.textContent.includes('PALAČINKE'));
-    if(h) h.scrollIntoView({behavior:'smooth', block:'start'});
-  }
 });
 document.getElementById('goto-order').addEventListener('click', ()=>{
   document.getElementById('order-summary').scrollIntoView({behavior:'smooth', block:'center'});
 });
+</script>
 
-/* --- simple safeguard: ensure anchors exist after render --- */
-window.addEventListener('load', ()=>{
-  // ensure salads anchor exists (already set on OBROK SALATA)
-});
 
+        
 /* --- end script --- */
 </script>
 </body>
