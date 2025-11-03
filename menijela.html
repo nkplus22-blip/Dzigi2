@@ -535,24 +535,8 @@ function renderMenu(){
       name.className = 'dish-name';
       name.textContent = dish.name;
       row.appendChild(name);
-
-      // Ako postoji veličina
-      if(dish.size && Array.isArray(dish.size)){
-        const sizeWrap = document.createElement('div');
-        sizeWrap.className = 'size-buttons';
-
-        const btnLarge = document.createElement('button');
-        btnLarge.textContent = `Velika (${dish.price.toFixed(2)} KM)`;
-        btnLarge.onclick = ()=>{ addToOrder(dish.name + " - Velika porcija", dish.price); };
-
-        const btnSmall = document.createElement('button');
-        btnSmall.textContent = `Mala (${dish.smallPrice.toFixed(2)} KM)`;
-        btnSmall.onclick = ()=>{ addToOrder(dish.name + " - Mala porcija", dish.smallPrice); };
-
-        sizeWrap.appendChild(btnLarge);
-        sizeWrap.appendChild(btnSmall);
-        row.appendChild(sizeWrap);
-      } else {
+     
+    } else {
         // Single price item
         const price = document.createElement('div');
         price.className = 'dish-price';
