@@ -147,19 +147,16 @@ footer{position:fixed;left:0;bottom:0;width:100%;background:var(--smedja);color:
 </head>
 <body>
 
-<!-- Floating icons -->
 <div class="floating-icons" id="floating-icons"></div>
 
 <header>
   <img src="image121.png" alt="Logo Džigi2">
   <h1>Restoran Džigi2</h1>
-
   <div class="menu-toggle" id="menu-toggle" aria-hidden="true">
     <span></span><span></span><span></span>
   </div>
 </header>
 
-<!-- Horizontal fixed action bar (top-right) -->
 <div id="top-actions">
   <a href="#" id="goto-drinks">➡ PIĆA</a>
   <span>|</span>
@@ -172,12 +169,7 @@ footer{position:fixed;left:0;bottom:0;width:100%;background:var(--smedja);color:
 
 <main>
   <h2 class="category-title">HRANA</h2>
-
   <div id="menu-container"></div>
-
-  
-
-  <!-- Order summary -->
   <div id="order-summary" aria-live="polite">
     <p>Ukupno: <span id="total-price">0.00</span> KM</p>
     <button id="order-btn">Naruči putem WhatsApp</button>
@@ -187,316 +179,6 @@ footer{position:fixed;left:0;bottom:0;width:100%;background:var(--smedja);color:
 <footer>© 2025 Restoran Džigi2 — Sva prava zadržana.</footer>
 
 <script>
-/* --- Hamburger (mobile) --- */
-const toggle = document.getElementById('menu-toggle');
-const menu = document.getElementById('menu'); // nav present in earlier drafts; if not present this is no-op
-if(toggle){
-  toggle.addEventListener('click', ()=> {
-    if(menu) menu.classList.toggle('active');
-  });
-}
-
-/* --- Floating icons population --- */
-const icons = ['🍷','🥃','🍾','🍽','🍰','🍔','🍕','☕','🥗','🍹'];
-const floating = document.getElementById('floating-icons');
-for(let i=0;i<26;i++){
-  const d = document.createElement('div');
-  d.className = 'icon';
-  d.textContent = icons[Math.floor(Math.random()*icons.length)];
-  d.style.left = Math.random()*100 + '%';
-  d.style.top = Math.random()*100 + '%';
-  d.style.fontSize = (20 + Math.random()*40) + 'px';
-  d.style.animationDuration = (8 + Math.random()*10) + 's';
-  d.style.animationDelay = (Math.random()*6) + 's';
-  floating.appendChild(d);
-}
-
-/* --- Menu data (complete) --- */
-/* Everything you provided is represented below. For items with large/small portion,
-   the object includes price (large) and smallPrice (small). */
-const menuData = [
-  { category: "JAJA", dishes: [
-    { name:"Omlet sa sirom i šunkom", price:8.50 },
-    { name:"Omlet (Goveđi pršut, sir, kajmak)", price:9.50 },
-    { name:"Jaje na oko (Svježi sir, kajmak)", price:7.00 },
-    { name:"Uštipci (Sir, kajmak)", price:10.00 }
-  ]},
-  { category: "ČORBA", dishes: [
-    { name:"Ponuda dana", price:6.00 }
-  ]},
-  { category: "PAŠTETE", dishes: [
-    { name:"Pileća 100g", price:5.00 },
-    { name:"Riblja 100g", price:5.00 }
-  ]},
-  { category: "PREDJELA", dishes: [
-    { name:"Plata za 2 osobe 400G (Goveđi pršut, svježi sir, sudžuka, edamer, pureća šunka, pileća šunka)", price:25.00 },
-    { name:"Selekcija sireva (Livada sir, travnički sir, gorgonzola sir, mozzarela sir, koziji sir)", price:30.00 }
-  ]},
-  { category: "UMACI", dishes: [
-    { name:"Gorgonzola sos", price:5.00 },
-    { name:"Šampinjon sos", price:3.00 },
-    { name:"4 vrste sira", price:4.00 }
-  ]},
-  { category: "PRILOZI", dishes: [
-    { name:"Grilovano povrće", price:5.00 },
-    { name:"Riža sa povrćem", price:3.00 },
-    { name:"Pomfrit", price:4.00 },
-    { name:"Pekarski krompir", price:4.00 },
-    { name:"Pire", price:3.00 },
-    { name:"Tjestenina", price:3.00 },
-    { name:"Kus-Kus", price:3.00 }
-  ]},
-  { category: "JELA PO NARUDŽBI - JUNEĆE MESO", dishes: [
-    { name:"Miješano meso 800G (Juneća kremenadla, pljeskavica, sudžukica, ćevapi, pileći ražnjići, pileći file)", price:30.00 },
-    { name:"Pljeskavica u lepini 150G", price:13.00 },
-    { name:"Punjena pljeskavica 350G (Sir trapist, goveđi pršut, pureća šunka)", price:20.00 },
-    { name:"Pljeskavica 300G", price:17.00 },
-    { name:"Leskovačka pljeskavica BIG 600G", price:30.00 },
-    { name:"Kardiovaskularna pljeskavica 200G (Iz krušne peći)", price:25.00 },
-    { name:"Kremenadle", price:25.00 },
-    { name:"Ćevapi velika porcija", price:10.00 },
-    { name:"Ćevapi srednja porcija", price:7.00 },
-    { name:"Ćevapi mala porcija", price:6.00 },
-    { name:"Ćevapi u kajmaku", price:11.00 },
-    { name:"Ćevapi u dubokom tanjuru (Poliv)", price:11.00 },
-    { name:"Ćevapi u domaćoj lepinji (Iz krušne peći sa punomasnim kajmakom)", price:13.00 },
-    { name:"Mesni uštipci", price:10.00 },
-    { name:"Pohovani mozak", price:20.00 },
-    { name:"Pohovani škembići/tripice", price:12.00 }
-  ]},
-  { category: "JELA PO NARUDŽBI - PILEĆE MESO", dishes: [
-    { name:"Pohovana piletina (prezla)", price:12.00 },
-    { name:"Punjena piletina (Sir trapist, pureća šunka, goveđi pršut)", price:17.00 },
-    { name:"Pileći ražnjići", price:10.00 },
-    { name:"Pileći otkošteni barak/2kom", price:13.00 },
-    { name:"Grilovana pileća prsa", price:13.00 },
-    { name:"Chicken nuggets", price:10.00 },
-    { name:"Piletina u lepini", price:10.00 },
-    { name:"Piletina sa 4 vrste sira", price:15.00 },
-    { name:"Timbola iz krušne peći", price:20.00 }
-  ]},
-  { category: "PIZZA", dishes: [
-    { name:"Margherita (Sir, paradajz sos)", price:11.00 },
-    { name:"Proscuitto (Sir, paradajz sos, pureća šunka)", price:12.00 },
-    { name:"Romana (Sir, goveđi pršut, paradajz sos)", price:13.00 },
-    { name:"Capricciusa (Sir, pureća šunka, gljive, paradajz sos)", price:12.00 },
-    { name:"Vegeteriana (Sir, gljive, kukuruz, paradajz sos)", price:10.00 },
-    { name:"Tono/Tuna (Paradajz sos, sir, tuna, luk)", price:13.00 },
-    { name:"Quattro Formaggi (Paradajz sos, mozzarella, edamer, gorgonzola, parmezan)", price:12.00 },
-    { name:"Bijela Pizza (Bijeli sos, piletina, sir, gljive)", price:10.00 },
-    { name:"DŽIGI2 PIZZA (Goveđi pršut, šunka, sir, sos, gljive, parmezan)", price:15.00 },
-    { name:"Tabaskino (Pileće ili juneće meso)", price:10.00 }
-  ]},
-  { category: "RIBE/FISH", dishes: [
-    { name:"Pastrmka", price:52.00, size:["Velika","Mala"], smallPrice:18.00 },
-    { name:"Šaran", price:60.00, size:["Velika","Mala"], smallPrice:22.00 },
-    { name:"Lignje 300G", price:20.00 },
-    { name:"Lignje punjene", price:23.00 },
-    { name:"Riblja plata 1KG", price:58.00 },
-    { name:"Oslić 300G", price:13.00 },
-    { name:"Brancin", price:62.00, size:["Velika","Mala"], smallPrice:24.00 },
-    { name:"Orada", price:62.00, size:["Velika","Mala"], smallPrice:24.00 },
-    { name:"Som", price:70.00, size:["Velika","Mala"], smallPrice:25.00 },
-    { name:"Smuđ", price:70.00, size:["Velika","Mala"], smallPrice:25.00 }
-  ]},
-  { category: "HAMBURGERI", dishes: [
-    { name:"Hamburger sa hrskavom piletinom i ljutim ajvarom (salata po želji)", price:8.00 },
-    { name:"Cheesburger", price:6.00 },
-    { name:"Double Quadburger (sir, salata, umak)", price:16.00 },
-    { name:"Hamburger Classic", price:4.50 },
-    { name:"Hamburger i pomfrit", price:6.50 }
-  ]},
-  { category: "JANJETINA/LAMB MEAT", strong:true, dishes: [
-    { name:"Janjetina", price:50.00, size:["Velika","Mala"], smallPrice:20.00 }
-  ]},
-  { category: "TELETINA/VEAL MEAT", strong:true, dishes: [
-    { name:"Teletina", price:55.00, size:["Velika","Mala"], smallPrice:25.00 }
-  ]},
-  { category: "JELA PO NARUDŽBI OD TELEĆEG MESA", dishes: [
-    { name:"Pariška šnicla", price:18.00 },
-    { name:"Bečka šnicla", price:20.00 },
-    { name:"Natur šnicla", price:17.00 },
-    { name:"Kremenadle", price:25.00, size:["Velika","Mala"], smallPrice:15.00 },
-    { name:"Ražnjići", price:20.00, size:["Velika","Mala"], smallPrice:10.00 },
-    { name:"Kuhana teleća koljenica 300G", price:30.00 },
-    { name:"Teletina ispod sača", price:25.00 },
-    { name:"Punjena teleća šnicla (Sor, punomasni kajmak, pureća šunka)", price:28.00 },
-    { name:"Teleća mućkalica", price:15.00, size:["Velika","Mala"], smallPrice:8.00 },
-    { name:"Kujruk na moderan način 200G", price:20.00 },
-    { name:"Teleći jezik u umaku od paradajza", price:15.00 }
-  ]},
-  { category: "TJESTENINA/PASTA", dishes: [
-    { name:"Carbonara", price:14.00, size:["Velika","Mala"], smallPrice:8.00 },
-    { name:"Pesto pasta", price:15.00 },
-    { name:"Bolognese", price:13.00, size:["Velika","Mala"], smallPrice:7.00 },
-    { name:"Spaghetti pomadoro", price:10.00, size:["Velika","Mala"], smallPrice:6.00 },
-    { name:"Spaghetti sa gljivama i piletinom", price:12.00, size:["Velika","Mala"], smallPrice:6.00 },
-    { name:"Spaghetti sa 4 vrste sira", price:13.00, size:["Velika","Mala"], smallPrice:8.00 },
-    { name:"Spaghetti sa domaćim sirom i vrhnjem", price:10.00, size:["Velika","Mala"], smallPrice:6.00 },
-    { name:"Tagtaele sa biftekom", price:25.00 },
-    { name:"Chicken pasta", price:13.00, size:["Velika","Mala"], smallPrice:7.00 },
-    { name:"Tagtaele sa morskim plodovima", price:17.00, size:["Velika","Mala"], smallPrice:9.00 },
-    { name:"Lazanje", price:12.00 },
-    { name:"Tagtaele sa špinatom/blitvom", price:10.00, size:["Velika","Mala"], smallPrice:8.00 }
-  ]},
-
-  /* The new categories you provided: biftek, hljebovi, sendvici, salate, salate i namazi, deserti, palacinke */
-  { category: "BIFTEK / RAMSTEK", dishes: [
-    { name:"Biftek / Ramstek (prilozi i umaci po želji)", price:27.00 }
-  ]},
-  { category: "HLJEBOVI", dishes: [
-    { name:"Domaći hljeb/Heljda", price:2.00 },
-    { name:"Domaći hljeb/Kukurzni", price:2.00 },
-    { name:"Integralni", price:2.00 },
-    { name:"Lepinice iz krušne peći", price:2.00 },
-    { name:"Uštipci", price:2.00 }
-  ]},
-  { category: "TOPLI SENDVIČI", dishes: [
-    { name:"Pileći sendvič (Pileći)", price:8.00 },
-    { name:"Juneći sendvič", price:10.00 },
-    { name:"Pileći sendvič (Šunka)", price:6.00 },
-    { name:"Pureći sendvič (Šunka)", price:6.00 },
-    { name:"Sendvič sa suhim mesom", price:8.00 }
-  ]},
-  /* Salads - we'll put an anchor on the big salads heading */
-  { category: "OBROK SALATA", id:"salads", dishes: [
-    { name:"Fitness salata (slanutak, piletina, paprika, paradajz, krastavica, mrkva, kukuruz, crveni kupus, rukola, brejsing, jogurt)", price:8.00 },
-    { name:"Cezar salata (Pileći file, zelena salata, parmezan, tost hljeb, majonez, maslinovo ulje, limun sok, bijeli luk, senf)", price:12.00 },
-    { name:"Salata sa tunjevinom (Zelena salata, tunjevina, makaroni, crveni kupus, rukola, kukuruz, paradajz)", price:13.00 },
-    { name:"Grčka salata (Feta sir, crveni luk, krastavica, paradajz, paprike, maslina, grah, peršun, maslinovo ulje, dresing, crveni kupus, avokado)", price:10.00 },
-    { name:"Biftek salata (Zelena salata, rukola, paradajz, parmezan, krastavice, senf, orasi, crveni luk, dresing)", price:25.00 },
-    { name:"Mediteran salata (Piletina, avokado, masline, zelena salata, paradajz, limun sok, bučino ulje)", price:12.00 }
-  ]},
-  { category: "SALATE I NAMAZI", dishes: [
-    { name:"Kupus", price:3.00 },
-    { name:"Paradajz", price:3.00 },
-    { name:"Krastavice", price:3.00 },
-    { name:"Miješana", price:3.50 },
-    { name:"Luk salata", price:2.00 },
-    { name:"Šopska salata", price:5.00 },
-    { name:"Zelena", price:3.00 },
-    { name:"Crveni Kupus", price:3.00 },
-    { name:"Sezonska salata", price:3.00 },
-    { name:"Ljuta pečena paprika", price:5.00 },
-    { name:"Kisele krastavice", price:3.00 },
-    { name:"Pečene roge paprike (Suncokretovo sjeme, bijeli luk, balzamiko)", price:6.00 },
-    { name:"Majoneza", price:2.00 },
-    { name:"Kečep", price:2.00 },
-    { name:"Senf", price:2.00 },
-    { name:"Ajvar", price:4.00 },
-    { name:"Tartar", price:3.50 }
-  ]},
-  { category: "DESERTI", id:"desserts", dishes: [
-    { name:"Snickers torta", price:5.00 },
-    { name:"Brownie", price:4.00 },
-    { name:"Plazma torta", price:5.00 },
-    { name:"Mileram torta", price:5.00 },
-    { name:"Voćni kolač", price:3.00 },
-    { name:"Trileće", price:4.00 }
-  ]},
-  { category: "PALAČINKE I SLATKO", dishes: [
-    { name:"Palačinci (Nutella, džem, med, orasi)", price:5.00 },
-    { name:"Nutella pizza", price:8.00 },
-    { name:"Dubai pizza", price:10.00 },
-    { name:"Rafaelo pizza", price:10.00 },
-    { name:"Hurmašice", price:3.00 },
-    { name:"Baklava", price:5.00 },
-    { name:"Jabukovača", price:3.00 },
-    { name:"Tufahije", price:3.00 }
-  ]},
-  { 
-  category: "PIĆA", 
-  id: "drinks", 
-  dishes: [
-    // --- Kafe i topli napici ---
-    { name:"Espresso 8G", price:2.00, subtitle:"Kafe i topli napici" },
-    { name:"Domaća kafa 10G", price:3.00 },
-    { name:"Nescaffe 2G", price:3.00 },
-    { name:"Nescaffe 3U1 16,50G", price:3.00 },
-    { name:"Cappuccino 12,50G", price:3.00 },
-    { name:"Čaj 1,75G", price:3.00 },
-    { name:"Topla čokolada 25G", price:3.50 },
-    { name:"ICE COFFEE 0,20L", price:3.50 },
-    { name:"Toplo mlijeko 0,20L", price:2.50 },
-
-    // --- Gazirana pića ---
-    { name:"Cocta 0,25L", price:4.00, subtitle:"Gazirana pića" },
-    { name:"Coca-Cola 0,25L", price:4.00 },
-    { name:"Coca-Cola Zero 0,25L", price:4.00 },
-    { name:"Coca-Cola Cherry 0,25L", price:4.00 },
-    { name:"Fanta 0,25L", price:4.00 },
-    { name:"Sprite 0,25L", price:4.00 },
-    { name:"Schweppes TONIC 0,25L", price:4.00 },
-    { name:"Schweppes BITTER LEMON 0,25L", price:4.00 },
-
-    // --- Nealkoholni sokovi ---
-    { name:"Ledeni čaj brusnica 0,25L", price:3.50, subtitle:"Nealkoholni sokovi" },
-    { name:"Ledeni čaj breskva 0,25L", price:3.50 },
-    { name:"Cijeđena narandža 0,33L", price:3.50 },
-    { name:"Cijeđeni limun 0,33L", price:3.50 },
-    { name:"Cedevita 0,33L", price:3.50 },
-
-    // --- Vitaminka sokovi ---
-    { name:"Borovnica 0,25L", price:3.50, subtitle:"Vitaminka prirodni sokovi" },
-    { name:"Breskva 0,25L", price:3.50 },
-    { name:"Jabuka 0,25L", price:3.50 },
-    { name:"Jagoda 0,25L", price:3.50 },
-    { name:"Kruška 0,25L", price:3.50 },
-    { name:"Multivitamin 0,25L", price:3.50 },
-    { name:"Narandža 0,25L", price:3.50 },
-    { name:"Višnja 0,25L", price:3.50 },
-
-    // --- Energetska pića ---
-    { name:"Richard Classic 0,25L", price:4.50, subtitle:"Energetska pića" },
-    { name:"Richard Zero 0,25L", price:4.50 },
-    { name:"Richard Eukaliptus 0,25L", price:4.50 },
-    { name:"Richard Guarana 0,25L", price:4.50 },
-    { name:"Richard Borovnica 0,25L", price:4.50 },
-    { name:"Red Bull 0,25L", price:7.00 },
-
-    // --- Voda ---
-    { name:"Vitinka Kisela 0,25L", price:2.00, subtitle:"Voda" },
-    { name:"Vitinka Kisela 0,75L", price:7.00 },
-    { name:"Vivia obična 0,25L", price:2.00 },
-    { name:"Vivia obična 0,75L", price:6.00 },
-    { name:"Vivia Limeta 0,33L", price:3.00 },
-
-    // --- Piva ---
-    { name:"Tuborg 0,33L", price:3.00, subtitle:"Piva" },
-    { name:"Tuborg Točeno 0,33L", price:3.00 },
-    { name:"Tuborg Bezalkoholni 0,33L", price:4.00 },
-    { name:"Carlsberg 0,33L", price:3.50 },
-
-    // --- Kokteli ---
-    { name:"Sex on the Beach 0,30L", price:12.00, subtitle:"Kokteli" },
-    { name:"Blue Lagoon 0,30L", price:12.00 },
-
-    // --- Žestoka pića (dozeri) ---
-    { name:"Johhnie Walker/Red Label 0,05L", price:7.00, subtitle:"Žestoka pića - Dozeri" },
-    { name:"Belvedere votka 0,05L", price:6.00 },
-    { name:"Smirnoff votka 0,05L", price:6.00 },
-
-    // --- Žestoka pića (flaše) ---
-    { name:"Johhnie Walker/Red Label 0,70L", price:80.00, subtitle:"Žestoka pića - Flaše" },
-
-    // --- Vina bijela ---
-    { name:"Kutjevo Graševina 0,75L", price:40.00, subtitle:"Vina - Bijela" },
-
-    // --- Vina crna ---
-    { name:"Vranac 0,75L", price:35.00, subtitle:"Vina - Crna" },
-
-    // --- Somersby ---
-    { name:"Jabuka 0,33L", price:4.00, subtitle:"Somersby" },
-
-    // --- Upozorenje ---
-    { name:"ZABRANJENO TOČENJE ALKOHOLNIH PIĆA OSOBAMA MLAĐIM OD 18 GODINA!", price:0.00, warning:true }
-  ]
-  },
-    <script>
-const menuContainer = document.getElementById('menu-container');
-let order = [];
-let totalPrice = 0;
-
 /* --- Floating icons --- */
 const icons = ['🍷','🥃','🍾','🍽','🍰','🍔','🍕','☕','🥗','🍹'];
 const floating = document.getElementById('floating-icons');
@@ -512,7 +194,300 @@ for(let i=0;i<26;i++){
   floating.appendChild(d);
 }
 
-/* --- Render menu --- */
+/* --- Menu data (svi podaci) --- */
+const menuData = [
+  /* Everything you provided is represented below. For items with large/small portion,  
+   the object includes price (large) and smallPrice (small). */  
+const menuData = [  
+  { category: "JAJA", dishes: [  
+    { name:"Omlet sa sirom i šunkom", price:8.50 },  
+    { name:"Omlet (Goveđi pršut, sir, kajmak)", price:9.50 },  
+    { name:"Jaje na oko (Svježi sir, kajmak)", price:7.00 },  
+    { name:"Uštipci (Sir, kajmak)", price:10.00 }  
+  ]},  
+  { category: "ČORBA", dishes: [  
+    { name:"Ponuda dana", price:6.00 }  
+  ]},  
+  { category: "PAŠTETE", dishes: [  
+    { name:"Pileća 100g", price:5.00 },  
+    { name:"Riblja 100g", price:5.00 }  
+  ]},  
+  { category: "PREDJELA", dishes: [  
+    { name:"Plata za 2 osobe 400G (Goveđi pršut, svježi sir, sudžuka, edamer, pureća šunka, pileća šunka)", price:25.00 },  
+    { name:"Selekcija sireva (Livada sir, travnički sir, gorgonzola sir, mozzarela sir, koziji sir)", price:30.00 }  
+  ]},  
+  { category: "UMACI", dishes: [  
+    { name:"Gorgonzola sos", price:5.00 },  
+    { name:"Šampinjon sos", price:3.00 },  
+    { name:"4 vrste sira", price:4.00 }  
+  ]},  
+  { category: "PRILOZI", dishes: [  
+    { name:"Grilovano povrće", price:5.00 },  
+    { name:"Riža sa povrćem", price:3.00 },  
+    { name:"Pomfrit", price:4.00 },  
+    { name:"Pekarski krompir", price:4.00 },  
+    { name:"Pire", price:3.00 },  
+    { name:"Tjestenina", price:3.00 },  
+    { name:"Kus-Kus", price:3.00 }  
+  ]},  
+  { category: "JELA PO NARUDŽBI - JUNEĆE MESO", dishes: [  
+    { name:"Miješano meso 800G (Juneća kremenadla, pljeskavica, sudžukica, ćevapi, pileći ražnjići, pileći file)", price:30.00 },  
+    { name:"Pljeskavica u lepini 150G", price:13.00 },  
+    { name:"Punjena pljeskavica 350G (Sir trapist, goveđi pršut, pureća šunka)", price:20.00 },  
+    { name:"Pljeskavica 300G", price:17.00 },  
+    { name:"Leskovačka pljeskavica BIG 600G", price:30.00 },  
+    { name:"Kardiovaskularna pljeskavica 200G (Iz krušne peći)", price:25.00 },  
+    { name:"Kremenadle", price:25.00 },  
+    { name:"Ćevapi velika porcija", price:10.00 },  
+    { name:"Ćevapi srednja porcija", price:7.00 },  
+    { name:"Ćevapi mala porcija", price:6.00 },  
+    { name:"Ćevapi u kajmaku", price:11.00 },  
+    { name:"Ćevapi u dubokom tanjuru (Poliv)", price:11.00 },  
+    { name:"Ćevapi u domaćoj lepinji (Iz krušne peći sa punomasnim kajmakom)", price:13.00 },  
+    { name:"Mesni uštipci", price:10.00 },  
+    { name:"Pohovani mozak", price:20.00 },  
+    { name:"Pohovani škembići/tripice", price:12.00 }  
+  ]},  
+  { category: "JELA PO NARUDŽBI - PILEĆE MESO", dishes: [  
+    { name:"Pohovana piletina (prezla)", price:12.00 },  
+    { name:"Punjena piletina (Sir trapist, pureća šunka, goveđi pršut)", price:17.00 },  
+    { name:"Pileći ražnjići", price:10.00 },  
+    { name:"Pileći otkošteni barak/2kom", price:13.00 },  
+    { name:"Grilovana pileća prsa", price:13.00 },  
+    { name:"Chicken nuggets", price:10.00 },  
+    { name:"Piletina u lepini", price:10.00 },  
+    { name:"Piletina sa 4 vrste sira", price:15.00 },  
+    { name:"Timbola iz krušne peći", price:20.00 }  
+  ]},  
+  { category: "PIZZA", dishes: [  
+    { name:"Margherita (Sir, paradajz sos)", price:11.00 },  
+    { name:"Proscuitto (Sir, paradajz sos, pureća šunka)", price:12.00 },  
+    { name:"Romana (Sir, goveđi pršut, paradajz sos)", price:13.00 },  
+    { name:"Capricciusa (Sir, pureća šunka, gljive, paradajz sos)", price:12.00 },  
+    { name:"Vegeteriana (Sir, gljive, kukuruz, paradajz sos)", price:10.00 },  
+    { name:"Tono/Tuna (Paradajz sos, sir, tuna, luk)", price:13.00 },  
+    { name:"Quattro Formaggi (Paradajz sos, mozzarella, edamer, gorgonzola, parmezan)", price:12.00 },  
+    { name:"Bijela Pizza (Bijeli sos, piletina, sir, gljive)", price:10.00 },  
+    { name:"DŽIGI2 PIZZA (Goveđi pršut, šunka, sir, sos, gljive, parmezan)", price:15.00 },  
+    { name:"Tabaskino (Pileće ili juneće meso)", price:10.00 }  
+  ]},  
+  { category: "RIBE/FISH", dishes: [  
+    { name:"Pastrmka", price:52.00, size:["Velika","Mala"], smallPrice:18.00 },  
+    { name:"Šaran", price:60.00, size:["Velika","Mala"], smallPrice:22.00 },  
+    { name:"Lignje 300G", price:20.00 },  
+    { name:"Lignje punjene", price:23.00 },  
+    { name:"Riblja plata 1KG", price:58.00 },  
+    { name:"Oslić 300G", price:13.00 },  
+    { name:"Brancin", price:62.00, size:["Velika","Mala"], smallPrice:24.00 },  
+    { name:"Orada", price:62.00, size:["Velika","Mala"], smallPrice:24.00 },  
+    { name:"Som", price:70.00, size:["Velika","Mala"], smallPrice:25.00 },  
+    { name:"Smuđ", price:70.00, size:["Velika","Mala"], smallPrice:25.00 }  
+  ]},  
+  { category: "HAMBURGERI", dishes: [  
+    { name:"Hamburger sa hrskavom piletinom i ljutim ajvarom (salata po želji)", price:8.00 },  
+    { name:"Cheesburger", price:6.00 },  
+    { name:"Double Quadburger (sir, salata, umak)", price:16.00 },  
+    { name:"Hamburger Classic", price:4.50 },  
+    { name:"Hamburger i pomfrit", price:6.50 }  
+  ]},  
+  { category: "JANJETINA/LAMB MEAT", strong:true, dishes: [  
+    { name:"Janjetina", price:50.00, size:["Velika","Mala"], smallPrice:20.00 }  
+  ]},  
+  { category: "TELETINA/VEAL MEAT", strong:true, dishes: [  
+    { name:"Teletina", price:55.00, size:["Velika","Mala"], smallPrice:25.00 }  
+  ]},  
+  { category: "JELA PO NARUDŽBI OD TELEĆEG MESA", dishes: [  
+    { name:"Pariška šnicla", price:18.00 },  
+    { name:"Bečka šnicla", price:20.00 },  
+    { name:"Natur šnicla", price:17.00 },  
+    { name:"Kremenadle", price:25.00, size:["Velika","Mala"], smallPrice:15.00 },  
+    { name:"Ražnjići", price:20.00, size:["Velika","Mala"], smallPrice:10.00 },  
+    { name:"Kuhana teleća koljenica 300G", price:30.00 },  
+    { name:"Teletina ispod sača", price:25.00 },  
+    { name:"Punjena teleća šnicla (Sor, punomasni kajmak, pureća šunka)", price:28.00 },  
+    { name:"Teleća mućkalica", price:15.00, size:["Velika","Mala"], smallPrice:8.00 },  
+    { name:"Kujruk na moderan način 200G", price:20.00 },  
+    { name:"Teleći jezik u umaku od paradajza", price:15.00 }  
+  ]},  
+  { category: "TJESTENINA/PASTA", dishes: [  
+    { name:"Carbonara", price:14.00, size:["Velika","Mala"], smallPrice:8.00 },  
+    { name:"Pesto pasta", price:15.00 },  
+    { name:"Bolognese", price:13.00, size:["Velika","Mala"], smallPrice:7.00 },  
+    { name:"Spaghetti pomadoro", price:10.00, size:["Velika","Mala"], smallPrice:6.00 },  
+    { name:"Spaghetti sa gljivama i piletinom", price:12.00, size:["Velika","Mala"], smallPrice:6.00 },  
+    { name:"Spaghetti sa 4 vrste sira", price:13.00, size:["Velika","Mala"], smallPrice:8.00 },  
+    { name:"Spaghetti sa domaćim sirom i vrhnjem", price:10.00, size:["Velika","Mala"], smallPrice:6.00 },  
+    { name:"Tagtaele sa biftekom", price:25.00 },  
+    { name:"Chicken pasta", price:13.00, size:["Velika","Mala"], smallPrice:7.00 },  
+    { name:"Tagtaele sa morskim plodovima", price:17.00, size:["Velika","Mala"], smallPrice:9.00 },  
+    { name:"Lazanje", price:12.00 },  
+    { name:"Tagtaele sa špinatom/blitvom", price:10.00, size:["Velika","Mala"], smallPrice:8.00 }  
+  ]},  
+  
+  /* The new categories you provided: biftek, hljebovi, sendvici, salate, salate i namazi, deserti, palacinke */  
+  { category: "BIFTEK / RAMSTEK", dishes: [  
+    { name:"Biftek / Ramstek (prilozi i umaci po želji)", price:27.00 }  
+  ]},  
+  { category: "HLJEBOVI", dishes: [  
+    { name:"Domaći hljeb/Heljda", price:2.00 },  
+    { name:"Domaći hljeb/Kukurzni", price:2.00 },  
+    { name:"Integralni", price:2.00 },  
+    { name:"Lepinice iz krušne peći", price:2.00 },  
+    { name:"Uštipci", price:2.00 }  
+  ]},  
+  { category: "TOPLI SENDVIČI", dishes: [  
+    { name:"Pileći sendvič (Pileći)", price:8.00 },  
+    { name:"Juneći sendvič", price:10.00 },  
+    { name:"Pileći sendvič (Šunka)", price:6.00 },  
+    { name:"Pureći sendvič (Šunka)", price:6.00 },  
+    { name:"Sendvič sa suhim mesom", price:8.00 }  
+  ]},  
+  /* Salads - we'll put an anchor on the big salads heading */  
+  { category: "OBROK SALATA", id:"salads", dishes: [  
+    { name:"Fitness salata (slanutak, piletina, paprika, paradajz, krastavica, mrkva, kukuruz, crveni kupus, rukola, brejsing, jogurt)", price:8.00 },  
+    { name:"Cezar salata (Pileći file, zelena salata, parmezan, tost hljeb, majonez, maslinovo ulje, limun sok, bijeli luk, senf)", price:12.00 },  
+    { name:"Salata sa tunjevinom (Zelena salata, tunjevina, makaroni, crveni kupus, rukola, kukuruz, paradajz)", price:13.00 },  
+    { name:"Grčka salata (Feta sir, crveni luk, krastavica, paradajz, paprike, maslina, grah, peršun, maslinovo ulje, dresing, crveni kupus, avokado)", price:10.00 },  
+    { name:"Biftek salata (Zelena salata, rukola, paradajz, parmezan, krastavice, senf, orasi, crveni luk, dresing)", price:25.00 },  
+    { name:"Mediteran salata (Piletina, avokado, masline, zelena salata, paradajz, limun sok, bučino ulje)", price:12.00 }  
+  ]},  
+  { category: "SALATE I NAMAZI", dishes: [  
+    { name:"Kupus", price:3.00 },  
+    { name:"Paradajz", price:3.00 },  
+    { name:"Krastavice", price:3.00 },  
+    { name:"Miješana", price:3.50 },  
+    { name:"Luk salata", price:2.00 },  
+    { name:"Šopska salata", price:5.00 },  
+    { name:"Zelena", price:3.00 },  
+    { name:"Crveni Kupus", price:3.00 },  
+    { name:"Sezonska salata", price:3.00 },  
+    { name:"Ljuta pečena paprika", price:5.00 },  
+    { name:"Kisele krastavice", price:3.00 },  
+    { name:"Pečene roge paprike (Suncokretovo sjeme, bijeli luk, balzamiko)", price:6.00 },  
+    { name:"Majoneza", price:2.00 },  
+    { name:"Kečep", price:2.00 },  
+    { name:"Senf", price:2.00 },  
+    { name:"Ajvar", price:4.00 },  
+    { name:"Tartar", price:3.50 }  
+  ]},  
+  { category: "DESERTI", id:"desserts", dishes: [  
+    { name:"Snickers torta", price:5.00 },  
+    { name:"Brownie", price:4.00 },  
+    { name:"Plazma torta", price:5.00 },  
+    { name:"Mileram torta", price:5.00 },  
+    { name:"Voćni kolač", price:3.00 },  
+    { name:"Trileće", price:4.00 }  
+  ]},  
+  { category: "PALAČINKE I SLATKO", dishes: [  
+    { name:"Palačinci (Nutella, džem, med, orasi)", price:5.00 },  
+    { name:"Nutella pizza", price:8.00 },  
+    { name:"Dubai pizza", price:10.00 },  
+    { name:"Rafaelo pizza", price:10.00 },  
+    { name:"Hurmašice", price:3.00 },  
+    { name:"Baklava", price:5.00 },  
+    { name:"Jabukovača", price:3.00 },  
+    { name:"Tufahije", price:3.00 }  
+  ]},  
+  {   
+  category: "PIĆA",   
+  id: "drinks",   
+  dishes: [  
+    // --- Kafe i topli napici ---  
+    { name:"Espresso 8G", price:2.00, subtitle:"Kafe i topli napici" },  
+    { name:"Domaća kafa 10G", price:3.00 },  
+    { name:"Nescaffe 2G", price:3.00 },  
+    { name:"Nescaffe 3U1 16,50G", price:3.00 },  
+    { name:"Cappuccino 12,50G", price:3.00 },  
+    { name:"Čaj 1,75G", price:3.00 },  
+    { name:"Topla čokolada 25G", price:3.50 },  
+    { name:"ICE COFFEE 0,20L", price:3.50 },  
+    { name:"Toplo mlijeko 0,20L", price:2.50 },  
+  
+    // --- Gazirana pića ---  
+    { name:"Cocta 0,25L", price:4.00, subtitle:"Gazirana pića" },  
+    { name:"Coca-Cola 0,25L", price:4.00 },  
+    { name:"Coca-Cola Zero 0,25L", price:4.00 },  
+    { name:"Coca-Cola Cherry 0,25L", price:4.00 },  
+    { name:"Fanta 0,25L", price:4.00 },  
+    { name:"Sprite 0,25L", price:4.00 },  
+    { name:"Schweppes TONIC 0,25L", price:4.00 },  
+    { name:"Schweppes BITTER LEMON 0,25L", price:4.00 },  
+  
+    // --- Nealkoholni sokovi ---  
+    { name:"Ledeni čaj brusnica 0,25L", price:3.50, subtitle:"Nealkoholni sokovi" },  
+    { name:"Ledeni čaj breskva 0,25L", price:3.50 },  
+    { name:"Cijeđena narandža 0,33L", price:3.50 },  
+    { name:"Cijeđeni limun 0,33L", price:3.50 },  
+    { name:"Cedevita 0,33L", price:3.50 },  
+  
+    // --- Vitaminka sokovi ---  
+    { name:"Borovnica 0,25L", price:3.50, subtitle:"Vitaminka prirodni sokovi" },  
+    { name:"Breskva 0,25L", price:3.50 },  
+    { name:"Jabuka 0,25L", price:3.50 },  
+    { name:"Jagoda 0,25L", price:3.50 },  
+    { name:"Kruška 0,25L", price:3.50 },  
+    { name:"Multivitamin 0,25L", price:3.50 },  
+    { name:"Narandža 0,25L", price:3.50 },  
+    { name:"Višnja 0,25L", price:3.50 },  
+  
+    // --- Energetska pića ---  
+    { name:"Richard Classic 0,25L", price:4.50, subtitle:"Energetska pića" },  
+    { name:"Richard Zero 0,25L", price:4.50 },  
+    { name:"Richard Eukaliptus 0,25L", price:4.50 },  
+    { name:"Richard Guarana 0,25L", price:4.50 },  
+    { name:"Richard Borovnica 0,25L", price:4.50 },  
+    { name:"Red Bull 0,25L", price:7.00 },  
+  
+    // --- Voda ---  
+    { name:"Vitinka Kisela 0,25L", price:2.00, subtitle:"Voda" },  
+    { name:"Vitinka Kisela 0,75L", price:7.00 },  
+    { name:"Vivia obična 0,25L", price:2.00 },  
+    { name:"Vivia obična 0,75L", price:6.00 },  
+    { name:"Vivia Limeta 0,33L", price:3.00 },  
+  
+    // --- Piva ---  
+    { name:"Tuborg 0,33L", price:3.00, subtitle:"Piva" },  
+    { name:"Tuborg Točeno 0,33L", price:3.00 },  
+    { name:"Tuborg Bezalkoholni 0,33L", price:4.00 },  
+    { name:"Carlsberg 0,33L", price:3.50 },  
+  
+    // --- Kokteli ---  
+    { name:"Sex on the Beach 0,30L", price:12.00, subtitle:"Kokteli" },  
+    { name:"Blue Lagoon 0,30L", price:12.00 },  
+  
+    // --- Žestoka pića (dozeri) ---  
+    { name:"Johhnie Walker/Red Label 0,05L", price:7.00, subtitle:"Žestoka pića - Dozeri" },  
+    { name:"Belvedere votka 0,05L", price:6.00 },  
+    { name:"Smirnoff votka 0,05L", price:6.00 },  
+  
+    // --- Žestoka pića (flaše) ---  
+    { name:"Johhnie Walker/Red Label 0,70L", price:80.00, subtitle:"Žestoka pića - Flaše" },  
+  
+    // --- Vina bijela ---  
+    { name:"Kutjevo Graševina 0,75L", price:40.00, subtitle:"Vina - Bijela" },  
+  
+    // --- Vina crna ---  
+    { name:"Vranac 0,75L", price:35.00, subtitle:"Vina - Crna" },  
+  
+    // --- Somersby ---  
+    { name:"Jabuka 0,33L", price:4.00, subtitle:"Somersby" },  
+  
+    // --- Upozorenje ---  
+    { name:"ZABRANJENO TOČENJE ALKOHOLNIH PIĆA OSOBAMA MLAĐIM OD 18 GODINA!", price:0.00, warning:true }  
+  ]  
+  },  
+    <script>  
+const menuContainer = document.getElementById('menu-container');  
+let order = [];  
+let totalPrice = 0;  
+  
+];
+
+/* --- Order management --- */
+const menuContainer = document.getElementById('menu-container');
+let order = [];
+let totalPrice = 0;
+
 function renderMenu(){
   menuContainer.innerHTML = '';
   menuData.forEach(cat => {
@@ -523,7 +498,6 @@ function renderMenu(){
     menuContainer.appendChild(heading);
 
     cat.dishes.forEach(dish => {
-      // Upozorenje
       if(dish.warning){
         const warning = document.createElement('p');
         warning.textContent = dish.name;
@@ -533,8 +507,6 @@ function renderMenu(){
         menuContainer.appendChild(warning);
         return;
       }
-
-      // Podnaslov
       if(dish.subtitle){
         const subtitle = document.createElement('h3');
         subtitle.textContent = dish.subtitle;
@@ -544,7 +516,6 @@ function renderMenu(){
         menuContainer.appendChild(subtitle);
       }
 
-      // Red jela
       const row = document.createElement('div');
       row.className = 'dish';
 
@@ -553,19 +524,15 @@ function renderMenu(){
       name.textContent = dish.name;
       row.appendChild(name);
 
-      // Velika/mala porcija
       if(dish.size && Array.isArray(dish.size)){
         const sizeWrap = document.createElement('div');
         sizeWrap.className = 'size-buttons';
-
         const btnLarge = document.createElement('button');
         btnLarge.textContent = `Velika (${dish.price.toFixed(2)} KM)`;
         btnLarge.onclick = () => { addToOrder(dish.name + " - Velika porcija", dish.price); };
-
         const btnSmall = document.createElement('button');
         btnSmall.textContent = `Mala (${dish.smallPrice.toFixed(2)} KM)`;
         btnSmall.onclick = () => { addToOrder(dish.name + " - Mala porcija", dish.smallPrice); };
-
         sizeWrap.appendChild(btnLarge);
         sizeWrap.appendChild(btnSmall);
         row.appendChild(sizeWrap);
@@ -573,28 +540,23 @@ function renderMenu(){
         const price = document.createElement('div');
         price.className = 'dish-price';
         price.textContent = dish.price.toFixed(2) + " KM";
-
         const btn = document.createElement('button');
         btn.textContent = "Odaberi";
         btn.onclick = () => { addToOrder(dish.name, dish.price); };
-
         row.appendChild(price);
         row.appendChild(btn);
       }
-
       menuContainer.appendChild(row);
     });
   });
 }
 
-/* --- Add to order --- */
 function addToOrder(name, price){
   order.push({name, price});
   totalPrice = +(totalPrice + price).toFixed(2);
   document.getElementById('total-price').textContent = totalPrice.toFixed(2);
 }
 
-/* --- Render first time --- */
 renderMenu();
 
 /* --- WhatsApp narudžba --- */
@@ -624,9 +586,6 @@ document.getElementById('goto-dessert').addEventListener('click', ()=>{
 document.getElementById('goto-order').addEventListener('click', ()=>{
   document.getElementById('order-summary').scrollIntoView({behavior:'smooth', block:'center'});
 });
-
-        
-/* --- end script --- */
 </script>
 </body>
 </html>
