@@ -1,197 +1,51 @@
-/* menu.js */
-
-/* --- Global order state --- */
-const menuContainer = document.getElementById('menu-container');
-let order = [];
-let totalPrice = 0;
-
-/* --- Menu data --- */
-const menuData = [
-  { category: "JAJA", dishes: [
-    { name:"Omlet sa sirom i šunkom", price:8.50 },
-    { name:"Omlet (Goveđi pršut, sir, kajmak)", price:9.50 },
-    { name:"Jaje na oko (Svježi sir, kajmak)", price:7.00 },
-    { name:"Uštipci (Sir, kajmak)", price:10.00 }
-  ]},
-  { category: "ČORBA", dishes: [
-    { name:"Ponuda dana", price:6.00 }
-  ]},
-  { category: "PAŠTETE", dishes: [
-    { name:"Pileća 100g", price:5.00 },
-    { name:"Riblja 100g", price:5.00 }
-  ]},
-  { category: "PREDJELA", dishes: [
-    { name:"Plata za 2 osobe 400G (Goveđi pršut, svježi sir, sudžuka, edamer, pureća šunka, pileća šunka)", price:25.00 },
-    { name:"Selekcija sireva (Livada sir, travnički sir, gorgonzola sir, mozzarela sir, koziji sir)", price:30.00 }
-  ]},
-  { category: "UMACI", dishes: [
-    { name:"Gorgonzola sos", price:5.00 },
-    { name:"Šampinjon sos", price:3.00 },
-    { name:"4 vrste sira", price:4.00 }
-  ]},
-  { category: "PRILOZI", dishes: [
-    { name:"Grilovano povrće", price:5.00 },
-    { name:"Riža sa povrćem", price:3.00 },
-    { name:"Pomfrit", price:4.00 },
-    { name:"Pekarski krompir", price:4.00 },
-    { name:"Pire", price:3.00 },
-    { name:"Tjestenina", price:3.00 },
-    { name:"Kus-Kus", price:3.00 }
-  ]},
-  { category: "JELA PO NARUDŽBI - JUNEĆE MESO", dishes: [
-    { name:"Miješano meso 800G (Juneća kremenadla, pljeskavica, sudžukica, ćevapi, pileći ražnjići, pileći file)", price:30.00 },
-    { name:"Pljeskavica u lepini 150G", price:13.00 },
-    { name:"Punjena pljeskavica 350G (Sir trapist, goveđi pršut, pureća šunka)", price:20.00 },
-    { name:"Pljeskavica 300G", price:17.00 },
-    { name:"Leskovačka pljeskavica BIG 600G", price:30.00 },
-    { name:"Kardiovaskularna pljeskavica 200G (Iz krušne peći)", price:25.00 },
-    { name:"Kremenadle", price:25.00 },
-    { name:"Ćevapi velika porcija", price:10.00 },
-    { name:"Ćevapi srednja porcija", price:7.00 },
-    { name:"Ćevapi mala porcija", price:6.00 },
-    { name:"Ćevapi u kajmaku", price:11.00 },
-    { name:"Ćevapi u dubokom tanjuru (Poliv)", price:11.00 },
-    { name:"Ćevapi u domaćoj lepinji (Iz krušne peći sa punomasnim kajmakom)", price:13.00 },
-    { name:"Mesni uštipci", price:10.00 },
-    { name:"Pohovani mozak", price:20.00 },
-    { name:"Pohovani škembići/tripice", price:12.00 }
-  ]},
-  { category: "JELA PO NARUDŽBI - PILEĆE MESO", dishes: [
-    { name:"Pohovana piletina (prezla)", price:12.00 },
-    { name:"Punjena piletina (Sir trapist, pureća šunka, goveđi pršut)", price:17.00 },
-    { name:"Pileći ražnjići", price:10.00 },
-    { name:"Pileći otkošteni barak/2kom", price:13.00 },
-    { name:"Grilovana pileća prsa", price:13.00 },
-    { name:"Chicken nuggets", price:10.00 },
-    { name:"Piletina u lepini", price:10.00 },
-    { name:"Piletina sa 4 vrste sira", price:15.00 },
-    { name:"Timbola iz krušne peći", price:20.00 }
-  ]},
-  { category: "PIZZA", dishes: [
-    { name:"Margherita (Sir, paradajz sos)", price:11.00 },
-    { name:"Proscuitto (Sir, paradajz sos, pureća šunka)", price:12.00 },
-    { name:"Romana (Sir, goveđi pršut, paradajz sos)", price:13.00 },
-    { name:"Capricciusa (Sir, pureća šunka, gljive, paradajz sos)", price:12.00 },
-    { name:"Vegeteriana (Sir, gljive, kukuruz, paradajz sos)", price:10.00 },
-    { name:"Tono/Tuna (Paradajz sos, sir, tuna, luk)", price:13.00 },
-    { name:"Quattro Formaggi (Paradajz sos, mozzarella, edamer, gorgonzola, parmezan)", price:12.00 },
-    { name:"Bijela Pizza (Bijeli sos, piletina, sir, gljive)", price:10.00 },
-    { name:"DŽIGI2 PIZZA (Goveđi pršut, šunka, sir, sos, gljive, parmezan)", price:15.00 },
-    { name:"Tabaskino (Pileće ili juneće meso)", price:10.00 }
-  ]},
-  { category: "RIBE/FISH", dishes: [
-    { name:"Pastrmka", price:52.00, size:["Velika","Mala"], smallPrice:18.00 },
-    { name:"Šaran", price:60.00, size:["Velika","Mala"], smallPrice:22.00 },
-    { name:"Lignje 300G", price:20.00 },
-    { name:"Lignje punjene", price:23.00 },
-    { name:"Riblja plata 1KG", price:58.00 },
-    { name:"Oslić 300G", price:13.00 },
-    { name:"Brancin", price:62.00, size:["Velika","Mala"], smallPrice:24.00 },
-    { name:"Orada", price:62.00, size:["Velika","Mala"], smallPrice:24.00 },
-    { name:"Som", price:70.00, size:["Velika","Mala"], smallPrice:25.00 },
-    { name:"Smuđ", price:70.00, size:["Velika","Mala"], smallPrice:25.00 }
-  ]},
-  { category: "HAMBURGERI", dishes: [
-    { name:"Hamburger sa hrskavom piletinom i ljutim ajvarom (salata po želji)", price:8.00 },
-    { name:"Cheesburger", price:6.00 },
-    { name:"Double Quadburger (sir, salata, umak)", price:16.00 },
-    { name:"Hamburger Classic", price:4.50 },
-    { name:"Hamburger i pomfrit", price:6.50 }
-  ]},
-  { category: "PIĆA", id:"drinks", dishes:[
-    { name:"Espresso 8G", price:2.00, subtitle:"Kafe i topli napici" },
-    { name:"Domaća kafa 10G", price:3.00 },
-    { name:"Nescaffe 2G", price:3.00 },
-    { name:"Cocta 0,25L", price:4.00, subtitle:"Gazirana pića" },
-    { name:"Coca-Cola 0,25L", price:4.00 },
-    { name:"Red Bull 0,25L", price:7.00 },
-    { name:"ZABRANJENO TOČENJE ALKOHOLNIH PIĆA OSOBAMA MLAĐIM OD 18 GODINA!", price:0.00, warning:true }
-  ]}
-];
-
-/* --- Render menu --- */
-function renderMenu(){
-  menuContainer.innerHTML = '';
-  menuData.forEach(cat=>{
-    const heading = document.createElement('h2');
-    heading.textContent = cat.category;
-    if(cat.id) heading.id = cat.id;
-    heading.className = cat.strong ? 'category-title-strong' : 'category-title';
-    menuContainer.appendChild(heading);
-
-    cat.dishes.forEach(dish=>{
-      if(dish.warning){
-        const warn = document.createElement('p');
-        warn.textContent = dish.name;
-        warn.style.color = 'red';
-        warn.style.fontWeight = '700';
-        warn.style.margin = '6px 0';
-        menuContainer.appendChild(warn);
-        return;
-      }
-
-      if(dish.subtitle){
-        const sub = document.createElement('h3');
-        sub.textContent = dish.subtitle;
-        sub.style.fontSize = '20px';
-        sub.style.margin = '12px 0 6px 0';
-        sub.style.color = '#5a3825';
-        menuContainer.appendChild(sub);
-      }
-
-      const row = document.createElement('div');
-      row.className = 'dish';
-
-      const name = document.createElement('div');
-      name.className = 'dish-name';
-      name.textContent = dish.name;
-      row.appendChild(name);
-
-      if(dish.size){
-        const sizeWrap = document.createElement('div');
-        sizeWrap.className = 'size-buttons';
-        const btnLarge = document.createElement('button');
-        btnLarge.textContent = `Velika (${dish.price.toFixed(2)} KM)`;
-        btnLarge.onclick = ()=>addToOrder(dish.name+" - Velika porcija", dish.price);
-        const btnSmall = document.createElement('button');
-        btnSmall.textContent = `Mala (${dish.smallPrice.toFixed(2)} KM)`;
-        btnSmall.onclick = ()=>addToOrder(dish.name+" - Mala porcija", dish.smallPrice);
-        sizeWrap.appendChild(btnLarge);
-        sizeWrap.appendChild(btnSmall);
-        row.appendChild(sizeWrap);
-      } else {
-        const price = document.createElement('div');
-        price.className = 'dish-price';
-        price.textContent = dish.price.toFixed(2)+" KM";
-        const btn = document.createElement('button');
-        btn.textContent = "Odaberi";
-        btn.onclick = ()=>addToOrder(dish.name, dish.price);
-        row.appendChild(price);
-        row.appendChild(btn);
-      }
-
-      menuContainer.appendChild(row);
-    });
-  });
-}
-
-/* --- Add to order --- */
-function addToOrder(name, price){
-  order.push({name, price});
-  totalPrice = +(totalPrice + price).toFixed(2);
-  document.getElementById('total-price').textContent = totalPrice.toFixed(2);
-}
-
-/* --- WhatsApp order --- */
-document.getElementById('order-btn').addEventListener('click', ()=>{
-  if(order.length === 0){ alert('Molimo odaberite bar jedno jelo.'); return; }
-  let text = "Narudžba:%0A";
-  order.forEach(it => { text += `- ${it.name} (${it.price.toFixed(2)} KM)%0A`; });
-  text += `Ukupno: ${totalPrice.toFixed(2)} KM`;
-  const phone = "38761015241"; // <-- tvoj broj
-  const url = `https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(text)}`;
-  window.open(url, "_blank");
-});
-
-/* --- Render first time --- */
-renderMenu();
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jelovnik Džigi2</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .message-box {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            text-align: center;
+            max-width: 600px;
+        }
+        .message-box h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .message-box p {
+            font-size: 18px;
+            line-height: 1.5;
+            color: #555;
+        }
+    </style>
+    <script>
+        // Automatsko preusmjeravanje nakon 5 sekundi
+        setTimeout(function() {
+            window.location.href = "jelovnik.html"; // ovdje stavi putanju do pravog jelovnika
+        }, 5000);
+    </script>
+</head>
+<body>
+    <div class="message-box">
+        <h1>Obavijest</h1>
+        <p>Danas u toku dana jelovnik će biti dostupan za sve vrste narudžbe, kao i online narudžbe i rezervacije!<br><br>
+        Hvala Vam na razumijevanju!<br>
+        Vaš tim održavanja Džigi2.</p>
+        <p><em>Automatski ćete biti preusmjereni na jelovnik za nekoliko sekundi...</em></p>
+    </div>
+</body>
+</html>
