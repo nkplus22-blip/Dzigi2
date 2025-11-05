@@ -175,9 +175,6 @@ footer{position:fixed;left:0;bottom:0;width:100%;background:var(--smedja);color:
 
   <div id="menu-container"></div>
 
-  <!-- Placeholder PIĆA section (user will fill later) -->
-  <h2 id="drinks" class="category-title" style="margin-top:34px">PIĆA (sekcija za napuniti)</h2>
-  <p style="color:#666;margin:8px 0 18px">Sekcija pića nije još popunjena — pošaljite mi listu pića i ja ću ih ubaciti (ima podrške za male/velike porcije i ista funkcionalnost).</p>
 
   <!-- Order summary -->
   <div id="order-summary" aria-live="polite">
@@ -270,7 +267,7 @@ const menuData = [
     { name:"Pohovana piletina (prezla)", price:12.00 },
     { name:"Punjena piletina (Sir trapist, pureća šunka, goveđi pršut)", price:17.00 },
     { name:"Pileći ražnjići", price:10.00 },
-    { name:"Pileći otkošteni barak/2kom", price:13.00 },
+    { name:"Pileći otkošteni batak/2kom", price:13.00 },
     { name:"Grilovana pileća prsa", price:13.00 },
     { name:"Chicken nuggets", price:10.00 },
     { name:"Piletina u lepini", price:10.00 },
@@ -418,7 +415,7 @@ const menuData = [
     { name:"Toplo mlijeko 0,20L", price:2.50 }
   ]},
   { category: "☆🥤BEZALKOHOLNI NAPICI I VODA", dishes: [
-    { name:"-GAZIRANA PIĆA", price:0.00 },
+    { subcategory:"-GAZIRANA PIĆA" },
     { name:"Cocta 0,25L", price:4.00 },
     { name:"Coca-Cola 0,25L", price:4.00 },
     { name:"Coca-Cola Zero 0,25L", price:4.00 },
@@ -433,13 +430,13 @@ const menuData = [
     { name:"Schweppes PURPLE TONIC 0,25L", price:4.00 },
     { name:"Orangina Yellow 0,25L", price:4.00 },
     { name:"Orangina Red 0,25L", price:4.00 },
-    { name:"-NEGAZIRANA PIĆA", price:0.00 },
-    { name:"Ledeni čaj brusnica 0,25L", price:0.00 },
-    { name:"Ledeni čaj breskva 0,25L", price:0.00 },
-    { name:"Cijeđena narandža 0,33L", price:0.00 },
-    { name:"Cijeđeni limun 0,33L", price:0.00 },
-    { name:"Cedevita 0,33L", price:0.00 },
-    { name:"-VITAMINKA PRIRODNI SOKOVI", price:0.00 },
+    { subcategory:"NEGAZIRANA PIĆA" },
+    { name:"Ledeni čaj brusnica 0,25L", price:3.50 },
+    { name:"Ledeni čaj breskva 0,25L", price:3.50 },
+    { name:"Cijeđena narandža 0,33L", price:5.00 },
+    { name:"Cijeđeni limun 0,33L", price:5.00 },
+    { name:"Cedevita 0,33L", price:3.00 },
+    { subcategory:"VITAMINKA PRIRODNI SOKOVI" },
     { name:"Borovnica 0,25L", price:3.50 },
     { name:"Breskva 0,25L", price:3.50 },
     { name:"Jabuka 0,25L", price:3.50 },
@@ -448,14 +445,14 @@ const menuData = [
     { name:"Multivitamin 0,25L", price:3.50 },
     { name:"Narandža 0,25L", price:3.50 },
     { name:"Višnja 0,25L", price:3.50 },
-    { name:"-ENERGETSKA PIĆA", price:0.00 },
+    { subcategory:"ENERGETSKA PIĆA" },
     { name:"Richard Classic 0,25L", price:4.50 },
     { name:"Richard Zero 0,25L", price:4.50 },
     { name:"Richard Eukaliptus 0,25L", price:4.50 },
     { name:"Richard Guarana 0,25L", price:4.50 },
     { name:"Richard Borovnica 0,25L", price:4.50 },
     { name:"Red Bull 0,25L", price:7.00 },
-    { name:"-VODA VITINKA", price:0.00 },
+    { subcategory: "VODA VITINKA" },
     { name:"Vitinka Kisela 0,25L", price:2.00 },
     { name:"Vitinka Kisela 0,75L", price:7.00 },
     { name:"Vivia obična voda 0,25L", price:2.00 },
@@ -515,7 +512,7 @@ const menuData = [
     { name:"Jägermaister 0,70L", price:80.00 }
   ]},
   { category: "☆🍷VINA", dishes: [
-    { name:"-Bijela vina", price:0.00 },
+    { subcategory:"Bijela vina" },
     { name:"Kutjevo Graševina 0,75L", price:40.00 },
     { name:"Kutjevo Graševina 0,187L", price:8.00 },
     { name:"Žlatina 0,75L", price:50.00 },
@@ -523,12 +520,12 @@ const menuData = [
     { name:"Kovačević Chardonnau 0,187L", price:8.00 },
     { name:"Žilavka Andrija 0,75L", price:50.00 },
     { name:"Pjenušac Möet 0,75L", price:200.00 },
-    { name:"-Crna vina", price:0.00 },
+    { subcategory: "Crna vina" },
     { name:"Vranac 0,75L", price:35.00 },
     { name:"Vranac 0,187L", price:8.00 },
     { name:"Kovačević Aurelius 0,75L", price:60.00 },
     { name:"Vranac Procorde 0,75L", price:50.00 },
-    { name:"-Somersby", price:0.00 },
+    { subcategory: "Somersby" },
     { name:"Jabuka 0,33L", price:4.00 },
     { name:"Kruška 0,33L", price:4.00 },
     { name:"Mango 0,33L", price:4.00 },
