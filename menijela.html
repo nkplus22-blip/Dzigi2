@@ -91,13 +91,6 @@ header h1{font-family:'Fredoka One',cursive;font-size:28px;color:var(--smedja);m
 }
 .top-action:hover{transform:translateY(-3px);background:var(--accent);color:var(--smedja)}
 
-/* side mobile fallback: hide top-actions on very small screens? we'll keep and let it wrap */
-@media(max-width:520px){
-  #top-actions{right:8px;top:8px;gap:6px;font-size:13px}
-  header h1{font-size:20px}
-  .menu-toggle{display:flex}
-}
-
 /* Main card */
 main{
   max-width:1100px;
@@ -153,10 +146,6 @@ footer{position:fixed;left:0;bottom:0;width:100%;background:var(--smedja);color:
 <header>
   <img src="image121.png" alt="Logo Džigi2">
   <h1>Restoran Džigi2</h1>
-
-  <div class="menu-toggle" id="menu-toggle" aria-hidden="true">
-    <span></span><span></span><span></span>
-  </div>
 </header>
 
 <!-- Horizontal fixed action bar (top-right) -->
@@ -172,7 +161,6 @@ footer{position:fixed;left:0;bottom:0;width:100%;background:var(--smedja);color:
 
 <main>
   <h2 class="category-title">HRANA</h2>
-
   <div id="menu-container"></div>
   
   <!-- Order summary -->
@@ -185,16 +173,7 @@ footer{position:fixed;left:0;bottom:0;width:100%;background:var(--smedja);color:
 <footer>© 2025 Restoran Džigi2 — Sva prava zadržana.</footer>
 
 <script>
-/* --- Hamburger (mobile) --- */
-const toggle = document.getElementById('menu-toggle');
-const menu = document.getElementById('menu'); // nav present in earlier drafts; if not present this is no-op
-if(toggle){
-  toggle.addEventListener('click', ()=> {
-    if(menu) menu.classList.toggle('active');
-  });
-}
-
-/* --- Floating icons population --- */
+// --- Floating icons ---
 const icons = ['🍷','🥃','🍾','🍽','🍰','🍔','🍕','☕','🥗','🍹'];
 const floating = document.getElementById('floating-icons');
 for(let i=0;i<26;i++){
@@ -533,36 +512,30 @@ const menuData = [
     { name:"Jagoda0% 0,33L", price:4.00 },
     { name:"Zova/Limeta0% 0,33L", price:4.00 }
 ]};
-  // --- Narudžba i ukupna cijena ---
+  // --- Order & total ---
 let order = [];
 let totalPrice = 0.00;
-
 function addToOrder(name, price) {
   order.push({ name, price });
   totalPrice += price;
   document.getElementById('total-price').textContent = totalPrice.toFixed(2);
 }
 
-// --- Render menija ---
+// --- Render menu ---
 function renderMenu() {
   const menuContainer = document.getElementById('menu-container');
   menuContainer.innerHTML = '';
-
   menuData.forEach(cat => {
-    // Naslov kategorije
     const heading = document.createElement('h2');
     heading.textContent = cat.category;
     if (cat.id) heading.id = cat.id;
     heading.className = cat.strong ? 'category-title-strong' : 'category-title';
     menuContainer.appendChild(heading);
 
-    // Stavke u kategoriji
     cat.dishes.forEach(dish => {
       const row = document.createElement('div');
       row.className = 'dish';
-
       if (dish.isTitle) {
-        // Naslov unutar sekcije (npr. -GAZIRANA PIĆA)
         const title = document.createElement('div');
         title.className = 'dish-name';
         title.style.fontWeight = '700';
@@ -570,7 +543,6 @@ function renderMenu() {
         title.textContent = dish.name;
         row.appendChild(title);
       } else if (dish.size && Array.isArray(dish.size)) {
-        // Stavka sa velikom/malom porcijom
         const name = document.createElement('div');
         name.className = 'dish-name';
         name.textContent = dish.name;
@@ -578,78 +550,33 @@ function renderMenu() {
 
         const sizeWrap = document.createElement('div');
         sizeWrap.className = 'size-buttons';
-
         const btnLarge = document.createElement('button');
         btnLarge.textContent = `Velika (${dish.price.toFixed(2)} KM)`;
         btnLarge.onclick = () => addToOrder(dish.name + " - Velika porcija", dish.price);
-
         const btnSmall = document.createElement('button');
         btnSmall.textContent = `Mala (${dish.smallPrice.toFixed(2)} KM)`;
         btnSmall.onclick = () => addToOrder(dish.name + " - Mala porcija", dish.smallPrice);
-
         sizeWrap.appendChild(btnLarge);
         sizeWrap.appendChild(btnSmall);
         row.appendChild(sizeWrap);
-
       } else {
-        // Stavka sa jednom cijenom
         const name = document.createElement('div');
         name.className = 'dish-name';
         name.textContent = dish.name;
         row.appendChild(name);
-
         const price = document.createElement('div');
         price.className = 'dish-price';
         price.textContent = dish.price.toFixed(2) + " KM";
         row.appendChild(price);
-
         const btn = document.createElement('button');
         btn.textContent = "Odaberi";
         btn.onclick = () => addToOrder(dish.name, dish.price);
         row.appendChild(btn);
       }
-
       menuContainer.appendChild(row);
     });
   });
 }
 
-// --- Inicijalno renderiranje menija ---
-renderMenu();
-
-// --- Dugme za narudžbu (WhatsApp) ---
-document.getElementById('order-btn').onclick = () => {
-  if(order.length === 0){
-    alert("Niste odabrali ništa za narudžbu!");
-    return;
-  }
-  let text = "Narudžba:\n";
-  order.forEach(item => {
-    text += `${item.name} - ${item.price.toFixed(2)} KM\n`;
-  });
-  text += `Ukupno: ${totalPrice.toFixed(2)} KM`;
-  const phone = "38761123456"; // zamijeni sa vašim brojem
-  window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`, "_blank");
-};
-// --- Scrollanje na sekcije (smooth) ---
-document.getElementById('goto-drinks').addEventListener('click', (e) => {
-  e.preventDefault();
-  document.getElementById('drinks').scrollIntoView({ behavior: 'smooth', block: 'start' });
-});
-
-document.getElementById('goto-salads').addEventListener('click', (e) => {
-  e.preventDefault();
-  document.getElementById('salads').scrollIntoView({ behavior: 'smooth', block: 'start' });
-});
-
-document.getElementById('goto-dessert').addEventListener('click', (e) => {
-  e.preventDefault();
-  document.getElementById('desserts').scrollIntoView({ behavior: 'smooth', block: 'start' });
-});
-
-document.getElementById('goto-order').addEventListener('click', (e) => {
-  e.preventDefault();
-  document.getElementById('order-summary').scrollIntoView({ behavior: 'smooth', block: 'start' });
-});
-
-
+// --- Initialize ---
+document.addEvent
