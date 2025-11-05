@@ -577,3 +577,34 @@ function renderMenu() {
     });
   });
 }
+  document.addEventListener('DOMContentLoaded', () => {
+  // render menija
+  renderMenu();
+
+  // dugmad za skrolanje
+  document.getElementById('goto-drinks').addEventListener('click', e => {
+    e.preventDefault();
+    document.getElementById('drinks').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+  document.getElementById('goto-salads').addEventListener('click', e => {
+    e.preventDefault();
+    document.getElementById('salads').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+  document.getElementById('goto-dessert').addEventListener('click', e => {
+    e.preventDefault();
+    document.getElementById('desserts').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  // dugme za narudžbu
+  document.getElementById('order-btn').addEventListener('click', () => {
+    if(order.length === 0){
+      alert('Niste odabrali nijedno jelo/piće!');
+      return;
+    }
+    const message = order.map(o => `${o.name} - ${o.price.toFixed(2)} KM`).join('%0A') + 
+                    `%0AUkupno: ${totalPrice.toFixed(2)} KM`;
+    window.open(`https://wa.me/38761234567?text=${message}`, '_blank');
+  });
+});
+  
+</script>
