@@ -403,7 +403,7 @@ const menuData = [
     { name:"Jabukovača", price:3.00 },
     { name:"Tufahije", price:3.00 }
   ]},
-  { category: "☆☕️KAFE I TOPLI NAPICI", dishes: [
+    { category: "☆☕️KAFE I TOPLI NAPICI", dishes: [
     { name:"Espresso 8G", price:2.00 },
     { name:"Domaća kafa 10G", price:3.00 },
     { name:"Nescaffe 2G", price:3.00 },
@@ -415,7 +415,7 @@ const menuData = [
     { name:"Toplo mlijeko 0,20L", price:2.50 }
   ]},
   { category: "☆🥤BEZALKOHOLNI NAPICI I VODA", dishes: [
-    { subcategory:"-GAZIRANA PIĆA" },
+    { name:"-GAZIRANA PIĆA" },
     { name:"Cocta 0,25L", price:4.00 },
     { name:"Coca-Cola 0,25L", price:4.00 },
     { name:"Coca-Cola Zero 0,25L", price:4.00 },
@@ -430,13 +430,13 @@ const menuData = [
     { name:"Schweppes PURPLE TONIC 0,25L", price:4.00 },
     { name:"Orangina Yellow 0,25L", price:4.00 },
     { name:"Orangina Red 0,25L", price:4.00 },
-    { subcategory:"NEGAZIRANA PIĆA" },
+    { name:"-NEGAZIRANA PIĆA" },
     { name:"Ledeni čaj brusnica 0,25L", price:3.50 },
-    { name:"Ledeni čaj breskva 0,25L", price:3.50 },
+    { name:"Ledeni čaj breskva 0,25L", price:3.500 },
     { name:"Cijeđena narandža 0,33L", price:5.00 },
     { name:"Cijeđeni limun 0,33L", price:5.00 },
-    { name:"Cedevita 0,33L", price:3.00 },
-    { subcategory:"VITAMINKA PRIRODNI SOKOVI" },
+    { name:"Cedevita 0,33L", price:3.50 },
+    { name:"-VITAMINKA PRIRODNI SOKOVI" },
     { name:"Borovnica 0,25L", price:3.50 },
     { name:"Breskva 0,25L", price:3.50 },
     { name:"Jabuka 0,25L", price:3.50 },
@@ -445,14 +445,14 @@ const menuData = [
     { name:"Multivitamin 0,25L", price:3.50 },
     { name:"Narandža 0,25L", price:3.50 },
     { name:"Višnja 0,25L", price:3.50 },
-    { subcategory:"ENERGETSKA PIĆA" },
+    { name:"-ENERGETSKA PIĆA" },
     { name:"Richard Classic 0,25L", price:4.50 },
     { name:"Richard Zero 0,25L", price:4.50 },
     { name:"Richard Eukaliptus 0,25L", price:4.50 },
     { name:"Richard Guarana 0,25L", price:4.50 },
     { name:"Richard Borovnica 0,25L", price:4.50 },
     { name:"Red Bull 0,25L", price:7.00 },
-    { subcategory: "VODA VITINKA" },
+    { name:"-VODA VITINKA" },
     { name:"Vitinka Kisela 0,25L", price:2.00 },
     { name:"Vitinka Kisela 0,75L", price:7.00 },
     { name:"Vivia obična voda 0,25L", price:2.00 },
@@ -482,7 +482,7 @@ const menuData = [
     { name:"Blue Lagoon 0,30L", price:12.00 }
   ]},
   { category: "☆🥃ŽESTOKA PIĆA", dishes: [
-    { name:"-Dozeri", price:0.00 },
+    { name:"-Dozeri" },
     { name:"Johhnie Walker/Red Label 0,05L", price:7.00 },
     { name:"Belvedere votka 0,05L", price:6.00 },
     { name:"Smirnoff votka 0,05L", price:6.00 },
@@ -502,7 +502,7 @@ const menuData = [
     { name:"Jägermaister 0,05L", price:6.00 },
     { name:"Šljiva rakija 0,05L", price:4.00 },
     { name:"Jabuka rakija 0,05L", price:5.00 },
-    { name:"-Flaše", price:0.00 },
+    { name:"-Flaše" },
     { name:"Johhnie Walker/Red Label 0,70L", price:80.00 },
     { name:"Belvedere votka 0,70L", price:150.00 },
     { name:"Chivac 0,70L", price:150.00 },
@@ -512,7 +512,7 @@ const menuData = [
     { name:"Jägermaister 0,70L", price:80.00 }
   ]},
   { category: "☆🍷VINA", dishes: [
-    { subcategory:"Bijela vina" },
+    { name:"-Bijela vina" },
     { name:"Kutjevo Graševina 0,75L", price:40.00 },
     { name:"Kutjevo Graševina 0,187L", price:8.00 },
     { name:"Žlatina 0,75L", price:50.00 },
@@ -520,12 +520,12 @@ const menuData = [
     { name:"Kovačević Chardonnau 0,187L", price:8.00 },
     { name:"Žilavka Andrija 0,75L", price:50.00 },
     { name:"Pjenušac Möet 0,75L", price:200.00 },
-    { subcategory: "Crna vina" },
+    { name:"-Crna vina" },
     { name:"Vranac 0,75L", price:35.00 },
     { name:"Vranac 0,187L", price:8.00 },
     { name:"Kovačević Aurelius 0,75L", price:60.00 },
     { name:"Vranac Procorde 0,75L", price:50.00 },
-    { subcategory: "Somersby" },
+    { name:"-Somersby" },
     { name:"Jabuka 0,33L", price:4.00 },
     { name:"Kruška 0,33L", price:4.00 },
     { name:"Mango 0,33L", price:4.00 },
@@ -534,6 +534,8 @@ const menuData = [
     { name:"Jagoda0% 0,33L", price:4.00 },
     { name:"Zova/Limeta0% 0,33L", price:4.00 }
   ]}
+);
+ 
 ];
 
 /* --- Render menu --- */
