@@ -540,67 +540,69 @@ const menuContainer = document.getElementById('menu-container');
 let order = [];
 let totalPrice = 0.00;
 
-function renderMenu(){
+function renderMenu() {
   menuContainer.innerHTML = '';
-  menuData.forEach(cat=>{
+  menuData.forEach(cat => {
     const heading = document.createElement('h2');
     heading.textContent = cat.category;
-    // if category object has id property, set it (for anchor)
-    if(cat.id) heading.id = cat.id;
+    if (cat.id) heading.id = cat.id;
     heading.className = cat.strong ? 'category-title-strong' : 'category-title';
     menuContainer.appendChild(heading);
 
-    cat.dishes.forEach(dish=>{
+    cat.dishes.forEach(dish => {
       const row = document.createElement('div');
       row.className = 'dish';
 
-      const name = document.createElement('div');
-      name.className = 'dish-name';
-      name.textContent = dish.name;
-      row.appendChild(name);
-
-      // sizes (large + small)
-      if(dish.size && Array.isArray(dish.size)){
-        const sizeWrap = document.createElement('div');
-        sizeWrap.className = 'size-buttons';
-
-        const btnLarge = document.createElement('button');
-        btnLarge.textContent = `Velika (${dish.price.toFixed(2)} KM)`;
-        btnLarge.onclick = ()=>{ addToOrder(dish.name + " - Velika porcija", dish.price); };
-
-        const btnSmall = document.createElement('button');
-        btnSmall.textContent = `Mala (${dish.smallPrice.toFixed(2)} KM)`;
-        btnSmall.onclick = ()=>{ addToOrder(dish.name + " - Mala porcija", dish.smallPrice); };
-
-        sizeWrap.appendChild(btnLarge);
-        sizeWrap.appendChild(btnSmall);
-        row.appendChild(sizeWrap);
+      if (dish.isTitle) {
+        // Naslov unutar sekcije (npr. -GAZIRANA PIĆA)
+        const title = document.createElement('div');
+        title.className = 'dish-name';
+        title.style.fontWeight = '700';
+        title.style.fontStyle = 'italic';
+        title.textContent = dish.name;
+        row.appendChild(title);
       } else {
-        // single price item
-        const price = document.createElement('div');
-        price.className = 'dish-price';
-        price.textContent = dish.price.toFixed(2) + " KM";
+        // Obični item sa cijenom
+        const name = document.createElement('div');
+        name.className = 'dish-name';
+        name.textContent = dish.name;
+        row.appendChild(name);
 
-        const btn = document.createElement('button');
-        btn.textContent = "Odaberi";
-        btn.onclick = ()=>{ addToOrder(dish.name, dish.price); };
+        if (dish.size && Array.isArray(dish.size)) {
+          // Item sa velikom/malom porcijom
+          const sizeWrap = document.createElement('div');
+          sizeWrap.className = 'size-buttons';
 
-        row.appendChild(price);
-        row.appendChild(btn);
+          const btnLarge = document.createElement('button');
+          btnLarge.textContent = `Velika (${dish.price.toFixed(2)} KM)`;
+          btnLarge.onclick = () => addToOrder(dish.name + " - Velika porcija", dish.price);
+
+          const btnSmall = document.createElement('button');
+          btnSmall.textContent = `Mala (${dish.smallPrice.toFixed(2)} KM)`;
+          btnSmall.onclick = () => addToOrder(dish.name + " - Mala porcija", dish.smallPrice);
+
+          sizeWrap.appendChild(btnLarge);
+          sizeWrap.appendChild(btnSmall);
+          row.appendChild(sizeWrap);
+        } else {
+          // Item sa jednom cijenom
+          const price = document.createElement('div');
+          price.className = 'dish-price';
+          price.textContent = dish.price.toFixed(2) + " KM";
+
+          const btn = document.createElement('button');
+          btn.textContent = "Odaberi";
+          btn.onclick = () => addToOrder(dish.name, dish.price);
+
+          row.appendChild(price);
+          row.appendChild(btn);
+        }
       }
 
       menuContainer.appendChild(row);
     });
   });
-}
-
-function addToOrder(name, price){
-  order.push({name, price});
-  totalPrice = +(totalPrice + price).toFixed(2);
-  document.getElementById('total-price').textContent = totalPrice.toFixed(2);
-}
-
-/* render first time */
+  }
 renderMenu();
 
 /* --- Order button (WhatsApp) --- */
