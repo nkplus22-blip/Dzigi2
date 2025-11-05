@@ -532,23 +532,31 @@ const menuData = [
     { name:"Malina 0,33L", price:4.00 },
     { name:"Jagoda0% 0,33L", price:4.00 },
     { name:"Zova/Limeta0% 0,33L", price:4.00 }
-]}
-];
-
-/* --- Render menu --- */
-const menuContainer = document.getElementById('menu-container');
+]};
+  // --- Narudžba i ukupna cijena ---
 let order = [];
 let totalPrice = 0.00;
 
+function addToOrder(name, price) {
+  order.push({ name, price });
+  totalPrice += price;
+  document.getElementById('total-price').textContent = totalPrice.toFixed(2);
+}
+
+// --- Render menija ---
 function renderMenu() {
+  const menuContainer = document.getElementById('menu-container');
   menuContainer.innerHTML = '';
+
   menuData.forEach(cat => {
+    // Naslov kategorije
     const heading = document.createElement('h2');
     heading.textContent = cat.category;
     if (cat.id) heading.id = cat.id;
     heading.className = cat.strong ? 'category-title-strong' : 'category-title';
     menuContainer.appendChild(heading);
 
+    // Stavke u kategoriji
     cat.dishes.forEach(dish => {
       const row = document.createElement('div');
       row.className = 'dish';
@@ -561,94 +569,87 @@ function renderMenu() {
         title.style.fontStyle = 'italic';
         title.textContent = dish.name;
         row.appendChild(title);
-      } else {
-        // Obični item sa cijenom
+      } else if (dish.size && Array.isArray(dish.size)) {
+        // Stavka sa velikom/malom porcijom
         const name = document.createElement('div');
         name.className = 'dish-name';
         name.textContent = dish.name;
         row.appendChild(name);
 
-        if (dish.size && Array.isArray(dish.size)) {
-          // Item sa velikom/malom porcijom
-          const sizeWrap = document.createElement('div');
-          sizeWrap.className = 'size-buttons';
+        const sizeWrap = document.createElement('div');
+        sizeWrap.className = 'size-buttons';
 
-          const btnLarge = document.createElement('button');
-          btnLarge.textContent = `Velika (${dish.price.toFixed(2)} KM)`;
-          btnLarge.onclick = () => addToOrder(dish.name + " - Velika porcija", dish.price);
+        const btnLarge = document.createElement('button');
+        btnLarge.textContent = `Velika (${dish.price.toFixed(2)} KM)`;
+        btnLarge.onclick = () => addToOrder(dish.name + " - Velika porcija", dish.price);
 
-          const btnSmall = document.createElement('button');
-          btnSmall.textContent = `Mala (${dish.smallPrice.toFixed(2)} KM)`;
-          btnSmall.onclick = () => addToOrder(dish.name + " - Mala porcija", dish.smallPrice);
+        const btnSmall = document.createElement('button');
+        btnSmall.textContent = `Mala (${dish.smallPrice.toFixed(2)} KM)`;
+        btnSmall.onclick = () => addToOrder(dish.name + " - Mala porcija", dish.smallPrice);
 
-          sizeWrap.appendChild(btnLarge);
-          sizeWrap.appendChild(btnSmall);
-          row.appendChild(sizeWrap);
-        } else {
-          // Item sa jednom cijenom
-          const price = document.createElement('div');
-          price.className = 'dish-price';
-          price.textContent = dish.price.toFixed(2) + " KM";
+        sizeWrap.appendChild(btnLarge);
+        sizeWrap.appendChild(btnSmall);
+        row.appendChild(sizeWrap);
 
-          const btn = document.createElement('button');
-          btn.textContent = "Odaberi";
-          btn.onclick = () => addToOrder(dish.name, dish.price);
+      } else {
+        // Stavka sa jednom cijenom
+        const name = document.createElement('div');
+        name.className = 'dish-name';
+        name.textContent = dish.name;
+        row.appendChild(name);
 
-          row.appendChild(price);
-          row.appendChild(btn);
-        }
+        const price = document.createElement('div');
+        price.className = 'dish-price';
+        price.textContent = dish.price.toFixed(2) + " KM";
+        row.appendChild(price);
+
+        const btn = document.createElement('button');
+        btn.textContent = "Odaberi";
+        btn.onclick = () => addToOrder(dish.name, dish.price);
+        row.appendChild(btn);
       }
 
       menuContainer.appendChild(row);
     });
   });
-  }
+}
+
+// --- Inicijalno renderiranje menija ---
 renderMenu();
 
-/* --- Order button (WhatsApp) --- */
-document.getElementById('order-btn').addEventListener('click', ()=>{
-  if(order.length === 0){ alert('Molimo odaberite bar jedno jelo.'); return; }
-  let text = "Narudžba:%0A";
-  order.forEach(it => { text += `- ${it.name} (${it.price.toFixed(2)} KM)%0A`; });
+// --- Dugme za narudžbu (WhatsApp) ---
+document.getElementById('order-btn').onclick = () => {
+  if(order.length === 0){
+    alert("Niste odabrali ništa za narudžbu!");
+    return;
+  }
+  let text = "Narudžba:\n";
+  order.forEach(item => {
+    text += `${item.name} - ${item.price.toFixed(2)} KM\n`;
+  });
   text += `Ukupno: ${totalPrice.toFixed(2)} KM`;
-  const phone = "38761015241"; // <-- promijeni na svoj broj (bez +), npr. 38761015241
-  const url = `https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(text)}`;
-  window.open(url, "_blank");
+  const phone = "38761123456"; // zamijeni sa vašim brojem
+  window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`, "_blank");
+};
+// --- Scrollanje na sekcije (smooth) ---
+document.getElementById('goto-drinks').addEventListener('click', (e) => {
+  e.preventDefault();
+  document.getElementById('drinks').scrollIntoView({ behavior: 'smooth', block: 'start' });
 });
 
-/* --- Top action button behaviour --- */
-document.getElementById('goto-drinks').addEventListener('click', ()=>{
-  const el = document.getElementById('drinks');
-  if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
-  else alert('Sekcija PIĆA još nije popunjena.');
-});
-document.getElementById('goto-salads').addEventListener('click', ()=>{
-  const el = document.getElementById('salads') || document.querySelector('[id="salads"]');
-  if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
-  else {
-    // if OBROK SALATA not found as id, try find heading text
-    const h = Array.from(document.querySelectorAll('.category-title')).find(x => x.textContent.includes('SALATA'));
-    if(h) h.scrollIntoView({behavior:'smooth', block:'start'});
-  }
-});
-document.getElementById('goto-dessert').addEventListener('click', ()=>{
-  const el = document.getElementById('desserts') || document.querySelector('[id="desserts"]');
-  if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
-  else {
-    const h = Array.from(document.querySelectorAll('.category-title')).find(x => x.textContent.includes('DESERT') || x.textContent.includes('PALAČINKE'));
-    if(h) h.scrollIntoView({behavior:'smooth', block:'start'});
-  }
-});
-document.getElementById('goto-order').addEventListener('click', ()=>{
-  document.getElementById('order-summary').scrollIntoView({behavior:'smooth', block:'center'});
+document.getElementById('goto-salads').addEventListener('click', (e) => {
+  e.preventDefault();
+  document.getElementById('salads').scrollIntoView({ behavior: 'smooth', block: 'start' });
 });
 
-/* --- simple safeguard: ensure anchors exist after render --- */
-window.addEventListener('load', ()=>{
-  // ensure salads anchor exists (already set on OBROK SALATA)
+document.getElementById('goto-dessert').addEventListener('click', (e) => {
+  e.preventDefault();
+  document.getElementById('desserts').scrollIntoView({ behavior: 'smooth', block: 'start' });
 });
 
-/* --- end script --- */
-</script>
-</body>
-</html>
+document.getElementById('goto-order').addEventListener('click', (e) => {
+  e.preventDefault();
+  document.getElementById('order-summary').scrollIntoView({ behavior: 'smooth', block: 'start' });
+});
+
+
