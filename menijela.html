@@ -1,656 +1,534 @@
 <!DOCTYPE html>
 <html lang="bs">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Meni jela - Džigi2 Restoran</title>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jelovnik | Restoran Džigi2</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
 <style>
 :root{
-  --smedja:#5a3825;
-  --svijetla:rgba(255,248,240,0.01);
-  --bijela:rgba(255,255,255,0.95);
-  --tamna:#3b2415;
+  --gold:#c9a14a;
+  --dark:#0e0a07;
+  --glass:rgba(255,255,255,0.07);
+  --text:#f5efe7;
   --accent:#ffd7b5;
 }
-*{box-sizing:border-box;margin:0;padding:0}
+
+/* RESET */
+*{margin:0;padding:0;box-sizing:border-box}
+
+/* BODY */
 body{
   font-family:'Poppins',sans-serif;
-  background:var(--svijetla);
-  color:var(--tamna);
-  min-height:100vh;
-  padding-bottom:80px;
+  background:radial-gradient(circle at top,#2a1a12,#0e0a07);
+  color:var(--text);
   overflow-x:hidden;
+  padding-bottom:120px;
+}
+
+/* FLOATING ICONS */
+.floating-icons{
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+}
+.icon{
+  position:absolute;
+  font-size:34px;
+  opacity:.25;
+  animation:floatAnim 14s linear infinite;
+}
+@keyframes floatAnim{
+  0%{transform:translateY(100vh)}
+  100%{transform:translateY(-120vh)}
+}
+
+/* HEADER */
+header{
+  position:sticky;
+  top:0;
+  z-index:50;
+  display:flex;
+  align-items:center;
+  gap:16px;
+  padding:14px 40px;
+  background:rgba(0,0,0,.55);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+header img{height:60px}
+header h1{
+  font-family:'Playfair Display',serif;
+  font-size:30px;
+  color:var(--gold);
+  letter-spacing:2px;
+}
+
+/* TOP ACTIONS */
+#top-actions{
+  position:fixed;
+  right:20px;
+  top:110px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  z-index:60;
+}
+#top-actions a{
+  background:rgba(0,0,0,.7);
+  color:var(--gold);
+  padding:8px 14px;
+  border-radius:10px;
+  text-decoration:none;
+  font-weight:600;
+  text-align:center;
+  border:1px solid rgba(255,255,255,.1);
+  transition:.25s;
+}
+#top-actions a:hover{
+  background:var(--gold);
+  color:#000;
+  transform:translateX(-6px);
+}
+
+/* HERO */
+.hero{
+  height:55vh;
+  background:url('dzigi2.jpg') center/cover fixed;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
   position:relative;
 }
-body::before{
+.hero::after{
   content:"";
-  position:fixed;inset:0;
-  background:linear-gradient(120deg,rgba(255,255,255,0.05),rgba(255,200,150,0.04));
-  z-index:-2;
-  animation:bgshift 25s ease-in-out infinite alternate;
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,.65);
 }
-@keyframes bgshift{0%{transform:translateX(0)}100%{transform:translateX(-10%)}}
-
-/* Floating icons */
-.floating-icons{position:fixed;inset:0;pointer-events:none;z-index:-1;overflow:hidden}
-.icon{position:absolute;font-size:40px;opacity:0.9;animation:floatAnim 12s linear infinite;color:rgba(90,56,37,0.8);text-shadow:0 0 8px rgba(255,255,255,0.5)}
-@keyframes floatAnim{0%{transform:translateY(100vh) rotate(0deg);opacity:0}20%{opacity:1}50%{transform:translateY(0) rotate(180deg);opacity:1}80%{opacity:0.9}100%{transform:translateY(-100vh) rotate(360deg);opacity:0}}
-
-/* Header/nav */
-header{background:var(--bijela);position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:16px;padding:10px 24px;border-bottom:1px solid rgba(0,0,0,0.04);backdrop-filter:blur(6px)}
-header img{height:64px}
-header h1{font-family:'Fredoka One',cursive;font-size:28px;color:var(--smedja);margin-left:6px}
-.menu-toggle{display:none;flex-direction:column;gap:4px;margin-left:auto;cursor:pointer}
-.menu-toggle span{height:3px;background:#111;border-radius:3px;width:26px;display:block}
-
-/* compact horizontal action bar on the right */
-#top-actions {
-  position: absolute;
-  right: 10px;
-  top: 120px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 6px;
-  z-index: 50;
-  font-size: 13px;
-  white-space: nowrap;
+.hero-content{
+  position:relative;
+  z-index:2;
+  max-width:900px;
+}
+.hero h2{
+  font-family:'Playfair Display',serif;
+  font-size:52px;
+  color:var(--gold);
+}
+.hero p{
+  margin-top:14px;
+  font-size:20px;
+  opacity:.9;
 }
 
-#top-actions a {
-  background: rgba(255, 255, 255, 0.95);
-  color: #222;
-  font-weight: 600;
-  padding: 6px 10px;
-  border-radius: 8px;
-  text-decoration: none;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-  transition: all 0.2s ease;
-}
-
-#top-actions a:hover {
-  background: #ffe9d1;
-  transform: scale(1.05);
-}
-
-#top-actions span {
-  color: #555;
-  font-weight: 600;
-}
-.top-action{
-  background:var(--smedja);
-  color:white;
-  padding:8px 10px;
-  border-radius:8px;
-  font-weight:700;
-  cursor:pointer;
-  border:none;
-  box-shadow:0 6px 18px rgba(0,0,0,0.12);
-  transition:transform .14s, background .14s;
-}
-.top-action:hover{transform:translateY(-3px);background:var(--accent);color:var(--smedja)}
-
-/* side mobile fallback: hide top-actions on very small screens? we'll keep and let it wrap */
-@media(max-width:520px){
-  #top-actions{right:8px;top:8px;gap:6px;font-size:13px}
-  header h1{font-size:20px}
-  .menu-toggle{display:flex}
-}
-
-/* Main card */
+/* MAIN CARD */
 main{
-  max-width:1100px;
-  margin:74px auto 120px;
-  padding:20px;
-  background:var(--bijela);
-  border-radius:12px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.08);
+  max-width:1200px;
+  margin:-60px auto 0;
+  background:var(--glass);
+  backdrop-filter:blur(14px);
+  border-radius:22px;
+  padding:60px;
+  box-shadow:0 40px 80px rgba(0,0,0,.7);
 }
 
-/* categories */
-.category-title{font-family:'Fredoka One',cursive;font-size:26px;color:var(--smedja);border-bottom:2px solid var(--accent);padding-bottom:6px;margin-top:22px}
-.category-title-strong{font-family:'Fredoka One',cursive;font-size:30px;font-weight:700;color:var(--smedja);border-bottom:3px solid var(--accent);padding-bottom:6px;margin-top:22px}
-
-/* dish row */
-.dish{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;margin:8px 0;border-radius:8px;background:rgba(250,240,230,0.7);gap:12px;flex-wrap:wrap}
-.dish:hover{transform:translateY(-3px);background:rgba(255,223,180,0.85)}
-.dish-name{font-size:17px;color:var(--tamna);flex:1;min-width:160px}
-.dish-price{font-weight:700;color:var(--smedja);margin-left:10px}
-.dish button{padding:6px 12px;border-radius:7px;border:none;background:var(--smedja);color:white;cursor:pointer;font-weight:600;transition:all .12s;margin-top:6px}
-.dish button:hover{background:var(--accent);color:var(--smedja)}
-
-/* group for size buttons - keeps them in one line */
-.size-buttons{display:flex;gap:10px;margin-left:12px;align-items:center;flex-shrink:0;}
-
-/* order summary */
-#order-summary{margin-top:28px;text-align:center;padding:18px 12px}
-#order-summary p{font-size:20px;margin-bottom:10px}
-#order-summary button{padding:10px 22px;font-size:18px;border-radius:10px;border:none;background:var(--smedja);color:white;cursor:pointer}
-#order-summary button:hover{background:var(--accent);color:var(--smedja)}
-
-/* footer */
-footer{position:fixed;left:0;bottom:0;width:100%;background:var(--smedja);color:#fff;padding:10px 8px;text-align:center;font-size:14px;z-index:30}
-
-/* responsive */
-@media(max-width:860px){
-  main{margin:84px 10px 120px}
-  .dish{padding:12px}
-  .dish button{padding:8px 10px}
+/* CATEGORY */
+.category-title{
+  font-family:'Playfair Display',serif;
+  font-size:34px;
+  color:var(--gold);
+  margin:50px 0 24px;
+  border-bottom:2px solid rgba(201,161,74,.5);
+  padding-bottom:8px;
 }
-@media(max-width:520px){
-  .dish{flex-direction:column;align-items:flex-start}
-  .size-buttons{margin-left:0}
-  #top-actions{position:fixed;left:8px;right:8px;top:8px;display:flex;flex-wrap:wrap;justify-content:center}
+
+/* DISH */
+.dish{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:16px;
+  padding:18px 20px;
+  margin-bottom:14px;
+  background:rgba(0,0,0,.45);
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.08);
+  transition:.3s;
+}
+.dish:hover{
+  transform:translateY(-4px);
+  box-shadow:0 20px 40px rgba(0,0,0,.8);
+}
+.dish-name{
+  flex:1;
+  font-size:17px;
+}
+.dish-price{
+  font-weight:700;
+  color:var(--gold);
+}
+.dish button{
+  background:var(--gold);
+  color:#000;
+  border:none;
+  padding:8px 16px;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:700;
+  transition:.2s;
+}
+.dish button:hover{
+  background:var(--accent);
+}
+
+/* SIZE BUTTONS */
+.size-buttons{
+  display:flex;
+  gap:10px;
+}
+
+/* ORDER SUMMARY */
+#order-summary{
+  margin-top:60px;
+  text-align:center;
+}
+#order-summary p{
+  font-size:22px;
+  margin-bottom:12px;
+}
+#order-summary button{
+  padding:14px 28px;
+  font-size:20px;
+  border-radius:14px;
+  border:none;
+  background:var(--gold);
+  color:#000;
+  cursor:pointer;
+  font-weight:700;
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  main{padding:30px}
+  .hero h2{font-size:36px}
+  #top-actions{right:10px}
 }
 </style>
 </head>
+
 <body>
 
-<!-- Floating icons -->
 <div class="floating-icons" id="floating-icons"></div>
 
 <header>
-  <img src="image121.png" alt="Logo Džigi2">
-  <h1>Restoran Džigi2</h1>
-
-  <div class="menu-toggle" id="menu-toggle" aria-hidden="true">
-    <span></span><span></span><span></span>
-  </div>
+  <img src="image121.png" alt="Džigi2">
+  <h1>Džigi2 Jelovnik</h1>
 </header>
 
-<!-- Horizontal fixed action bar (top-right) -->
 <div id="top-actions">
-  <a href="#" id="goto-drinks">➡ PIĆA</a>
-  <span>|</span>
-  <a href="#" id="goto-salads">➡ SALATE</a>
-  <span>|</span>
-  <a href="#" id="goto-dessert">➡ DESERT</a>
-  <span>|</span>
-  <a href="#" id="goto-order">✅ NARUDŽBA</a>
+  <a href="#salads">SALATE</a>
+  <a href="#desserts">DESERTI</a>
+  <a href="#order-summary">NARUDŽBA</a>
 </div>
 
-<main>
-  <h2 class="category-title">HRANA</h2>
-
-  <div id="menu-container"></div>
-
-   <!-- Order summary -->
-  <div id="order-summary" aria-live="polite">
-    <p>Ukupno: <span id="total-price">0.00</span> KM</p>
-    <button id="order-btn">Naruči putem WhatsApp</button>
+<section class="hero">
+  <div class="hero-content">
+    <h2>Luksuz koji se pamti</h2>
+    <p>Kompletan jelovnik restorana Džigi2</p>
   </div>
-</main>
+</section>
 
-<footer>© 2025 Restoran Džigi2 — Sva prava zadržana.</footer>
+<main>
 
-<script>
-/* --- Hamburger (mobile) --- */
-const toggle = document.getElementById('menu-toggle');
-const menu = document.getElementById('menu'); // nav present in earlier drafts; if not present this is no-op
-if(toggle){
-  toggle.addEventListener('click', ()=> {
-    if(menu) menu.classList.toggle('active');
-  });
-}
+<h2 class="category-title">JAJA</h2>
+<div id="menu-container"></div>
+<h2 class="category-title">JELA PO NARUDŽBI</h2>
 
-/* --- Floating icons population --- */
-const icons = ['🍷','🥃','🍾','🍽','🍰','🍔','🍕','☕','🥗','🍹'];
-const floating = document.getElementById('floating-icons');
-for(let i=0;i<26;i++){
-  const d = document.createElement('div');
-  d.className = 'icon';
-  d.textContent = icons[Math.floor(Math.random()*icons.length)];
-  d.style.left = Math.random()*100 + '%';
-  d.style.top = Math.random()*100 + '%';
-  d.style.fontSize = (20 + Math.random()*40) + 'px';
-  d.style.animationDuration = (8 + Math.random()*10) + 's';
-  d.style.animationDelay = (Math.random()*6) + 's';
-  floating.appendChild(d);
-}
+<div class="dish">
+  <div class="dish-name">Juneći odrezak</div>
+  <div class="dish-price">18 KM</div>
+  <button onclick="addItem('Juneći odrezak',18)">Dodaj</button>
+</div>
 
-/* --- Menu data (complete) --- */
-/* Everything you provided is represented below. For items with large/small portion,
-   the object includes price (large) and smallPrice (small). */
-const menuData = [
-  { category: "JAJA", dishes: [
-    { name:"Omlet sa sirom i šunkom", price:8.50 },
-    { name:"Omlet (Goveđi pršut, sir, kajmak)", price:9.50 },
-    { name:"Jaje na oko (Svježi sir, kajmak)", price:7.00 },
-    { name:"Uštipci (Sir, kajmak)", price:10.00 }
-  ]},
-  { category: "ČORBA", dishes: [
-    { name:"Ponuda dana", price:6.00 }
-  ]},
-  { category: "PAŠTETE", dishes: [
-    { name:"Pileća 100g", price:5.00 },
-    { name:"Riblja 100g", price:5.00 }
-  ]},
-  { category: "PREDJELA", dishes: [
-    { name:"Plata za 2 osobe 400G (Goveđi pršut, svježi sir, sudžuka, edamer, pureća šunka, pileća šunka)", price:25.00 },
-    { name:"Selekcija sireva (Livada sir, travnički sir, gorgonzola sir, mozzarela sir, koziji sir)", price:30.00 }
-  ]},
-  { category: "UMACI", dishes: [
-    { name:"Gorgonzola sos", price:5.00 },
-    { name:"Šampinjon sos", price:3.00 },
-    { name:"4 vrste sira", price:4.00 }
-  ]},
-  { category: "PRILOZI", dishes: [
-    { name:"Grilovano povrće", price:5.00 },
-    { name:"Riža sa povrćem", price:3.00 },
-    { name:"Pomfrit", price:4.00 },
-    { name:"Pekarski krompir", price:4.00 },
-    { name:"Pire", price:3.00 },
-    { name:"Tjestenina", price:3.00 },
-    { name:"Kus-Kus", price:3.00 }
-  ]},
-  { category: "JELA PO NARUDŽBI - JUNEĆE MESO", dishes: [
-    { name:"Miješano meso 800G (Juneća kremenadla, pljeskavica, sudžukica, ćevapi, pileći ražnjići, pileći file)", price:30.00 },
-    { name:"Pljeskavica u lepini 150G", price:13.00 },
-    { name:"Punjena pljeskavica 350G (Sir trapist, goveđi pršut, pureća šunka)", price:20.00 },
-    { name:"Pljeskavica 300G", price:17.00 },
-    { name:"Leskovačka pljeskavica BIG 600G", price:30.00 },
-    { name:"Kardiovaskularna pljeskavica 200G (Iz krušne peći)", price:25.00 },
-    { name:"Kremenadle", price:25.00 },
-    { name:"Ćevapi velika porcija", price:10.00 },
-    { name:"Ćevapi srednja porcija", price:7.00 },
-    { name:"Ćevapi mala porcija", price:6.00 },
-    { name:"Ćevapi u kajmaku", price:11.00 },
-    { name:"Ćevapi u dubokom tanjuru (Poliv)", price:11.00 },
-    { name:"Ćevapi u domaćoj lepinji (Iz krušne peći sa punomasnim kajmakom)", price:13.00 },
-    { name:"Mesni uštipci", price:10.00 },
-    { name:"Pohovani mozak", price:20.00 },
-    { name:"Pohovani škembići/tripice", price:12.00 }
-  ]},
-  { category: "JELA PO NARUDŽBI - PILEĆE MESO", dishes: [
-    { name:"Pohovana piletina (prezla)", price:12.00 },
-    { name:"Punjena piletina (Sir trapist, pureća šunka, goveđi pršut)", price:17.00 },
-    { name:"Pileći ražnjići", price:10.00 },
-    { name:"Pileći otkošteni barak/2kom", price:13.00 },
-    { name:"Grilovana pileća prsa", price:13.00 },
-    { name:"Chicken nuggets", price:10.00 },
-    { name:"Piletina u lepini", price:10.00 },
-    { name:"Piletina sa 4 vrste sira", price:15.00 },
-    { name:"Timbola iz krušne peći", price:20.00 }
-  ]},
-  { category: "PIZZA", dishes: [
-    { name:"Margherita (Sir, paradajz sos)", price:11.00 },
-    { name:"Proscuitto (Sir, paradajz sos, pureća šunka)", price:12.00 },
-    { name:"Romana (Sir, goveđi pršut, paradajz sos)", price:13.00 },
-    { name:"Capricciusa (Sir, pureća šunka, gljive, paradajz sos)", price:12.00 },
-    { name:"Vegeteriana (Sir, gljive, kukuruz, paradajz sos)", price:10.00 },
-    { name:"Tono/Tuna (Paradajz sos, sir, tuna, luk)", price:13.00 },
-    { name:"Quattro Formaggi (Paradajz sos, mozzarella, edamer, gorgonzola, parmezan)", price:12.00 },
-    { name:"Bijela Pizza (Bijeli sos, piletina, sir, gljive)", price:10.00 },
-    { name:"DŽIGI2 PIZZA (Goveđi pršut, šunka, sir, sos, gljive, parmezan)", price:15.00 },
-    { name:"Tabaskino (Pileće ili juneće meso)", price:10.00 }
-  ]},
-  { category: "RIBE/FISH", dishes: [
-    { name:"Pastrmka", price:52.00, size:["Velika","Mala"], smallPrice:18.00 },
-    { name:"Šaran", price:60.00, size:["Velika","Mala"], smallPrice:22.00 },
-    { name:"Lignje 300G", price:20.00 },
-    { name:"Lignje punjene", price:23.00 },
-    { name:"Riblja plata 1KG", price:58.00 },
-    { name:"Oslić 300G", price:13.00 },
-    { name:"Brancin", price:62.00, size:["Velika","Mala"], smallPrice:24.00 },
-    { name:"Orada", price:62.00, size:["Velika","Mala"], smallPrice:24.00 },
-    { name:"Som", price:70.00, size:["Velika","Mala"], smallPrice:25.00 },
-    { name:"Smuđ", price:70.00, size:["Velika","Mala"], smallPrice:25.00 }
-  ]},
-  { category: "HAMBURGERI", dishes: [
-    { name:"Hamburger sa hrskavom piletinom i ljutim ajvarom (salata po želji)", price:8.00 },
-    { name:"Cheesburger", price:6.00 },
-    { name:"Double Quadburger (sir, salata, umak)", price:16.00 },
-    { name:"Hamburger Classic", price:4.50 },
-    { name:"Hamburger i pomfrit", price:6.50 }
-  ]},
-  { category: "JANJETINA/LAMB MEAT", strong:true, dishes: [
-    { name:"Janjetina", price:50.00, size:["Velika","Mala"], smallPrice:20.00 }
-  ]},
-  { category: "TELETINA/VEAL MEAT", strong:true, dishes: [
-    { name:"Teletina", price:55.00, size:["Velika","Mala"], smallPrice:25.00 }
-  ]},
-  { category: "JELA PO NARUDŽBI OD TELEĆEG MESA", dishes: [
-    { name:"Pariška šnicla", price:18.00 },
-    { name:"Bečka šnicla", price:20.00 },
-    { name:"Natur šnicla", price:17.00 },
-    { name:"Kremenadle", price:25.00, size:["Velika","Mala"], smallPrice:15.00 },
-    { name:"Ražnjići", price:20.00, size:["Velika","Mala"], smallPrice:10.00 },
-    { name:"Kuhana teleća koljenica 300G", price:30.00 },
-    { name:"Teletina ispod sača", price:25.00 },
-    { name:"Punjena teleća šnicla (Sor, punomasni kajmak, pureća šunka)", price:28.00 },
-    { name:"Teleća mućkalica", price:15.00, size:["Velika","Mala"], smallPrice:8.00 },
-    { name:"Kujruk na moderan način 200G", price:20.00 },
-    { name:"Teleći jezik u umaku od paradajza", price:15.00 }
-  ]},
-  { category: "TJESTENINA/PASTA", dishes: [
-    { name:"Carbonara", price:14.00, size:["Velika","Mala"], smallPrice:8.00 },
-    { name:"Pesto pasta", price:15.00 },
-    { name:"Bolognese", price:13.00, size:["Velika","Mala"], smallPrice:7.00 },
-    { name:"Spaghetti pomadoro", price:10.00, size:["Velika","Mala"], smallPrice:6.00 },
-    { name:"Spaghetti sa gljivama i piletinom", price:12.00, size:["Velika","Mala"], smallPrice:6.00 },
-    { name:"Spaghetti sa 4 vrste sira", price:13.00, size:["Velika","Mala"], smallPrice:8.00 },
-    { name:"Spaghetti sa domaćim sirom i vrhnjem", price:10.00, size:["Velika","Mala"], smallPrice:6.00 },
-    { name:"Tagtaele sa biftekom", price:25.00 },
-    { name:"Chicken pasta", price:13.00, size:["Velika","Mala"], smallPrice:7.00 },
-    { name:"Tagtaele sa morskim plodovima", price:17.00, size:["Velika","Mala"], smallPrice:9.00 },
-    { name:"Lazanje", price:12.00 },
-    { name:"Tagtaele sa špinatom/blitvom", price:10.00, size:["Velika","Mala"], smallPrice:8.00 }
-  ]},
+<div class="dish">
+  <div class="dish-name">Juneći medaljoni</div>
+  <div class="dish-price">22 KM</div>
+  <button onclick="addItem('Juneći medaljoni',22)">Dodaj</button>
+</div>
 
-  /* The new categories you provided: biftek, hljebovi, sendvici, salate, salate i namazi, deserti, palacinke */
-  { category: "BIFTEK / RAMSTEK", dishes: [
-    { name:"Biftek / Ramstek (prilozi i umaci po želji)", price:27.00 }
-  ]},
-  { category: "HLJEBOVI", dishes: [
-    { name:"Domaći hljeb/Heljda", price:2.00 },
-    { name:"Domaći hljeb/Kukurzni", price:2.00 },
-    { name:"Integralni", price:2.00 },
-    { name:"Lepinice iz krušne peći", price:2.00 },
-    { name:"Uštipci", price:2.00 }
-  ]},
-  { category: "TOPLI SENDVIČI", dishes: [
-    { name:"Pileći sendvič (Pileći)", price:8.00 },
-    { name:"Juneći sendvič", price:10.00 },
-    { name:"Pileći sendvič (Šunka)", price:6.00 },
-    { name:"Pureći sendvič (Šunka)", price:6.00 },
-    { name:"Sendvič sa suhim mesom", price:8.00 }
-  ]},
-  /* Salads - we'll put an anchor on the big salads heading */
-  { category: "OBROK SALATA", id:"salads", dishes: [
-    { name:"Fitness salata (slanutak, piletina, paprika, paradajz, krastavica, mrkva, kukuruz, crveni kupus, rukola, brejsing, jogurt)", price:8.00 },
-    { name:"Cezar salata (Pileći file, zelena salata, parmezan, tost hljeb, majonez, maslinovo ulje, limun sok, bijeli luk, senf)", price:12.00 },
-    { name:"Salata sa tunjevinom (Zelena salata, tunjevina, makaroni, crveni kupus, rukola, kukuruz, paradajz)", price:13.00 },
-    { name:"Grčka salata (Feta sir, crveni luk, krastavica, paradajz, paprike, maslina, grah, peršun, maslinovo ulje, dresing, crveni kupus, avokado)", price:10.00 },
-    { name:"Biftek salata (Zelena salata, rukola, paradajz, parmezan, krastavice, senf, orasi, crveni luk, dresing)", price:25.00 },
-    { name:"Mediteran salata (Piletina, avokado, masline, zelena salata, paradajz, limun sok, bučino ulje)", price:12.00 }
-  ]},
-  { category: "SALATE I NAMAZI", dishes: [
-    { name:"Kupus", price:3.00 },
-    { name:"Paradajz", price:3.00 },
-    { name:"Krastavice", price:3.00 },
-    { name:"Miješana", price:3.50 },
-    { name:"Luk salata", price:2.00 },
-    { name:"Šopska salata", price:5.00 },
-    { name:"Zelena", price:3.00 },
-    { name:"Crveni Kupus", price:3.00 },
-    { name:"Sezonska salata", price:3.00 },
-    { name:"Ljuta pečena paprika", price:5.00 },
-    { name:"Kisele krastavice", price:3.00 },
-    { name:"Pečene roge paprike (Suncokretovo sjeme, bijeli luk, balzamiko)", price:6.00 },
-    { name:"Majoneza", price:2.00 },
-    { name:"Kečep", price:2.00 },
-    { name:"Senf", price:2.00 },
-    { name:"Ajvar", price:4.00 },
-    { name:"Tartar", price:3.50 }
-  ]},
-  { category: "DESERTI", id:"desserts", dishes: [
-    { name:"Snickers torta", price:5.00 },
-    { name:"Brownie", price:4.00 },
-    { name:"Plazma torta", price:5.00 },
-    { name:"Mileram torta", price:5.00 },
-    { name:"Voćni kolač", price:3.00 },
-    { name:"Trileće", price:4.00 }
-  ]},
-  { category: "PALAČINKE I SLATKO", dishes: [
-    { name:"Palačinci (Nutella, džem, med, orasi)", price:5.00 },
-    { name:"Nutella pizza", price:8.00 },
-    { name:"Dubai pizza", price:10.00 },
-    { name:"Rafaelo pizza", price:10.00 },
-    { name:"Hurmašice", price:3.00 },
-    { name:"Baklava", price:5.00 },
-    { name:"Jabukovača", price:3.00 },
-    { name:"Tufahije", price:3.00 }
-  ]},
-  { category: "PIĆA", id:"drinks", strong:true, dishes: [
-  // ☆☕️KAFE I TOPLI NAPICI
-  { name:"Espresso 8G", price:2.00 },
-  { name:"Domaća kafa 10G", price:3.00 },
-  { name:"Nescaffe 2G", price:3.00 },
-  { name:"Nescaffe 3U1 16,50G", price:3.00 },
-  { name:"Cappuccino 12,50G", price:3.00 },
-  { name:"Čaj 1,75G", price:3.00 },
-  { name:"Topla čokolada 25G", price:3.50 },
-  { name:"ICE COFFEE 0,20L", price:3.50 },
-  { name:"Toplo mlijeko 0,20L", price:2.50 },
+<div class="dish">
+  <div class="dish-name">Pileći file na žaru</div>
+  <div class="dish-price">12 KM</div>
+  <button onclick="addItem('Pileći file na žaru',12)">Dodaj</button>
+</div>
 
-  // ☆🥤BEZALKOHOLNI NAPICI I VODA
-  // Gazirana
-  { name:"Cocta 0,25L", price:4.00 },
-  { name:"Coca-Cola 0,25L", price:4.00 },
-  { name:"Coca-Cola Zero 0,25L", price:4.00 },
-  { name:"Coca-Cola Cherry 0,25L", price:4.00 },
-  { name:"Fanta 0,25L", price:4.00 },
-  { name:"Sprite 0,25L", price:4.00 },
-  { name:"Schweppes TONIC 0,25L", price:4.00 },
-  { name:"Schweppes BITTER LEMON 0,25L", price:4.00 },
-  { name:"Schweppes TANGARINA 0,25L", price:4.00 },
-  { name:"Schweppes PINK TONIC 0,25L", price:4.00 },
-  { name:"Schweppes POMEGRANATE 0,25L", price:4.00 },
-  { name:"Schweppes PURPLE TONIC 0,25L", price:4.00 },
-  { name:"Orangina Yellow 0,25L", price:4.00 },
-  { name:"Orangina Red 0,25L", price:4.00 },
+<div class="dish">
+  <div class="dish-name">Pohovana piletina</div>
+  <div class="dish-price">13 KM</div>
+  <button onclick="addItem('Pohovana piletina',13)">Dodaj</button>
+</div>
 
-  // Negazirana
-  { name:"Ledeni čaj brusnica 0,25L", price:3.50 },
-  { name:"Ledeni čaj breskva 0,25L", price:3.50 },
-  { name:"Cijeđena narandža 0,33L", price:3.50 },
-  { name:"Cijeđeni limun 0,33L", price:3.50 },
-  { name:"Cedevita 0,33L", price:3.50 },
+<div class="dish">
+  <div class="dish-name">Teletina u sosu od gljiva</div>
+  <div class="dish-price">24 KM</div>
+  <button onclick="addItem('Teletina u sosu od gljiva',24)">Dodaj</button>
+</div>
 
-  // Vitaminka sokovi
-  { name:"Borovnica 0,25L", price:3.50 },
-  { name:"Breskva 0,25L", price:3.50 },
-  { name:"Jabuka 0,25L", price:3.50 },
-  { name:"Jagoda 0,25L", price:3.50 },
-  { name:"Kruška 0,25L", price:3.50 },
-  { name:"Multivitamin 0,25L", price:3.50 },
-  { name:"Narandža 0,25L", price:3.50 },
-  { name:"Višnja 0,25L", price:3.50 },
+<div class="dish">
+  <div class="dish-name">Janjetina ispod sača</div>
+  <div class="dish-price">30 KM</div>
+  <button onclick="addItem('Janjetina ispod sača',30)">Dodaj</button>
+</div>
+<!-- ================= PIZZA ================= -->
+<h2 class="category-title">PIZZA</h2>
 
-  // Energetska pića
-  { name:"Richard Classic 0,25L", price:4.50 },
-  { name:"Richard Zero 0,25L", price:4.50 },
-  { name:"Richard Eukaliptus 0,25L", price:4.50 },
-  { name:"Richard Guarana 0,25L", price:4.50 },
-  { name:"Richard Borovnica 0,25L", price:4.50 },
-  { name:"Red Bull 0,25L", price:7.00 },
+<div class="dish"><div class="dish-name">Margherita (Sir, paradajz sos)</div><div class="dish-price">11 KM</div><button onclick="addItem('Margherita',11)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Proscuitto (Sir, paradajz sos, pureća šunka)</div><div class="dish-price">12 KM</div><button onclick="addItem('Proscuitto',12)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Romana (Sir, goveđi pršut)</div><div class="dish-price">13 KM</div><button onclick="addItem('Romana',13)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Capricciosa</div><div class="dish-price">12 KM</div><button onclick="addItem('Capricciosa',12)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Vegeteriana</div><div class="dish-price">10 KM</div><button onclick="addItem('Vegeteriana',10)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Tuna</div><div class="dish-price">13 KM</div><button onclick="addItem('Tuna pizza',13)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Quattro Formaggi</div><div class="dish-price">12 KM</div><button onclick="addItem('Quattro Formaggi',12)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Bijela pizza</div><div class="dish-price">10 KM</div><button onclick="addItem('Bijela pizza',10)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">DŽIGI2 Pizza</div><div class="dish-price">15 KM</div><button onclick="addItem('DŽIGI2 Pizza',15)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Tabaskino</div><div class="dish-price">10 KM</div><button onclick="addItem('Tabaskino pizza',10)">Dodaj</button></div>
 
-  // Voda
-  { name:"Vitinka Kisela 0,25L", price:2.00 },
-  { name:"Vitinka Kisela 0,75L", price:7.00 },
-  { name:"Vivia obična voda 0,25L", price:2.00 },
-  { name:"Vivia obična voda 0,75L", price:6.00 },
-  { name:"Vivia Limeta 0,33L", price:3.00 },
-  { name:"Exotic Dunja 0,25L", price:3.00 },
-  { name:"Exotic Kruška 0,25L", price:3.00 },
-  { name:"Exotic Limeta/Maracuja 0,25L", price:3.00 },
-  { name:"Exotic Zmajevo voće 0,25L", price:3.00 },
+<!-- ================= RIBE ================= -->
+<h2 class="category-title">RIBE</h2>
 
-  // Piva
-  { name:"Tuborg 0,33L", price:3.00 },
-  { name:"Tuborg Točeno 0,33L", price:3.00 },
-  { name:"Tuborg Bezalkoholni 0,33L", price:4.00 },
-  { name:"Carlsberg 0,33L", price:3.50 },
-  { name:"1664 Blanc 0,33L", price:4.00 },
-  { name:"Radler Twist Limun 0,33L", price:3.00 },
-  { name:"Budweiser 0,33L", price:4.00 },
-  { name:"Erdinger 0,33L", price:5.00 },
-  { name:"Sarajevsko 0,33L", price:3.00 },
-  { name:"Preminger 0,33L", price:3.00 },
-  { name:"Heineken 0,33L", price:5.00 },
-  { name:"Tuzlansko 0,33L", price:3.00 },
+<div class="dish"><div class="dish-name">Pastrmka</div><div class="dish-price">Velika 52 KM / Mala 18 KM</div></div>
+<div class="dish"><div class="dish-name">Šaran</div><div class="dish-price">Velika 60 KM / Mala 22 KM</div></div>
+<div class="dish"><div class="dish-name">Lignje 300G</div><div class="dish-price">20 KM</div><button onclick="addItem('Lignje 300G',20)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Lignje punjene</div><div class="dish-price">23 KM</div><button onclick="addItem('Lignje punjene',23)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Riblja plata 1KG</div><div class="dish-price">58 KM</div><button onclick="addItem('Riblja plata',58)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Oslić 300G</div><div class="dish-price">13 KM</div><button onclick="addItem('Oslić',13)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Brancin</div><div class="dish-price">Velika 62 KM / Mala 24 KM</div></div>
+<div class="dish"><div class="dish-name">Orada</div><div class="dish-price">Velika 62 KM / Mala 24 KM</div></div>
+<div class="dish"><div class="dish-name">Som</div><div class="dish-price">Velika 70 KM / Mala 25 KM</div></div>
+<div class="dish"><div class="dish-name">Smuđ</div><div class="dish-price">Velika 70 KM / Mala 25 KM</div></div>
 
-  // Kokteli
-  { name:"Sex on the Beach 0,30L", price:12.00 },
-  { name:"Blue Lagoon 0,30L", price:12.00 },
+<!-- ================= TJESTENINA ================= -->
+<h2 class="category-title">TJESTENINA</h2>
 
-  // Žestoka pića - Dozeri
-  { name:"Johhnie Walker/Red Label 0,05L", price:7.00 },
-  { name:"Belvedere votka 0,05L", price:6.00 },
-  { name:"Smirnoff votka 0,05L", price:6.00 },
-  { name:"Stock 0,05L", price:5.00 },
-  { name:"Konjak 0,05L", price:4.00 },
-  { name:"Pelinkovac 0,05L", price:4.00 },
-  { name:"Chivac 0,05L", price:8.00 },
-  { name:"Jack Daniels 0,05L", price:8.00 },
-  { name:"Hennessy 0,05L", price:10.00 },
-  { name:"Ballentines 0,05L", price:7.00 },
-  { name:"Gorki list 0,05L", price:6.00 },
-  { name:"Ginn 0,05L", price:5.00 },
-  { name:"Tequila 0,05L", price:5.00 },
-  { name:"Bacardi 0,05L", price:7.00 },
-  { name:"Lavov 0,05L", price:4.00 },
-  { name:"Viljamovka 0,05L", price:6.00 },
-  { name:"Jägermaister 0,05L", price:6.00 },
-  { name:"Šljiva rakija 0,05L", price:4.00 },
-  { name:"Jabuka rakija 0,05L", price:5.00 },
+<div class="dish"><div class="dish-name">Carbonara</div><div class="dish-price">14 KM</div><button onclick="addItem('Carbonara',14)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Pesto pasta</div><div class="dish-price">15 KM</div><button onclick="addItem('Pesto pasta',15)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Bolognese</div><div class="dish-price">13 KM</div><button onclick="addItem('Bolognese',13)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Spaghetti pomodoro</div><div class="dish-price">10 KM</div><button onclick="addItem('Spaghetti pomodoro',10)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Spaghetti sa piletinom i gljivama</div><div class="dish-price">12 KM</div><button onclick="addItem('Spaghetti piletina',12)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Tagliatelle sa biftekom</div><div class="dish-price">25 KM</div><button onclick="addItem('Tagliatelle biftek',25)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Lazanje</div><div class="dish-price">12 KM</div><button onclick="addItem('Lazanje',12)">Dodaj</button></div>
 
-  // Žestoka pića - Flaše
-  { name:"Johnnie Walker/Red Label 0,70L", price:80.00 },
-  { name:"Belvedere votka 0,70L", price:150.00 },
-  { name:"Chivas 0,70L", price:150.00 },
-  { name:"Jack Daniels 0,70L", price:100.00 },
-  { name:"Hennessy 0,70L", price:200.00 },
-  { name:"Ballentines 0,70L", price:90.00 },
-  { name:"Jägermaister 0,70L", price:80.00 },
+<!-- ================= TOPLI SENDVIČI ================= -->
+<h2 class="category-title">TOPLI SENDVIČI</h2>
 
-  // Vina
-  { name:"Kutjevo Graševina 0,75L", price:40.00 },
-  { name:"Kutjevo Graševina 0,187L", price:8.00 },
-  { name:"Žlatina 0,75L", price:50.00 },
-  { name:"Kovačević Chardonnau 0,75L", price:60.00 },
-  { name:"Kovačević Chardonnau 0,187L", price:8.00 },
-  { name:"Žilavka Andrija 0,75L", price:50.00 },
-  { name:"Pjenušac Möet 0,75L", price:200.00 },
-  { name:"Vranac 0,75L", price:35.00 },
-  { name:"Vranac 0,187L", price:8.00 },
-  { name:"Kovačević Aurelius 0,75L", price:60.00 },
-  { name:"Vranac Procorde 0,75L", price:50.00 },
+<div class="dish"><div class="dish-name">Pileći sendvič</div><div class="dish-price">8 KM</div><button onclick="addItem('Pileći sendvič',8)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Juneći sendvič</div><div class="dish-price">10 KM</div><button onclick="addItem('Juneći sendvič',10)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Sendvič sa šunkom</div><div class="dish-price">6 KM</div><button onclick="addItem('Sendvič šunka',6)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Sendvič sa suhim mesom</div><div class="dish-price">8 KM</div><button onclick="addItem('Sendvič suho meso',8)">Dodaj</button></div>
+<!-- ================= OBROK SALATA ================= -->
+<h2 class="category-title" id="salads">OBROK SALATA</h2>
 
-  // Somersby
-  { name:"Jabuka 0,33L", price:4.00 },
-  { name:"Kruška 0,33L", price:4.00 },
-  { name:"Mango 0,33L", price:4.00 },
-  { name:"Borovnica 0,33L", price:4.00 },
-  { name:"Malina 0,33L", price:4.00 },
-  { name:"Jagoda0% 0,33L", price:4.00 },
-  { name:"Zova/Limeta0% 0,33L", price:4.00 }
-]}
-];
+<div class="dish"><div class="dish-name">Fitness salata (slanutak, piletina, paprika, paradajz, krastavica, mrkva, kukuruz, crveni kupus, rukola, brejsing, jogurt)</div><div class="dish-price">8 KM</div><button onclick="addItem('Fitness salata',8)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Cezar salata (Pileći file, zelena salata, parmezan, tost hljeb, majonez, maslinovo ulje, limun sok, bijeli luk, senf)</div><div class="dish-price">12 KM</div><button onclick="addItem('Cezar salata',12)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Salata sa tunjevinom (Zelena salata, tunjevina, makaroni, crveni kupus, rukola, kukuruz, paradajz)</div><div class="dish-price">13 KM</div><button onclick="addItem('Salata sa tunjevinom',13)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Grčka salata (Feta sir, crveni luk, krastavica, paradajz, paprike, maslina, grah, peršun, maslinovo ulje, dresing, crveni kupus, avokado)</div><div class="dish-price">10 KM</div><button onclick="addItem('Grčka salata',10)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Biftek salata (Zelena salata, rukola, paradajz, parmezan, krastavice, senf, orasi, crveni luk, dresing)</div><div class="dish-price">25 KM</div><button onclick="addItem('Biftek salata',25)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Mediteran salata (Piletina, avokado, masline, zelena salata, paradajz, limun sok, bučino ulje)</div><div class="dish-price">12 KM</div><button onclick="addItem('Mediteran salata',12)">Dodaj</button></div>
 
-/* --- Render menu --- */
-const menuContainer = document.getElementById('menu-container');
-let order = [];
-let totalPrice = 0.00;
+<!-- ================= SALATE I NAMAZI ================= -->
+<h2 class="category-title">SALATE I NAMAZI</h2>
 
-function renderMenu(){
-  menuContainer.innerHTML = '';
-  menuData.forEach(cat=>{
-    const heading = document.createElement('h2');
-    heading.textContent = cat.category;
-    // if category object has id property, set it (for anchor)
-    if(cat.id) heading.id = cat.id;
-    heading.className = cat.strong ? 'category-title-strong' : 'category-title';
-    menuContainer.appendChild(heading);
+<div class="dish"><div class="dish-name">Kupus</div><div class="dish-price">3 KM</div><button onclick="addItem('Kupus',3)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Paradajz</div><div class="dish-price">3 KM</div><button onclick="addItem('Paradajz',3)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Krastavice</div><div class="dish-price">3 KM</div><button onclick="addItem('Krastavice',3)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Miješana</div><div class="dish-price">3.5 KM</div><button onclick="addItem('Miješana',3.5)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Luk salata</div><div class="dish-price">2 KM</div><button onclick="addItem('Luk salata',2)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Šopska salata</div><div class="dish-price">5 KM</div><button onclick="addItem('Šopska salata',5)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Zelena</div><div class="dish-price">3 KM</div><button onclick="addItem('Zelena salata',3)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Crveni kupus</div><div class="dish-price">3 KM</div><button onclick="addItem('Crveni kupus',3)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Sezonska salata</div><div class="dish-price">3 KM</div><button onclick="addItem('Sezonska salata',3)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Ljuta pečena paprika</div><div class="dish-price">5 KM</div><button onclick="addItem('Ljuta paprika',5)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Kisele krastavice</div><div class="dish-price">3 KM</div><button onclick="addItem('Kisele krastavice',3)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Pečene roge paprike (Suncokretovo sjeme, bijeli luk, balzamiko)</div><div class="dish-price">6 KM</div><button onclick="addItem('Pečene roge paprike',6)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Majoneza</div><div class="dish-price">2 KM</div><button onclick="addItem('Majoneza',2)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Kečep</div><div class="dish-price">2 KM</div><button onclick="addItem('Kečep',2)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Senf</div><div class="dish-price">2 KM</div><button onclick="addItem('Senf',2)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Ajvar</div><div class="dish-price">4 KM</div><button onclick="addItem('Ajvar',4)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Tartar</div><div class="dish-price">3.5 KM</div><button onclick="addItem('Tartar',3.5)">Dodaj</button></div>
 
-    cat.dishes.forEach(dish=>{
-      const row = document.createElement('div');
-      row.className = 'dish';
+<!-- ================= DESERTI ================= -->
+<h2 class="category-title" id="desserts">DESERTI</h2>
 
-      const name = document.createElement('div');
-      name.className = 'dish-name';
-      name.textContent = dish.name;
-      row.appendChild(name);
+<div class="dish"><div class="dish-name">Snickers torta</div><div class="dish-price">5 KM</div><button onclick="addItem('Snickers torta',5)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Brownie</div><div class="dish-price">4 KM</div><button onclick="addItem('Brownie',4)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Plazma torta</div><div class="dish-price">5 KM</div><button onclick="addItem('Plazma torta',5)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Mileram torta</div><div class="dish-price">5 KM</div><button onclick="addItem('Mileram torta',5)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Voćni kolač</div><div class="dish-price">3 KM</div><button onclick="addItem('Voćni kolač',3)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Trileće</div><div class="dish-price">4 KM</div><button onclick="addItem('Trileće',4)">Dodaj</button></div>
 
-      // sizes (large + small)
-      if(dish.size && Array.isArray(dish.size)){
-        const sizeWrap = document.createElement('div');
-        sizeWrap.className = 'size-buttons';
+<!-- ================= PALAČINKE I SLATKO ================= -->
+<h2 class="category-title">PALAČINKE I SLATKO</h2>
 
-        const btnLarge = document.createElement('button');
-        btnLarge.textContent = `Velika (${dish.price.toFixed(2)} KM)`;
-        btnLarge.onclick = ()=>{ addToOrder(dish.name + " - Velika porcija", dish.price); };
+<div class="dish"><div class="dish-name">Palačinci (Nutella, džem, med, orasi)</div><div class="dish-price">5 KM</div><button onclick="addItem('Palačinci',5)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Nutella pizza</div><div class="dish-price">8 KM</div><button onclick="addItem('Nutella pizza',8)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Dubai pizza</div><div class="dish-price">10 KM</div><button onclick="addItem('Dubai pizza',10)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Rafaelo pizza</div><div class="dish-price">10 KM</div><button onclick="addItem('Rafaelo pizza',10)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Hurmašice</div><div class="dish-price">3 KM</div><button onclick="addItem('Hurmašice',3)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Baklava</div><div class="dish-price">5 KM</div><button onclick="addItem('Baklava',5)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Jabukovača</div><div class="dish-price">3 KM</div><button onclick="addItem('Jabukovača',3)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Tufahije</div><div class="dish-price">3 KM</div><button onclick="addItem('Tufahije',3)">Dodaj</button></div>
 
-        const btnSmall = document.createElement('button');
-        btnSmall.textContent = `Mala (${dish.smallPrice.toFixed(2)} KM)`;
-        btnSmall.onclick = ()=>{ addToOrder(dish.name + " - Mala porcija", dish.smallPrice); };
+<!-- ================= HLJEBOVI ================= -->
+<h2 class="category-title">HLJEBOVI</h2>
 
-        sizeWrap.appendChild(btnLarge);
-        sizeWrap.appendChild(btnSmall);
-        row.appendChild(sizeWrap);
-      } else {
-        // single price item
-        const price = document.createElement('div');
-        price.className = 'dish-price';
-        price.textContent = dish.price.toFixed(2) + " KM";
+<div class="dish"><div class="dish-name">Domaći hljeb/Heljda</div><div class="dish-price">2 KM</div><button onclick="addItem('Domaći hljeb/Heljda',2)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Domaći hljeb/Kukurzni</div><div class="dish-price">2 KM</div><button onclick="addItem('Domaći hljeb/Kukurzni',2)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Integralni</div><div class="dish-price">2 KM</div><button onclick="addItem('Integralni hljeb',2)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Lepinice iz krušne peći</div><div class="dish-price">2 KM</div><button onclick="addItem('Lepinice iz krušne peći',2)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Uštipci</div><div class="dish-price">2 KM</div><button onclick="addItem('Uštipci',2)">Dodaj</button></div>
+<h2 class="category-title-strong" id="drinks">PIĆA</h2>
 
-        const btn = document.createElement('button');
-        btn.textContent = "Odaberi";
-        btn.onclick = ()=>{ addToOrder(dish.name, dish.price); };
+<!-- KAFE I TOPLI NAPICI -->
+<div class="dish"><div class="dish-name">Espresso 8G</div><div class="dish-price">2 KM</div><button onclick="addItem('Espresso 8G',2)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Domaća kafa 10G</div><div class="dish-price">3 KM</div><button onclick="addItem('Domaća kafa 10G',3)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Nescaffe 2G</div><div class="dish-price">3 KM</div><button onclick="addItem('Nescaffe 2G',3)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Nescaffe 3U1 16,50G</div><div class="dish-price">3 KM</div><button onclick="addItem('Nescaffe 3U1 16,50G',3)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Cappuccino 12,50G</div><div class="dish-price">3 KM</div><button onclick="addItem('Cappuccino 12,50G',3)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Čaj 1,75G</div><div class="dish-price">3 KM</div><button onclick="addItem('Čaj 1,75G',3)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Topla čokolada 25G</div><div class="dish-price">3.5 KM</div><button onclick="addItem('Topla čokolada 25G',3.5)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">ICE COFFEE 0,20L</div><div class="dish-price">3.5 KM</div><button onclick="addItem('ICE COFFEE 0,20L',3.5)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Toplo mlijeko 0,20L</div><div class="dish-price">2.5 KM</div><button onclick="addItem('Toplo mlijeko 0,20L',2.5)">Dodaj</button></div>
 
-        row.appendChild(price);
-        row.appendChild(btn);
-      }
+<!-- BEZALKOHOLNI NAPICI -->
+<!-- Gazirana -->
+<div class="dish"><div class="dish-name">Cocta 0,25L</div><div class="dish-price">4 KM</div><button onclick="addItem('Cocta 0,25L',4)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Coca-Cola 0,25L</div><div class="dish-price">4 KM</div><button onclick="addItem('Coca-Cola 0,25L',4)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Coca-Cola Zero 0,25L</div><div class="dish-price">4 KM</div><button onclick="addItem('Coca-Cola Zero 0,25L',4)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Coca-Cola Cherry 0,25L</div><div class="dish-price">4 KM</div><button onclick="addItem('Coca-Cola Cherry 0,25L',4)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Fanta 0,25L</div><div class="dish-price">4 KM</div><button onclick="addItem('Fanta 0,25L',4)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Sprite 0,25L</div><div class="dish-price">4 KM</div><button onclick="addItem('Sprite 0,25L',4)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Schweppes TONIC 0,25L</div><div class="dish-price">4 KM</div><button onclick="addItem('Schweppes TONIC 0,25L',4)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Schweppes BITTER LEMON 0,25L</div><div class="dish-price">4 KM</div><button onclick="addItem('Schweppes BITTER LEMON 0,25L',4)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Schweppes TANGARINA 0,25L</div><div class="dish-price">4 KM</div><button onclick="addItem('Schweppes TANGARINA 0,25L',4)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Schweppes PINK TONIC 0,25L</div><div class="dish-price">4 KM</div><button onclick="addItem('Schweppes PINK TONIC 0,25L',4)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Schweppes POMEGRANATE 0,25L</div><div class="dish-price">4 KM</div><button onclick="addItem('Schweppes POMEGRANATE 0,25L',4)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Schweppes PURPLE TONIC 0,25L</div><div class="dish-price">4 KM</div><button onclick="addItem('Schweppes PURPLE TONIC 0,25L',4)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Orangina Yellow 0,25L</div><div class="dish-price">4 KM</div><button onclick="addItem('Orangina Yellow 0,25L',4)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Orangina Red 0,25L</div><div class="dish-price">4 KM</div><button onclick="addItem('Orangina Red 0,25L',4)">Dodaj</button></div>
 
-      menuContainer.appendChild(row);
-    });
-  });
-}
+<!-- Negazirana -->
+<div class="dish"><div class="dish-name">Ledeni čaj brusnica 0,25L</div><div class="dish-price">3.5 KM</div><button onclick="addItem('Ledeni čaj brusnica 0,25L',3.5)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Ledeni čaj breskva 0,25L</div><div class="dish-price">3.5 KM</div><button onclick="addItem('Ledeni čaj breskva 0,25L',3.5)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Cijeđena narandža 0,33L</div><div class="dish-price">3.5 KM</div><button onclick="addItem('Cijeđena narandža 0,33L',3.5)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Cijeđeni limun 0,33L</div><div class="dish-price">3.5 KM</div><button onclick="addItem('Cijeđeni limun 0,33L',3.5)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Cedevita 0,33L</div><div class="dish-price">3.5 KM</div><button onclick="addItem('Cedevita 0,33L',3.5)">Dodaj</button></div>
 
-function addToOrder(name, price){
-  order.push({name, price});
-  totalPrice = +(totalPrice + price).toFixed(2);
-  document.getElementById('total-price').textContent = totalPrice.toFixed(2);
-}
+<!-- Vitaminka sokovi -->
+<div class="dish"><div class="dish-name">Borovnica 0,25L</div><div class="dish-price">3.5 KM</div><button onclick="addItem('Borovnica 0,25L',3.5)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Breskva 0,25L</div><div class="dish-price">3.5 KM</div><button onclick="addItem('Breskva 0,25L',3.5)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Jabuka 0,25L</div><div class="dish-price">3.5 KM</div><button onclick="addItem('Jabuka 0,25L',3.5)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Jagoda 0,25L</div><div class="dish-price">3.5 KM</div><button onclick="addItem('Jagoda 0,25L',3.5)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Kruška 0,25L</div><div class="dish-price">3.5 KM</div><button onclick="addItem('Kruška 0,25L',3.5)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Multivitamin 0,25L</div><div class="dish-price">3.5 KM</div><button onclick="addItem('Multivitamin 0,25L',3.5)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Narandža 0,25L</div><div class="dish-price">3.5 KM</div><button onclick="addItem('Narandža 0,25L',3.5)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Višnja 0,25L</div><div class="dish-price">3.5 KM</div><button onclick="addItem('Višnja 0,25L',3.5)">Dodaj</button></div>
 
-/* render first time */
-renderMenu();
+<!-- Energetska pića -->
+<div class="dish"><div class="dish-name">Richard Classic 0,25L</div><div class="dish-price">4.5 KM</div><button onclick="addItem('Richard Classic 0,25L',4.5)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Richard Zero 0,25L</div><div class="dish-price">4.5 KM</div><button onclick="addItem('Richard Zero 0,25L',4.5)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Richard Eukaliptus 0,25L</div><div class="dish-price">4.5 KM</div><button onclick="addItem('Richard Eukaliptus 0,25L',4.5)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Richard Guarana 0,25L</div><div class="dish-price">4.5 KM</div><button onclick="addItem('Richard Guarana 0,25L',4.5)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Richard Borovnica 0,25L</div><div class="dish-price">4.5 KM</div><button onclick="addItem('Richard Borovnica 0,25L',4.5)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Red Bull 0,25L</div><div class="dish-price">7 KM</div><button onclick="addItem('Red Bull 0,25L',7)">Dodaj</button></div>
 
-/* --- Order button (WhatsApp) --- */
-document.getElementById('order-btn').addEventListener('click', ()=>{
-  if(order.length === 0){ alert('Molimo odaberite bar jedno jelo.'); return; }
-  let text = "Narudžba:%0A";
-  order.forEach(it => { text += `- ${it.name} (${it.price.toFixed(2)} KM)%0A`; });
-  text += `Ukupno: ${totalPrice.toFixed(2)} KM`;
-  const phone = "38761015241"; // <-- promijeni na svoj broj (bez +), npr. 38761015241
-  const url = `https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(text)}`;
-  window.open(url, "_blank");
-});
+<!-- Voda -->
+<div class="dish"><div class="dish-name">Vitinka Kisela 0,25L</div><div class="dish-price">2 KM</div><button onclick="addItem('Vitinka Kisela 0,25L',2)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Vitinka Kisela 0,75L</div><div class="dish-price">7 KM</div><button onclick="addItem('Vitinka Kisela 0,75L',7)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Vivia obična voda 0,25L</div><div class="dish-price">2 KM</div><button onclick="addItem('Vivia obična voda 0,25L',2)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Vivia obična voda 0,75L</div><div class="dish-price">6 KM</div><button onclick="addItem('Vivia obična voda 0,75L',6)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Vivia Limeta 0,33L</div><div class="dish-price">3 KM</div><button onclick="addItem('Vivia Limeta 0,33L',3)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Exotic Dunja 0,25L</div><div class="dish-price">3 KM</div><button onclick="addItem('Exotic Dunja 0,25L',3)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Exotic Kruška 0,25L</div><div class="dish-price">3 KM</div><button onclick="addItem('Exotic Kruška 0,25L',3)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Exotic Limeta/Maracuja 0,25L</div><div class="dish-price">3 KM</div><button onclick="addItem('Exotic Limeta/Maracuja 0,25L',3)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Exotic Zmajevo voće 0,25L</div><div class="dish-price">3 KM</div><button onclick="addItem('Exotic Zmajevo voće 0,25L',3)">Dodaj</button></div>
+<!-- Piva -->
+<div class="dish"><div class="dish-name">Tuborg 0,33L</div><div class="dish-price">3 KM</div><button onclick="addItem('Tuborg 0,33L',3)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Tuborg Točeno 0,33L</div><div class="dish-price">3 KM</div><button onclick="addItem('Tuborg Točeno 0,33L',3)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Tuborg Bezalkoholni 0,33L</div><div class="dish-price">4 KM</div><button onclick="addItem('Tuborg Bezalkoholni 0,33L',4)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Carlsberg 0,33L</div><div class="dish-price">3.5 KM</div><button onclick="addItem('Carlsberg 0,33L',3.5)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">1664 Blanc 0,33L</div><div class="dish-price">4 KM</div><button onclick="addItem('1664 Blanc 0,33L',4)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Radler Twist Limun 0,33L</div><div class="dish-price">3 KM</div><button onclick="addItem('Radler Twist Limun 0,33L',3)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Budweiser 0,33L</div><div class="dish-price">4 KM</div><button onclick="addItem('Budweiser 0,33L',4)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Erdinger 0,33L</div><div class="dish-price">5 KM</div><button onclick="addItem('Erdinger 0,33L',5)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Sarajevsko 0,33L</div><div class="dish-price">3 KM</div><button onclick="addItem('Sarajevsko 0,33L',3)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Preminger 0,33L</div><div class="dish-price">3 KM</div><button onclick="addItem('Preminger 0,33L',3)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Heineken 0,33L</div><div class="dish-price">5 KM</div><button onclick="addItem('Heineken 0,33L',5)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Tuzlansko 0,33L</div><div class="dish-price">3 KM</div><button onclick="addItem('Tuzlansko 0,33L',3)">Dodaj</button></div>
 
-/* --- Top action button behaviour --- */
-document.getElementById('goto-drinks').addEventListener('click', ()=>{
-  const el = document.getElementById('drinks');
-  if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
-  else alert('Sekcija PIĆA još nije popunjena.');
-});
-document.getElementById('goto-salads').addEventListener('click', ()=>{
-  const el = document.getElementById('salads') || document.querySelector('[id="salads"]');
-  if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
-  else {
-    // if OBROK SALATA not found as id, try find heading text
-    const h = Array.from(document.querySelectorAll('.category-title')).find(x => x.textContent.includes('SALATA'));
-    if(h) h.scrollIntoView({behavior:'smooth', block:'start'});
-  }
-});
-document.getElementById('goto-dessert').addEventListener('click', ()=>{
-  const el = document.getElementById('desserts') || document.querySelector('[id="desserts"]');
-  if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
-  else {
-    const h = Array.from(document.querySelectorAll('.category-title')).find(x => x.textContent.includes('DESERT') || x.textContent.includes('PALAČINKE'));
-    if(h) h.scrollIntoView({behavior:'smooth', block:'start'});
-  }
-});
-document.getElementById('goto-order').addEventListener('click', ()=>{
-  document.getElementById('order-summary').scrollIntoView({behavior:'smooth', block:'center'});
-});
+<!-- Kokteli -->
+<div class="dish"><div class="dish-name">Sex on the Beach 0,30L</div><div class="dish-price">12 KM</div><button onclick="addItem('Sex on the Beach 0,30L',12)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Blue Lagoon 0,30L</div><div class="dish-price">12 KM</div><button onclick="addItem('Blue Lagoon 0,30L',12)">Dodaj</button></div>
 
-/* --- simple safeguard: ensure anchors exist after render --- */
-window.addEventListener('load', ()=>{
-  // ensure salads anchor exists (already set on OBROK SALATA)
-});
+<!-- Žestoka pića - Dozeri -->
+<div class="dish"><div class="dish-name">Johhnie Walker/Red Label 0,05L</div><div class="dish-price">7 KM</div><button onclick="addItem('Johhnie Walker/Red Label 0,05L',7)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Belvedere votka 0,05L</div><div class="dish-price">6 KM</div><button onclick="addItem('Belvedere votka 0,05L',6)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Smirnoff votka 0,05L</div><div class="dish-price">6 KM</div><button onclick="addItem('Smirnoff votka 0,05L',6)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Stock 0,05L</div><div class="dish-price">5 KM</div><button onclick="addItem('Stock 0,05L',5)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Konjak 0,05L</div><div class="dish-price">4 KM</div><button onclick="addItem('Konjak 0,05L',4)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Pelinkovac 0,05L</div><div class="dish-price">4 KM</div><button onclick="addItem('Pelinkovac 0,05L',4)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Chivac 0,05L</div><div class="dish-price">8 KM</div><button onclick="addItem('Chivac 0,05L',8)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Jack Daniels 0,05L</div><div class="dish-price">8 KM</div><button onclick="addItem('Jack Daniels 0,05L',8)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Hennessy 0,05L</div><div class="dish-price">10 KM</div><button onclick="addItem('Hennessy 0,05L',10)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Ballentines 0,05L</div><div class="dish-price">7 KM</div><button onclick="addItem('Ballentines 0,05L',7)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Gorki list 0,05L</div><div class="dish-price">6 KM</div><button onclick="addItem('Gorki list 0,05L',6)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Ginn 0,05L</div><div class="dish-price">5 KM</div><button onclick="addItem('Ginn 0,05L',5)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Tequila 0,05L</div><div class="dish-price">5 KM</div><button onclick="addItem('Tequila 0,05L',5)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Bacardi 0,05L</div><div class="dish-price">7 KM</div><button onclick="addItem('Bacardi 0,05L',7)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Lavov 0,05L</div><div class="dish-price">4 KM</div><button onclick="addItem('Lavov 0,05L',4)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Viljamovka 0,05L</div><div class="dish-price">6 KM</div><button onclick="addItem('Viljamovka 0,05L',6)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Jägermaister 0,05L</div><div class="dish-price">6 KM</div><button onclick="addItem('Jägermaister 0,05L',6)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Šljiva rakija 0,05L</div><div class="dish-price">4 KM</div><button onclick="addItem('Šljiva rakija 0,05L',4)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Jabuka rakija 0,05L</div><div class="dish-price">5 KM</div><button onclick="addItem('Jabuka rakija 0,05L',5)">Dodaj</button></div>
 
-/* --- end script --- */
+<!-- Žestoka pića - Flaše -->
+<div class="dish"><div class="dish-name">Johnnie Walker/Red Label 0,70L</div><div class="dish-price">80 KM</div><button onclick="addItem('Johnnie Walker/Red Label 0,70L',80)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Belvedere votka 0,70L</div><div class="dish-price">150 KM</div><button onclick="addItem('Belvedere votka 0,70L',150)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Chivas 0,70L</div><div class="dish-price">150 KM</div><button onclick="addItem('Chivas 0,70L',150)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Jack Daniels 0,70L</div><div class="dish-price">100 KM</div><button onclick="addItem('Jack Daniels 0,70L',100)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Hennessy 0,70L</div><div class="dish-price">200 KM</div><button onclick="addItem('Hennessy 0,70L',200)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Ballentines 0,70L</div><div class="dish-price">90 KM</div><button onclick="addItem('Ballentines 0,70L',90)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Jägermaister 0,70L</div><div class="dish-price">80 KM</div><button onclick="addItem('Jägermaister 0,70L',80)">Dodaj</button></div>
+
+<!-- Vina -->
+<div class="dish"><div class="dish-name">Kutjevo Graševina 0,75L</div><div class="dish-price">40 KM</div><button onclick="addItem('Kutjevo Graševina 0,75L',40)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Kutjevo Graševina 0,187L</div><div class="dish-price">8 KM</div><button onclick="addItem('Kutjevo Graševina 0,187L',8)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Žlatina 0,75L</div><div class="dish-price">50 KM</div><button onclick="addItem('Žlatina 0,75L',50)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Kovačević Chardonnau 0,75L</div><div class="dish-price">60 KM</div><button onclick="addItem('Kovačević Chardonnau 0,75L',60)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Kovačević Chardonnau 0,187L</div><div class="dish-price">8 KM</div><button onclick="addItem('Kovačević Chardonnau 0,187L',8)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Žilavka Andrija 0,75L</div><div class="dish-price">50 KM</div><button onclick="addItem('Žilavka Andrija 0,75L',50)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Pjenušac Möet 0,75L</div><div class="dish-price">200 KM</div><button onclick="addItem('Pjenušac Möet 0,75L',200)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Vranac 0,75L</div><div class="dish-price">35 KM</div><button onclick="addItem('Vranac 0,75L',35)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Vranac 0,187L</div><div class="dish-price">8 KM</div><button onclick="addItem('Vranac 0,187L',8)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Kovačević Aurelius 0,75L</div><div class="dish-price">60 KM</div><button onclick="addItem('Kovačević Aurelius 0,75L',60)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Vranac Procorde 0,75L</div><div class="dish-price">50 KM</div><button onclick="addItem('Vranac Procorde 0,75L',50)">Dodaj</button></div>
+
+<!-- Somersby -->
+<div class="dish"><div class="dish-name">Jabuka 0,33L</div><div class="dish-price">4 KM</div><button onclick="addItem('Jabuka 0,33L',4)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Kruška 0,33L</div><div class="dish-price">4 KM</div><button onclick="addItem('Kruška 0,33L',4)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Mango 0,33L</div><div class="dish-price">4 KM</div><button onclick="addItem('Mango 0,33L',4)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Borovnica 0,33L</div><div class="dish-price">4 KM</div><button onclick="addItem('Borovnica 0,33L',4)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Malina 0,33L</div><div class="dish-price">4 KM</div><button onclick="addItem('Malina 0,33L',4)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Jagoda0% 0,33L</div><div class="dish-price">4 KM</div><button onclick="addItem('Jagoda0% 0,33L',4)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Zova/Limeta0% 0,33L</div><div class="dish-price">4 KM</div><button onclick="addItem('Zova/Limeta0% 0,33L',4)">Dodaj</button></div>
+    /* --- end script --- */
 </script>
+
+</main>
+<footer>© 2025 Restoran Džigi2 — Sva prava zadržana.</footer>
 </body>
 </html>
