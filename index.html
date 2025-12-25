@@ -10,351 +10,234 @@
 
 <style>
 :root{
---gold:#c9a14a;
---dark:#1a120c;
---brown:#5a3825;
---glass:rgba(255,255,255,0.08);
+  --gold:#c9a14a;
+  --dark:#1a120c;
+  --brown:#5a3825;
+  --glass:rgba(255,255,255,0.08);
 }
 
 *{margin:0;padding:0;box-sizing:border-box;}
 
 body{
-font-family:'Poppins',sans-serif;
-background:radial-gradient(circle at top,#2b1b12,#0f0a07);
-color:#f5f1ec;
-overflow-x:hidden;
+  font-family:'Poppins',sans-serif;
+  background:radial-gradient(circle at top,#2b1b12,#0f0a07);
+  color:#f5f1ec;
+  overflow-x:hidden;
 }
 
 /* BACKGROUND GLOW */
 body::before{
-content:"";
-position:fixed;
-inset:0;
-background:linear-gradient(120deg,rgba(201,161,74,0.05),transparent,rgba(255,255,255,0.03));
-animation:bgmove 20s infinite alternate;
-z-index:-2;
+  content:"";
+  position:fixed;
+  inset:0;
+  background:linear-gradient(120deg,rgba(201,161,74,0.05),transparent,rgba(255,255,255,0.03));
+  animation:bgmove 20s infinite alternate;
+  z-index:-2;
 }
 @keyframes bgmove{to{transform:translateX(-10%);}}
 
 /* FLOATING ICONS */
 .floating-icons{position:fixed;inset:0;z-index:-1;pointer-events:none;}
 .icon{
-position:absolute;
-font-size:28px;
-opacity:.6;
-animation:float 16s linear infinite;
+  position:absolute;
+  font-size:28px;
+  opacity:.6;
+  animation:float 16s linear infinite;
 }
 @keyframes float{
-0%{transform:translateY(100vh) rotate(0);opacity:0;}
-30%{opacity:1;}
-100%{transform:translateY(-100vh) rotate(360deg);opacity:0;}
+  0%{transform:translateY(100vh) rotate(0);opacity:0;}
+  30%{opacity:1;}
+  100%{transform:translateY(-100vh) rotate(360deg);opacity:0;}
 }
 
 /* HEADER */
 header{
-position:sticky;
-top:0;
-display:flex;
-align-items:center;
-padding:15px 40px;
-background:rgba(0,0,0,0.45);
-backdrop-filter:blur(12px);
-z-index:10;
+  position:sticky;
+  top:0;
+  display:flex;
+  align-items:center;
+  padding:15px 40px;
+  background:rgba(0,0,0,0.45);
+  backdrop-filter:blur(12px);
+  z-index:10;
 }
 header img{height:70px;margin-right:15px;}
 header h1{
-font-family:'Playfair Display',serif;
-font-size:42px;
-color:var(--gold);
-letter-spacing:2px;
+  font-family:'Playfair Display',serif;
+  font-size:42px;
+  color:var(--gold);
+  letter-spacing:2px;
 }
 
 .menu-toggle{
-margin-left:auto;
-display:flex;
-flex-direction:column;
-gap:5px;
-cursor:pointer;
+  margin-left:auto;
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+  cursor:pointer;
 }
 .menu-toggle span{
-width:28px;height:3px;
-background:#fff;border-radius:3px;
+  width:28px;height:3px;
+  background:#fff;border-radius:3px;
 }
 
 /* NAV */
 nav{
-position:fixed;
-right:-320px;
-top:0;
-width:320px;
-height:100vh;
-background:linear-gradient(to bottom,#1a120c,#000);
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-transition:.4s;
-z-index:20;
+  position:fixed;
+  right:-320px;
+  top:0;
+  width:320px;
+  height:100vh;
+  background:linear-gradient(to bottom,#1a120c,#000);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  transition:.4s;
+  z-index:20;
 }
 nav.active{right:0;}
 nav a{
-color:#fff;
-text-decoration:none;
-font-size:20px;
-margin:12px 0;
+  color:#fff;
+  text-decoration:none;
+  font-size:20px;
+  margin:12px 0;
 }
 nav a:hover{color:var(--gold);}
 .close-menu{
-position:absolute;
-top:15px;right:20px;
-font-size:34px;cursor:pointer;
+  position:absolute;
+  top:15px;right:20px;
+  font-size:34px;cursor:pointer;
 }
 
 /* HERO */
 .hero{
-height:90vh;
-background:url('dzigi2.jpg') center/cover fixed;
-display:flex;
-align-items:center;
-justify-content:center;
-position:relative;
-text-align:center;
+  height:90vh;
+  background:url('dzigi2.jpg') center/cover fixed;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  text-align:center;
 }
 .hero::after{
-content:"";
-position:absolute;
-inset:0;
-background:rgba(0,0,0,.55);
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,.55);
 }
 .hero-content{
-position:relative;
-z-index:2;
-max-width:900px;
+  position:relative;
+  z-index:2;
+  max-width:900px;
 }
 .hero h2{
-font-family:'Playfair Display',serif;
-font-size:64px;
-color:var(--gold);
-animation:fadeDown 1.5s ease;
+  font-family:'Playfair Display',serif;
+  font-size:64px;
+  color:var(--gold);
+  animation:fadeDown 1.5s ease;
 }
 .hero p{
-font-size:22px;
-margin-top:20px;
-opacity:.9;
-animation:fadeIn 2.2s ease;
+  font-size:22px;
+  margin-top:20px;
+  opacity:.9;
+  animation:fadeIn 2.2s ease;
 }
 
 /* STATUS */
 .status{
-margin-top:30px;
-font-weight:600;
-color:#7CFF7C;
+  margin-top:30px;
+  font-weight:600;
+  color:#7CFF7C;
 }
 
 /* CTA */
 .cta{
-margin-top:40px;
-display:inline-block;
-padding:16px 40px;
-border:2px solid var(--gold);
-color:var(--gold);
-text-decoration:none;
-font-size:18px;
-letter-spacing:2px;
-transition:.3s;
+  margin-top:40px;
+  display:inline-block;
+  padding:16px 40px;
+  border:2px solid var(--gold);
+  color:var(--gold);
+  text-decoration:none;
+  font-size:18px;
+  letter-spacing:2px;
+  transition:.3s;
 }
 .cta:hover{
-background:var(--gold);
-color:#000;
+  background:var(--gold);
+  color:#000;
 }
 
 /* SECTIONS */
 section{
-padding:90px 20px;
-text-align:center;
+  padding:90px 20px;
+  text-align:center;
 }
 .glass{
-background:var(--glass);
-backdrop-filter:blur(10px);
-border-radius:18px;
-padding:50px 30px;
-max-width:1100px;
-margin:auto;
-box-shadow:0 20px 40px rgba(0,0,0,.5);
+  background:var(--glass);
+  backdrop-filter:blur(10px);
+  border-radius:18px;
+  padding:50px 30px;
+  max-width:1100px;
+  margin:auto;
+  box-shadow:0 20px 40px rgba(0,0,0,.5);
 }
 section h2{
-font-family:'Playfair Display',serif;
-font-size:42px;
-color:var(--gold);
-margin-bottom:25px;
+  font-family:'Playfair Display',serif;
+  font-size:42px;
+  color:var(--gold);
+  margin-bottom:25px;
 }
 
 /* CARDS */
 .cards{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:25px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:25px;
 }
 .card{
-padding:30px;
-border:1px solid rgba(255,255,255,.1);
-border-radius:15px;
+  padding:30px;
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:15px;
 }
 .card span{font-size:34px;}
 .card h3{margin:15px 0;color:var(--gold);}
 
 /* GALLERY */
 .gallery-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-gap:25px;
-margin-top:40px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:25px;
+  margin-top:40px;
 }
 .gallery-grid img{
-width:100%;
-border-radius:15px;
-transition:.4s;
+  width:100%;
+  border-radius:15px;
+  transition:.4s;
 }
 .gallery-grid img:hover{transform:scale(1.08);}
 
 /* TESTIMONIALS */
 .testimonials{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-gap:25px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:25px;
 }
 .testimonial{
-background:rgba(0,0,0,.5);
-padding:30px;
-border-radius:15px;
+  background:rgba(0,0,0,.5);
+  padding:30px;
+  border-radius:15px;
 }
 
 /* FOOTER */
 footer{
-background:#000;
-padding:25px;
-text-align:center;
-font-size:14px;
+  background:#000;
+  padding:25px;
+  text-align:center;
+  font-size:14px;
 }
 
-/* ANIM */
-@keyframes fadeDown{
-from{opacity:0;transform:translateY(-20px);}
-to{opacity:1;}
-}
-@keyframes fadeIn{
-from{opacity:0;}
-to{opacity:1;}
-}
-
-@media(max-width:768px){
-.hero h2{font-size:40px;}
-}
-</style>
-</head>
-
-<body>
-
-<div class="floating-icons" id="floating-icons"></div>
-
-<header>
-<img src="image121.png">
-<h1>Džigi2</h1>
-<div class="menu-toggle" id="menu-toggle">
-<span></span><span></span><span></span>
-</div>
-</header>
-
-<nav id="menu">
-<div class="close-menu" id="close-menu">&times;</div>
-<a href="#pocetna">Početna</a>
-<a href="#o-nama">O nama</a>
-<a href="#galerija">Galerija</a>
-<a href="menijela.html">Meni jela</a>
-<a href="rezervacije.html">Rezervacije</a>
-<a href="#utisci">Utisci</a>
-<a href="#kontakt">Kontakt</a>
-</nav>
-
-<section class="hero" id="pocetna">
-<div class="hero-content">
-<h2>Restoran Džigi2</h2>
-<p>Luksuzni ambijent, domaća kuhinja i nezaboravno iskustvo u srcu Gradačca.</p>
-<div class="status" id="status"></div>
-<a href="rezervacije.html" class="cta">REZERVIŠI STO</a>
-</div>
-</section>
-
-<section id="o-nama">
-<div class="glass">
-<h2>Zašto gosti biraju Džigi2</h2>
-<div class="cards">
-<div class="card"><span>🥩</span><h3>Specijaliteti kuće</h3><p>Autentična jela vrhunskog kvaliteta.</p></div>
-<div class="card"><span>🍷</span><h3>Luksuzni ambijent</h3><p>Elegancija u svakom detalju.</p></div>
-<div class="card"><span>👨‍🍳</span><h3>Iskusni kuhari</h3><p>Strast i tradicija na tanjiru.</p></div>
-</div>
-</div>
-</section>
-
-<section id="galerija">
-<h2>Ambijent</h2>
-<div class="gallery-grid">
-<img src="ambijent1.jpg">
-<img src="ambijent2.jpg">
-<img src="ambijent3.jpg">
-<img src="ambijent4.jpg">
-</div>
-</section>
-
-<section id="utisci">
-<div class="glass">
-<h2>Utisci gostiju</h2>
-<div class="testimonials">
-<div class="testimonial">⭐⭐⭐⭐⭐<br>“Najbolji restoran u Gradačcu!”</div>
-<div class="testimonial">⭐⭐⭐⭐⭐<br>“Ambijent i hrana na vrhunskom nivou.”</div>
-<div class="testimonial">⭐⭐⭐⭐⭐<br>“Uvijek se vraćamo ponovo.”</div>
-</div>
-</div>
-</section>
-
-<section id="kontakt">
-<div class="glass">
-<h2>Kontakt</h2>
-<p>📞 +387 35 818-817<br>Pon–Pet: 08–23 | Vikend: 13–23</p>
-</div>
-</section>
-
-<footer>
-© 2025 Restoran Džigi2 – Luksuz koji se pamti
-</footer>
-
-<script>
-const toggle=document.getElementById('menu-toggle');
-const menu=document.getElementById('menu');
-const closeMenu=document.getElementById('close-menu');
-toggle.onclick=()=>menu.classList.toggle('active');
-closeMenu.onclick=()=>menu.classList.remove('active');
-
-/* STATUS OPEN */
-const h=new Date().getHours();
-const status=document.getElementById('status');
-status.textContent=(h>=8 && h<23)?"🟢 Trenutno smo otvoreni":"🔴 Trenutno smo zatvoreni";
-
-/* FLOAT ICONS */
-const icons=['🍷','🍽','🥩','🍰'];
-const c=document.getElementById('floating-icons');
-for(let i=0;i<25;i++){
-const d=document.createElement('div');
-d.className='icon';
-d.textContent=icons[Math.floor(Math.random()*icons.length)];
-d.style.left=Math.random()*100+'vw';
-d.style.animationDuration=12+Math.random()*10+'s';
-c.appendChild(d);
-}
-  <!-- WhatsApp dugme -->
-<a href="https://wa.me/38761015241" class="whatsapp-float" target="_blank">WhatsApp</a>
-
-<style>
+/* WhatsApp dugme */
 .whatsapp-float {
   position: fixed;
   width: 60px;
@@ -374,8 +257,95 @@ c.appendChild(d);
 .whatsapp-float:hover {
   background-color: #128C7E;
 }
+
+/* ANIM */
+@keyframes fadeDown{
+  from{opacity:0;transform:translateY(-20px);}
+  to{opacity:1;}
+}
+@keyframes fadeIn{
+  from{opacity:0;}
+  to{opacity:1;}
+}
+
+@media(max-width:768px){
+  .hero h2{font-size:40px;}
+}
 </style>
-  <!-- Google Maps lokacija -->
+</head>
+
+<body>
+
+<div class="floating-icons" id="floating-icons"></div>
+
+<header>
+  <img src="image121.png" alt="Džigi2 logo">
+  <h1>Džigi2</h1>
+  <div class="menu-toggle" id="menu-toggle">
+    <span></span><span></span><span></span>
+  </div>
+</header>
+
+<nav id="menu">
+  <div class="close-menu" id="close-menu">&times;</div>
+  <a href="#pocetna">Početna</a>
+  <a href="#o-nama">O nama</a>
+  <a href="#galerija">Galerija</a>
+  <a href="menijela.html">Meni jela</a>
+  <a href="rezervacije.html">Rezervacije</a>
+  <a href="#utisci">Utisci</a>
+  <a href="#kontakt">Kontakt</a>
+</nav>
+
+<section class="hero" id="pocetna">
+  <div class="hero-content">
+    <h2>Restoran Džigi2</h2>
+    <p>Luksuzni ambijent, domaća kuhinja i nezaboravno iskustvo u srcu Gradačca.</p>
+    <div class="status" id="status"></div>
+    <a href="rezervacije.html" class="cta">REZERVIŠI STO</a>
+  </div>
+</section>
+
+<section id="o-nama">
+  <div class="glass">
+    <h2>Zašto gosti biraju Džigi2</h2>
+    <div class="cards">
+      <div class="card"><span>🥩</span><h3>Specijaliteti kuće</h3><p>Autentična jela vrhunskog kvaliteta.</p></div>
+      <div class="card"><span>🍷</span><h3>Luksuzni ambijent</h3><p>Elegancija u svakom detalju.</p></div>
+      <div class="card"><span>👨‍🍳</span><h3>Iskusni kuhari</h3><p>Strast i tradicija na tanjiru.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="galerija">
+  <h2>Ambijent</h2>
+  <div class="gallery-grid">
+    <img src="ambijent1.jpg" alt="">
+    <img src="ambijent2.jpg" alt="">
+    <img src="ambijent3.jpg" alt="">
+    <img src="ambijent4.jpg" alt="">
+  </div>
+</section>
+
+<section id="utisci">
+  <div class="glass">
+    <h2>Utisci gostiju</h2>
+    <div class="testimonials">
+      <div class="testimonial">⭐⭐⭐⭐⭐<br>“Najbolji restoran u Gradačcu!”</div>
+      <div class="testimonial">⭐⭐⭐⭐⭐<br>“Ambijent i hrana na vrhunskom nivou.”</div>
+      <div class="testimonial">⭐⭐⭐⭐⭐<br>“Uvijek se vraćamo ponovo.”</div>
+    </div>
+  </div>
+</section>
+
+<section id="kontakt">
+  <div class="glass">
+    <h2>Kontakt</h2>
+    <p>📞 +387 35 818-817<br>Pon–Pet: 08–23 | Vikend: 13–23</p>
+  </div>
+</section>
+
+<!-- Google Maps -->
 <div style="width: 100%; height: 400px; margin-top: 50px;">
   <iframe
     src="https://www.google.com/maps?q=VCJC+P33+Restoran+%E2%80%9CD%C5%BEigi+2%E2%80%9D,+Husein-kapetana+Grada%C5%A1%C4%8Devi%C4%87a,+Grada%C4%8Dac,+Bosna+i+Hercegovina&output=embed"
@@ -387,6 +357,37 @@ c.appendChild(d);
     referrerpolicy="no-referrer-when-downgrade">
   </iframe>
 </div>
+
+<footer>
+  © 2025 Restoran Džigi2 – Luksuz koji se pamti
+</footer>
+
+<!-- WhatsApp dugme -->
+<a href="https://wa.me/38761015241" class="whatsapp-float" target="_blank">💬</a>
+
+<script>
+const toggle=document.getElementById('menu-toggle');
+const menu=document.getElementById('menu');
+const closeMenu=document.getElementById('close-menu');
+toggle.onclick=()=>menu.classList.toggle('active');
+closeMenu.onclick=()=>menu.classList.remove('active');
+
+/* STATUS OPEN */
+const h=new Date().getHours();
+const status=document.getElementById('status');
+status.textContent=(h>=8 && h<23)?"🟢 Trenutno smo otvoreni":"🔴 Trenutno smo zatvoreni";
+
+/* FLOAT ICONS */
+const icons=['🍷','🍽','🥩','🍰'];
+const c=document.getElementById('floating-icons');
+for(let i=0;i<25;i++){
+  const d=document.createElement('div');
+  d.className='icon';
+  d.textContent=icons[Math.floor(Math.random()*icons.length)];
+  d.style.left=Math.random()*100+'vw';
+  d.style.animationDuration=12+Math.random()*10+'s';
+  c.appendChild(d);
+}
 </script>
 
 </body>
