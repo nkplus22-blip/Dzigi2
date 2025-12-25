@@ -66,16 +66,6 @@ header h1{
   color:var(--gold);
   letter-spacing:2px;
 }
-  <!-- Mobile navigation (hamburger menu) -->
-<nav id="mobile-menu" class="mobile-menu">
-  <ul>
-    <li><a href="index.html">🏠 POČETNA</a></li>
-    <li><a href="#drinks">➡ PIĆA</a></li>
-    <li><a href="#salads">➡ SALATE</a></li>
-    <li><a href="#desserts">➡ DESERT</a></li>
-    <li><a href="#order-summary">✅ NARUDŽBA</a></li>
-  </ul>
-</nav>
 
 /* TOP ACTIONS */
 #top-actions{
@@ -104,131 +94,14 @@ header h1{
   transform:translateX(-6px);
 }
 
-/* HERO */
-.hero{
-  height:55vh;
-  background:url('dzigi2.jpg') center/cover fixed;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  position:relative;
-}
-.hero::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:rgba(0,0,0,.65);
-}
-.hero-content{
-  position:relative;
-  z-index:2;
-  max-width:900px;
-}
-.hero h2{
-  font-family:'Playfair Display',serif;
-  font-size:52px;
-  color:var(--gold);
-}
-.hero p{
-  margin-top:14px;
-  font-size:20px;
-  opacity:.9;
-}
-
-/* MAIN CARD */
-main{
-  max-width:1200px;
-  margin:-60px auto 0;
-  background:var(--glass);
-  backdrop-filter:blur(14px);
-  border-radius:22px;
-  padding:60px;
-  box-shadow:0 40px 80px rgba(0,0,0,.7);
-}
-
-/* CATEGORY */
-.category-title{
-  font-family:'Playfair Display',serif;
-  font-size:34px;
-  color:var(--gold);
-  margin:50px 0 24px;
-  border-bottom:2px solid rgba(201,161,74,.5);
-  padding-bottom:8px;
-}
-
-/* DISH */
-.dish{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:16px;
-  padding:18px 20px;
-  margin-bottom:14px;
-  background:rgba(0,0,0,.45);
-  border-radius:16px;
-  border:1px solid rgba(255,255,255,.08);
-  transition:.3s;
-}
-.dish:hover{
-  transform:translateY(-4px);
-  box-shadow:0 20px 40px rgba(0,0,0,.8);
-}
-.dish-name{
-  flex:1;
-  font-size:17px;
-}
-.dish-price{
-  font-weight:700;
-  color:var(--gold);
-}
-.dish button{
-  background:var(--gold);
-  color:#000;
-  border:none;
-  padding:8px 16px;
-  border-radius:10px;
-  cursor:pointer;
-  font-weight:700;
-  transition:.2s;
-}
-.dish button:hover{
-  background:var(--accent);
-}
-
-/* SIZE BUTTONS */
-.size-buttons{
-  display:flex;
-  gap:10px;
-}
-
-/* ORDER SUMMARY */
-#order-summary{
-  margin-top:60px;
-  text-align:center;
-}
-#order-summary p{
-  font-size:22px;
-  margin-bottom:12px;
-}
-#order-summary button{
-  padding:14px 28px;
-  font-size:20px;
-  border-radius:14px;
-  border:none;
-  background:var(--gold);
-  color:#000;
-  cursor:pointer;
-  font-weight:700;
-}
-
 /* RESPONSIVE */
 @media(max-width:768px){
   main{padding:30px}
   .hero h2{font-size:36px}
   #top-actions{right:10px}
 } 
-  /* Mobile menu */
+
+/* Mobile menu */
 .mobile-menu {
   position: fixed;
   top: 64px; /* ispod header-a */
@@ -549,11 +422,6 @@ VINA🔽
 <div class="dish"><div class="dish-name">Kovačević Chardonnau 0,75L</div><div class="dish-price">60 KM</div><button onclick="addItem('Kovačević Chardonnau 0,75L',60)">Dodaj</button></div>
 <div class="dish"><div class="dish-name">Kovačević Chardonnau 0,187L</div><div class="dish-price">8 KM</div><button onclick="addItem('Kovačević Chardonnau 0,187L',8)">Dodaj</button></div>
 <div class="dish"><div class="dish-name">Žilavka Andrija 0,75L</div><div class="dish-price">50 KM</div><button onclick="addItem('Žilavka Andrija 0,75L',50)">Dodaj</button></div>
-<div class="dish"><div class="dish-name">Pjenušac Möet 0,75L</div><div class="dish-price">200 KM</div><button onclick="addItem('Pjenušac Möet 0,75L',200)">Dodaj</button></div>
-<div class="dish"><div class="dish-name">Vranac 0,75L</div><div class="dish-price">35 KM</div><button onclick="addItem('Vranac 0,75L',35)">Dodaj</button></div>
-<div class="dish"><div class="dish-name">Vranac 0,187L</div><div class="dish-price">8 KM</div><button onclick="addItem('Vranac 0,187L',8)">Dodaj</button></div>
-<div class="dish"><div class="dish-name">Kovačević Aurelius 0,75L</div><div class="dish-price">60 KM</div><button onclick="addItem('Kovačević Aurelius 0,75L',60)">Dodaj</button></div>
-<div class="dish"><div class="dish-name">Vranac Procorde 0,75L</div><div class="dish-price">50 KM</div><button onclick="addItem('Vranac Procorde 0,75L',50)">Dodaj</button></div>
 
 SOMERSBY🔽
 <div class="dish"><div class="dish-name">Jabuka 0,33L</div><div class="dish-price">4 KM</div><button onclick="addItem('Jabuka 0,33L',4)">Dodaj</button></div>
@@ -563,10 +431,96 @@ SOMERSBY🔽
 <div class="dish"><div class="dish-name">Malina 0,33L</div><div class="dish-price">4 KM</div><button onclick="addItem('Malina 0,33L',4)">Dodaj</button></div>
 <div class="dish"><div class="dish-name">Jagoda0% 0,33L</div><div class="dish-price">4 KM</div><button onclick="addItem('Jagoda0% 0,33L',4)">Dodaj</button></div>
 <div class="dish"><div class="dish-name">Zova/Limeta0% 0,33L</div><div class="dish-price">4 KM</div><button onclick="addItem('Zova/Limeta0% 0,33L',4)">Dodaj</button></div>
-    
 </script>
 
-</main>
+<!-- Order Summary Section -->
+<section class="order">
+  <h3>Vaša narudžba</h3>
+  <div id="order-summary"></div>
+  <div id="total-price">Ukupno: 0 KM</div>
+  <button id="send-whatsapp">Pošalji narudžbu</button>
+</section>
+
+<script>
+  // Narudžba array
+  let order = [];
+
+  function addItem(name, price) {
+    order.push({ name, price });
+    updateOrder();
+  }
+
+  function updateOrder() {
+    const orderSummary = document.getElementById('order-summary');
+    orderSummary.innerHTML = ''; // reset
+    let total = 0;
+
+    order.forEach((item, index) => {
+      const itemDiv = document.createElement('div');
+      itemDiv.textContent = `${item.name} - ${item.price} KM`;
+      
+      const removeBtn = document.createElement('button');
+      removeBtn.textContent = 'Ukloni';
+      removeBtn.onclick = () => {
+        order.splice(index, 1);
+        updateOrder();
+      };
+      
+      itemDiv.appendChild(removeBtn);
+      orderSummary.appendChild(itemDiv);
+
+      total += item.price;
+    });
+
+    document.getElementById('total-price').textContent = `Ukupno: ${total} KM`;
+  }
+
+  // WhatsApp narudžba
+  document.getElementById('send-whatsapp').onclick = () => {
+    if(order.length === 0) {
+      alert('Dodajte artikle u narudžbu prije slanja!');
+      return;
+    }
+
+    let message = 'Narudžba:\n';
+    order.forEach(item => {
+      message += `- ${item.name}: ${item.price} KM\n`;
+    });
+
+    const total = order.reduce((sum, item) => sum + item.price, 0);
+    message += `Ukupno: ${total} KM`;
+
+    const phone = '+38761015241'; // broj na koji ide narudžba
+    const whatsappUrl = `https://wa.me/${phone.replace('+','')}?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
+  };
+</script>
+
+<!-- Opcionalno CSS za bolji prikaz -->
+<style>
+  .order {
+    margin-top: 30px;
+    padding: 20px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+  }
+  #order-summary div {
+    margin: 5px 0;
+  }
+  #order-summary button {
+    margin-left: 10px;
+  }
+  #send-whatsapp {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background: #25D366;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+</style>
+</script>
 <footer>© 2025 Restoran Džigi2 — Sva prava zadržana.</footer>
 </body>
 </html>
