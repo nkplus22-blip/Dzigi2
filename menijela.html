@@ -13,10 +13,8 @@
 body{
   margin:0;
   font-family:Poppins;
-  background:#ffffff;
-  overflow-x:hidden; /* 🔥 uklanja crnu traku lijevo */
+  background:#f5f5f5;
 }
-
 
 /* HEADER */
 header{
@@ -30,20 +28,33 @@ header{
   z-index:1000;
 }
 
-/* MENU */
+/* HAMBURGER MENU */
 .side{
   position:fixed;
-  left:-250px;
+  left:-260px;
   top:0;
-  width:250px;
+  width:260px;
   height:100%;
   background:#000;
   color:#fff;
   padding:20px;
   transition:.3s;
+  z-index:2000;
 }
 
 .side.open{left:0;}
+
+.side a{
+  display:block;
+  padding:12px;
+  color:#fff;
+  text-decoration:none;
+  border-bottom:1px solid #333;
+}
+
+.side a:hover{
+  background:#111;
+}
 
 /* FILTER */
 .filter{
@@ -51,44 +62,59 @@ header{
   gap:10px;
   overflow:auto;
   padding:10px;
+  background:#fff;
 }
 
 .filter button{
   padding:8px 12px;
   border:1px solid #000;
   background:#fff;
+  border-radius:20px;
   cursor:pointer;
-  border-radius:10px;
 }
+
 /* SEARCH */
 #search{
   width:90%;
   margin:10px auto;
   display:block;
   padding:10px;
+  border-radius:10px;
+  border:1px solid #ccc;
 }
 
 /* MENU */
 #menu-wrapper{
-  padding:20px;
-  background:#ffffff; /* bijela pozadina iza svega */
-  box-sizing:border-box;
+  padding:15px;
 }
 
+/* NASLOVI */
 .category-title{
   margin-top:30px;
+  font-size:20px;
+  font-weight:700;
 }
 
-/* DISH */
+/* KARTICE */
 .dish{
   background:#000;
   color:#fff;
   padding:15px;
-  border-radius:15px;
+  border-radius:20px;
   margin:15px 0;
-  box-shadow:0 4px 10px rgba(0,0,0,0.2);
+  box-shadow:0 8px 20px rgba(0,0,0,0.2);
 }
 
+.dish-name{
+  font-size:18px;
+  margin-bottom:5px;
+}
+
+.dish-price{
+  opacity:0.8;
+}
+
+/* BUTTON */
 .dish button{
   width:100%;
   margin-top:10px;
