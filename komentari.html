@@ -14,6 +14,9 @@ body{
   font-family:Poppins;
   background:linear-gradient(180deg,#f5f5f5,#eaeaea);
 }
+  body{
+  overflow-x:hidden;
+}
 
 /* HEADER */
 header{
@@ -27,9 +30,18 @@ header{
 /* MENU */
 nav{
   position:fixed;
-  right:-260px;
+  right:0;
   top:0;
   width:260px;
+  height:100%;
+  background:#0a0a0a;
+  transform:translateX(100%);
+  transition:0.4s ease;
+  z-index:2000;
+}
+nav.active{
+  transform:translateX(0);
+}
   height:100%;
   background:#0a0a0a;
   transition:.4s;
@@ -98,6 +110,24 @@ button{
   padding:6px 12px;
   border-radius:10px;
 }
+  .fake{
+  opacity:0.4;
+  filter:grayscale(0.4);
+}
+
+.comment{
+  transition:0.3s;
+}
+
+.comment:hover{
+  transform:scale(1.02);
+}
+  body.menu-open::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.5);
+}
 </style>
 </head>
 
@@ -165,27 +195,43 @@ fake.forEach(text=>{
 // 🔥 REAL KOMENTARI
 onSnapshot(collection(db,"comments"), snap=>{
 
-  // 🔥 prvo ubaci FAKE (uvijek ostaju)
-  commentsDiv.innerHTML = `
-    <div class="comment fake">🇧🇦 Amir<br><small>Odlična hrana!</small></div>
-    <div class="comment fake">🇭🇷 Ivan<br><small>Top restoran!</small></div>
-    <div class="comment fake">🇷🇸 Marko<br><small>Preporuka svima!</small></div>
-  `;
+  // 🔥 očisti sve
+  commentsDiv.innerHTML = "";
 
-  // 🔥 onda pravi komentari
+  // 🔥 prvo REAL (novi komentari gore)
   snap.forEach(docu=>{
-    const c=docu.data();
+    const c = docu.data();
 
-    let div=document.createElement("div");
-    div.className="comment";
+    let div = document.createElement("div");
+    div.className = "comment";
 
-    div.innerHTML=`
+    div.innerHTML = `
       ${c.country || ""} ${c.name}
       <br><small>${c.text}</small>
-      ${localStorage.getItem("admin")==="1" ? `<button class="delete-btn" onclick="deleteComment('${docu.id}')">Obriši</button>` : ""}
+      ${localStorage.getItem("admin")==="1" ? 
+      `<button class="delete-btn" onclick="deleteComment('${docu.id}')">Obriši</button>` : ""}
     `;
 
-    commentsDiv.prepend(div); // NOVI GORE
+    commentsDiv.appendChild(div);
+  });
+
+  // 🔥 onda FAKE (na dno, kao stariji)
+  const fake = [
+    {name:"Amir", text:"Odlična hrana!", flag:"🇧🇦"},
+    {name:"Ivan", text:"Top restoran!", flag:"🇭🇷"},
+    {name:"Marko", text:"Preporuka svima!", flag:"🇷🇸"}
+  ];
+
+  fake.forEach(f=>{
+    let div = document.createElement("div");
+    div.className = "comment fake";
+
+    div.innerHTML = `
+      ${f.flag} ${f.name}
+      <br><small>${f.text}</small>
+    `;
+
+    commentsDiv.appendChild(div);
   });
 
 });
