@@ -31,19 +31,23 @@ header{
 /* HAMBURGER MENU */
 .side{
   position:fixed;
-  left:-260px;
+  left:0;
   top:0;
   width:260px;
   height:100%;
   background:#0a0a0a;
   color:#fff;
   padding:20px;
+  transform:translateX(-100%);
   transition:0.4s ease;
   z-index:2000;
-  box-shadow:2px 0 20px rgba(0,0,0,0.5);
 }
+  box-shadow: 5px 0 30px rgba(0,0,0,0.5);
 
-.side.open{left:0;}
+/* kad je otvoren */
+.side.open{
+  transform:translateX(0);
+}
 
 .side a{
   display:block;
