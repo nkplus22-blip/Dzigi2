@@ -13,7 +13,7 @@
 body{
   margin:0;
   font-family:Poppins;
-  background:#f5f5f5;
+  background:linear-gradient(180deg,#f8f8f8,#eeeeee);
 }
 
 /* HEADER */
@@ -35,11 +35,12 @@ header{
   top:0;
   width:260px;
   height:100%;
-  background:#000;
+  background:#0a0a0a;
   color:#fff;
   padding:20px;
-  transition:.3s;
+  transition:0.4s ease;
   z-index:2000;
+  box-shadow:2px 0 20px rgba(0,0,0,0.5);
 }
 
 .side.open{left:0;}
@@ -66,13 +67,14 @@ header{
 }
 
 .filter button{
-  padding:8px 12px;
-  border:1px solid #000;
+  padding:8px 14px;
+  border:none;
   background:#fff;
-  border-radius:20px;
+  border-radius:30px;
   cursor:pointer;
+  font-weight:500;
+  box-shadow:0 2px 8px rgba(0,0,0,0.1);
 }
-
 /* SEARCH */
 #search{
   width:90%;
@@ -85,45 +87,48 @@ header{
 
 /* MENU */
 #menu-wrapper{
-  padding:15px;
+  padding:20px;
+  max-width:600px;
+  margin:auto;
 }
 
 /* NASLOVI */
 .category-title{
   margin-top:30px;
-  font-size:20px;
+  font-size:22px;
   font-weight:700;
+  color:#111;
 }
 
 /* KARTICE */
 .dish{
-  background:#000;
+  background:linear-gradient(145deg,#0a0a0a,#1a1a1a);
   color:#fff;
-  padding:15px;
-  border-radius:20px;
+  padding:18px;
+  border-radius:25px;
   margin:15px 0;
-  box-shadow:0 8px 20px rgba(0,0,0,0.2);
+  box-shadow:0 10px 30px rgba(0,0,0,0.3);
 }
-
 .dish-name{
   font-size:18px;
-  margin-bottom:5px;
+  font-weight:600;
 }
 
 .dish-price{
-  opacity:0.8;
+  color:#c9a96e; /* GOLD */
+  margin-top:5px;
 }
 
 /* BUTTON */
 .dish button{
   width:100%;
-  margin-top:10px;
-  padding:10px;
+  margin-top:12px;
+  padding:12px;
   border:none;
-  border-radius:20px;
-  background:#fff;
+  border-radius:30px;
+  background:linear-gradient(135deg,#d4af37,#f1d27a);
   color:#000;
-  font-weight:600;
+  font-weight:700;
   cursor:pointer;
 }
 
