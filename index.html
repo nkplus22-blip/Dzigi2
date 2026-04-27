@@ -6,116 +6,89 @@
 
 <title>Restoran Džigi2 | Gradačac</title>
 
-<meta name="description" content="Džigi2 – vrhunski restoran u Gradačcu. Rezerviši sto, nazovi ili pronađi put odmah.">
+<meta name="description" content="Džigi2 – luksuzni restoran u Gradačcu. Rezervacije, navigacija i kontakt.">
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
 :root{
-  --gold:#c9a14a;
+  --gold:#c6a55c;
+  --gold-soft:#e7c97f;
   --dark:#0f0a07;
-  --glass:rgba(255,255,255,0.05);
 }
 
 *{margin:0;padding:0;box-sizing:border-box;}
-
 html{scroll-behavior:smooth;}
 
 body{
   font-family:'Poppins',sans-serif;
-  background:radial-gradient(circle at top,#2b1b12,#0f0a07);
+  background:#0f0a07;
   color:#fff;
-}
-
-/* HEADER */
-header{
-  position:fixed;
-  width:100%;
-  display:flex;
-  align-items:center;
-  padding:15px 30px;
-  background:rgba(0,0,0,0.5);
-  backdrop-filter:blur(12px);
-  z-index:100;
-}
-header img{height:60px;margin-right:10px;}
-header h1{color:var(--gold);}
-
-.menu-toggle{
-  margin-left:auto;
-  cursor:pointer;
 }
 
 /* HERO */
 .hero{
+  position:relative;
   height:100vh;
-  background:url('dzigi2.jpg') center/cover fixed;
+  background:url('dzigi2.jpg') center/cover no-repeat;
   display:flex;
   align-items:center;
   justify-content:center;
   text-align:center;
 }
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to bottom,rgba(0,0,0,0.6),rgba(0,0,0,0.85));
+}
+
+.hero-content{
+  position:relative;
+  z-index:2;
+  animation:fadeIn 1.5s ease;
+}
+
 .hero h2{
-  font-size:60px;
-  color:var(--gold);
+  font-size:64px;
+  font-family:'Playfair Display',serif;
+  background:linear-gradient(45deg,var(--gold),var(--gold-soft));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
 }
-.hero p{margin-top:20px;}
 
-.cta{
-  margin-top:30px;
-  display:inline-block;
-  padding:15px 35px;
-  border:2px solid var(--gold);
-  color:var(--gold);
-  text-decoration:none;
+.subtitle{
+  margin-top:10px;
+  font-size:22px;
+  opacity:.9;
 }
-.cta:hover{background:var(--gold);color:#000;}
 
-/* STATUS */
 .status{
   margin-top:15px;
   font-weight:bold;
 }
 
-/* SECTION */
-section{
-  padding:100px 20px;
-  text-align:center;
+/* CTA */
+.cta-main{
+  display:inline-block;
+  margin-top:30px;
+  padding:16px 40px;
+  border:2px solid var(--gold);
+  color:var(--gold);
+  text-decoration:none;
+  letter-spacing:2px;
+  transition:.3s;
+}
+.cta-main:hover{
+  background:var(--gold);
+  color:#000;
+  box-shadow:0 0 20px rgba(198,165,92,0.6);
 }
 
-.glass{
-  background:var(--glass);
-  padding:40px;
-  border-radius:15px;
-  backdrop-filter:blur(10px);
-  max-width:1000px;
-  margin:auto;
-}
-
-/* GALLERY */
-.gallery{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:20px;
-}
-.gallery img{
-  width:100%;
-  border-radius:15px;
-  transition:.4s;
-}
-.gallery img:hover{transform:scale(1.05);}
-
-/* MAP */
-.map{
-  width:100%;
-  height:400px;
-}
-
-/* BUTTONS */
-.action-buttons{
+.cta-row{
   margin-top:20px;
 }
-.action-buttons a{
+.cta-secondary{
   display:inline-block;
   margin:10px;
   padding:12px 25px;
@@ -123,101 +96,106 @@ section{
   color:var(--gold);
   text-decoration:none;
 }
-.action-buttons a:hover{
-  background:var(--gold);
-  color:#000;
+
+/* SECTION */
+section{padding:80px 20px;text-align:center;}
+
+.gallery{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:20px;
+}
+.gallery img{
+  width:100%;
+  border-radius:12px;
 }
 
-/* FLOATING WHATSAPP */
-.whatsapp{
+/* REVIEWS */
+.reviews{
+  max-width:700px;
+  margin:auto;
+  font-style:italic;
+}
+
+/* MAP */
+.map{width:100%;height:400px;margin-top:40px;}
+
+/* STICKY MOBILE BAR */
+.bottom-bar{
   position:fixed;
-  bottom:25px;
-  right:25px;
-  width:60px;
-  height:60px;
-  background:#25D366;
-  border-radius:50%;
-  text-align:center;
-  line-height:60px;
-  font-size:28px;
+  bottom:0;
+  width:100%;
+  background:#000;
+  display:flex;
+  justify-content:space-around;
+  padding:10px;
+}
+.bottom-bar a{
   color:#fff;
   text-decoration:none;
 }
 
-/* FLOAT ICONS */
-.floating span{
+/* WHATSAPP FLOAT */
+.whatsapp{
   position:fixed;
-  font-size:25px;
-  opacity:.5;
-  animation:float 12s linear infinite;
+  bottom:70px;
+  right:20px;
+  background:#25D366;
+  width:55px;height:55px;
+  border-radius:50%;
+  text-align:center;
+  line-height:55px;
+  font-size:26px;
+  color:#fff;
+  text-decoration:none;
 }
-@keyframes float{
-  from{transform:translateY(100vh);}
-  to{transform:translateY(-100vh);}
+
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(20px);}
+  to{opacity:1;}
 }
 </style>
 </head>
 
 <body>
 
-<!-- FLOAT ICONS -->
-<div class="floating">
-  <span style="left:10%">🍷</span>
-  <span style="left:30%">🥩</span>
-  <span style="left:70%">🍽️</span>
-</div>
-
-<header>
-  <img src="image121.png">
-  <h1>Džigi2</h1>
-</header>
-
 <section class="hero">
-  <div>
+  <div class="hero-content">
     <h2>Džigi2</h2>
-    <p>Luksuz & Tradicija</p>
+    <p class="subtitle">Luksuz & Tradicija</p>
+    <div id="status" class="status"></div>
 
-    <div class="status" id="status"></div>
+    <a href="#" class="cta-main">REZERVIŠI STO</a>
 
-    <a href="#" class="cta">REZERVIŠI STO</a>
-
-    <div class="action-buttons">
-      <a href="tel:+38735818817">📞 Pozovi</a>
-      <a href="https://wa.me/38761015241">💬 WhatsApp</a>
+    <div class="cta-row">
+      <a href="tel:+38735818817" class="cta-secondary">📞 Pozovi</a>
+      <a href="https://wa.me/38761015241" class="cta-secondary">💬 WhatsApp</a>
     </div>
   </div>
 </section>
 
 <section>
-  <div class="glass">
-    <h2>Ambijent</h2>
-    <div class="gallery">
-      <img src="ambijent1.jpg">
-      <img src="ambijent2.jpg">
-      <img src="ambijent3.jpg">
-      <img src="ambijent4.jpg">
-    </div>
+  <h2>Ambijent</h2>
+  <div class="gallery">
+    <img src="ambijent1.jpg">
+    <img src="ambijent2.jpg">
+    <img src="ambijent3.jpg">
+    <img src="ambijent4.jpg">
   </div>
 </section>
 
 <section>
-  <div class="glass">
-    <h2>Lokacija</h2>
-    <p>Ulica Varoška 2, Gradačac</p>
+  <h2>Utisci gostiju</h2>
+  <div class="reviews" id="reviews">
+    “Najbolji restoran u gradu.”
+  </div>
+</section>
 
-    <div class="map">
-      <iframe
-        src="https://www.google.com/maps?q=44.8818319,18.4202649&z=18&output=embed"
-        width="100%" height="100%" style="border:0;">
-      </iframe>
-    </div>
-
-    <div class="action-buttons">
-      <a href="https://www.google.com/maps?q=44.8818319,18.4202649" target="_blank">
-        📍 Navigacija
-      </a>
-    </div>
-
+<section>
+  <h2>Lokacija</h2>
+  <div class="map">
+    <iframe src="https://www.google.com/maps?q=44.8818319,18.4202649&z=18&output=embed"
+    width="100%" height="100%" style="border:0;"></iframe>
   </div>
 </section>
 
@@ -227,10 +205,30 @@ section{
 
 <a href="https://wa.me/38761015241" class="whatsapp">💬</a>
 
+<div class="bottom-bar">
+  <a href="tel:+38735818817">📞</a>
+  <a href="https://wa.me/38761015241">💬</a>
+  <a href="https://www.google.com/maps?q=44.8818319,18.4202649">📍</a>
+</div>
+
 <script>
+// STATUS
 const h=new Date().getHours();
 document.getElementById('status').innerText=
 (h>=8 && h<23)?"🟢 Otvoreni smo":"🔴 Zatvoreno";
+
+// REVIEWS SLIDER
+const reviews=[
+"Najbolji restoran u Gradačcu!",
+"Ambijent i hrana top nivo.",
+"Uvijek se vraćamo ponovo.",
+"Preporuka svima!"
+];
+let i=0;
+setInterval(()=>{
+ i=(i+1)%reviews.length;
+ document.getElementById('reviews').innerText=reviews[i];
+},3000);
 </script>
 
 </body>
