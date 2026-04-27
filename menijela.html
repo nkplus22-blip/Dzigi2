@@ -4,35 +4,69 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Džigi2 Jelovnik</title>
+<title>Džigi2 Jelovnik-Online narudžba</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
 
+/* RESET */
+*{
+  box-sizing:border-box;
+}
+
+/* BODY */
 body{
   margin:0;
-  font-family:Poppins;
-  background:linear-gradient(180deg,#f8f8f8,#eeeeee);
+  font-family:Poppins, sans-serif;
+  background:linear-gradient(180deg,#f5f5f5,#eaeaea);
+  overflow-x:hidden;
 }
 
 /* HEADER */
 header{
   display:flex;
   justify-content:space-between;
+  align-items:center;
   padding:15px;
   background:#000;
   color:#fff;
   position:sticky;
   top:0;
   z-index:1000;
+  box-shadow:0 5px 20px rgba(0,0,0,0.3);
+}
+
+header div:last-child{
+  font-size:22px;
+  cursor:pointer;
+}
+
+/* OVERLAY (blur background kad je meni otvoren) */
+.overlay{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.4);
+  backdrop-filter:blur(5px);
+  opacity:0;
+  pointer-events:none;
+  transition:0.3s;
+  z-index:1500;
+}
+
+.overlay.show{
+  opacity:1;
+  pointer-events:all;
 }
 
 /* HAMBURGER MENU */
 .side{
   position:fixed;
-  left:0;
   top:0;
+  left:0;
   width:260px;
   height:100%;
   background:#0a0a0a;
@@ -41,20 +75,20 @@ header{
   transform:translateX(-100%);
   transition:0.4s ease;
   z-index:2000;
-  border-right: 1px solid rgba(255,255,255,0.05);
+  box-shadow:5px 0 30px rgba(0,0,0,0.6);
 }
-  box-shadow: 5px 0 30px rgba(0,0,0,0border-right: 1px solid rgba(255,255,255,0.05);
-/* kad je otvoren */
+
 .side.open{
   transform:translateX(0);
 }
 
 .side a{
   display:block;
-  padding:12px;
+  padding:14px;
   color:#fff;
   text-decoration:none;
-  border-bottom:1px solid #333;
+  border-bottom:1px solid #222;
+  font-size:15px;
 }
 
 .side a:hover{
@@ -66,30 +100,47 @@ header{
   display:flex;
   gap:10px;
   overflow:auto;
-  padding:10px;
+  padding:12px;
   background:#fff;
+  position:sticky;
+  top:60px;
+  z-index:900;
+}
+
+.filter::-webkit-scrollbar{
+  display:none;
 }
 
 .filter button{
-  padding:8px 14px;
+  padding:8px 16px;
   border:none;
   background:#fff;
   border-radius:30px;
   cursor:pointer;
   font-weight:500;
-  box-shadow:0 2px 8px rgba(0,0,0,0.1);
+  white-space:nowrap;
+  box-shadow:0 3px 10px rgba(0,0,0,0.1);
+  transition:0.2s;
 }
+
+.filter button:hover{
+  background:#000;
+  color:#fff;
+}
+
 /* SEARCH */
 #search{
   width:90%;
   margin:10px auto;
   display:block;
-  padding:10px;
-  border-radius:10px;
+  padding:12px;
+  border-radius:25px;
   border:1px solid #ccc;
+  outline:none;
+  box-shadow:0 3px 10px rgba(0,0,0,0.05);
 }
 
-/* MENU */
+/* MENU WRAPPER */
 #menu-wrapper{
   padding:20px;
   max-width:600px;
@@ -111,15 +162,21 @@ header{
   padding:18px;
   border-radius:25px;
   margin:15px 0;
-  box-shadow:0 10px 30px rgba(0,0,0,0.3);
+  box-shadow:0 10px 30px rgba(0,0,0,0.35);
+  transition:0.2s;
 }
+
+.dish:hover{
+  transform:translateY(-3px);
+}
+
 .dish-name{
   font-size:18px;
   font-weight:600;
 }
 
 .dish-price{
-  color:#c9a96e; /* GOLD */
+  color:#d4af37;
   margin-top:5px;
 }
 
@@ -134,6 +191,11 @@ header{
   color:#000;
   font-weight:700;
   cursor:pointer;
+  transition:0.2s;
+}
+
+.dish button:active{
+  transform:scale(0.97);
 }
 
 /* CART */
@@ -144,6 +206,63 @@ header{
   background:#000;
   color:#fff;
   padding:10px;
+  box-shadow:0 -5px 20px rgba(0,0,0,0.3);
+}
+  /* CART HEADER */
+.cart-header{
+  display:flex;
+  justify-content:space-between;
+  font-weight:600;
+  margin-bottom:5px;
+}
+
+/* COUNT BADGE */
+#cart-count{
+  background:#d4af37;
+  color:#000;
+  padding:2px 8px;
+  border-radius:10px;
+  font-size:12px;
+}
+
+/* ITEMS */
+.cart-item{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:6px 0;
+  border-bottom:1px solid rgba(255,255,255,0.1);
+  font-size:14px;
+}
+
+/* REMOVE */
+.remove-btn{
+  background:#d4af37;
+  border:none;
+  color:#000;
+  border-radius:50%;
+  width:22px;
+  height:22px;
+  cursor:pointer;
+}
+
+/* BUTTON */
+.cart button{
+  width:100%;
+  margin-top:10px;
+  padding:12px;
+  border:none;
+  border-radius:25px;
+  background:linear-gradient(135deg,#d4af37,#f1d27a);
+  color:#000;
+  font-weight:700;
+  cursor:pointer;
+}
+
+/* SCROLL CART */
+#order{
+  max-height:120px;
+  overflow:auto;
 }
 
 </style>
@@ -155,6 +274,8 @@ header{
   <div>Džigi2</div>
   <div onclick="toggleMenu()">☰</div>
 </header>
+
+<div class="overlay" id="overlay" onclick="toggleMenu()"></div>
 
 <nav class="side" id="sideMenu">
   <div onclick="toggleMenu()" style="font-size:25px;cursor:pointer;">&times;</div>
@@ -168,7 +289,6 @@ header{
 
 <div class="filter">
   <button onclick="filterMenu('all')">Sve</button>
-
   <button onclick="filterMenu('jela')">Jela</button>
   <button onclick="filterMenu('pizza')">Pizza</button>
   <button onclick="filterMenu('ribe')">Ribe</button>
@@ -177,14 +297,12 @@ header{
   <button onclick="filterMenu('salata')">Salate</button>
   <button onclick="filterMenu('deserti')">Deserti</button>
   <button onclick="filterMenu('hljeb')">Hljeb</button>
-
   <button onclick="filterMenu('kafa')">Kafa</button>
   <button onclick="filterMenu('pice')">Piće</button>
 </div>
 
 <input id="search" placeholder="Pretraži..." onkeyup="searchMenu()">
 
-<!-- 🔴 OVDJE UBACUJEŠ SVOJ MENU -->
 <div id="menu-wrapper">
 
 <!-- PRAVILO:
@@ -483,36 +601,43 @@ NE DIRAŠ JS
 
 <!-- CART -->
 <div class="cart">
+  <div class="cart-header">
+    <span>🛒 Narudžba</span>
+    <span id="cart-count">0</span>
+  </div>
+
   <div id="order"></div>
+
   <div id="total">Ukupno: 0 KM</div>
-  <button onclick="sendOrder()">Pošalji</button>
+
+  <button onclick="sendOrder()">Pošalji narudžbu</button>
 </div>
 
 <script>
 
-/* MENU */
+/* MENU + OVERLAY */
 function toggleMenu(){
   document.getElementById("sideMenu").classList.toggle("open");
+  document.getElementById("overlay").classList.toggle("show");
 }
 
 /* SEARCH */
 function searchMenu(){
   let val=document.getElementById("search").value.toLowerCase();
+
   document.querySelectorAll(".dish").forEach(d=>{
-    d.style.display=d.innerText.toLowerCase().includes(val)?"block":"none";
+    d.style.display = d.innerText.toLowerCase().includes(val) ? "block" : "none";
   });
 }
 
 /* FILTER */
 function filterMenu(cat){
-
   let currentCat = null;
 
   document.querySelectorAll("#menu-wrapper > *").forEach(el=>{
 
     if(el.classList.contains("category-title")){
       currentCat = el.dataset.cat;
-
       el.style.display = (cat==="all" || currentCat===cat) ? "block":"none";
     }
 
@@ -523,53 +648,70 @@ function filterMenu(cat){
   });
 }
 
-/* ORDER */
+/* ORDER SYSTEM */
 let order=[];
 
 function addItem(name,price){
   order.push({name,price});
   render();
+
+  // 🔥 animacija klik
+  navigator.vibrate?.(50);
 }
 
+/* RENDER */
 function render(){
   let box=document.getElementById("order");
   box.innerHTML="";
   let total=0;
 
   order.forEach((i,index)=>{
-    let div=document.createElement("div");
-    div.innerText=i.name+" "+i.price+"KM";
+
+    let row=document.createElement("div");
+    row.className="cart-item";
+
+    let text=document.createElement("span");
+    text.innerText=i.name+" - "+i.price+" KM";
 
     let btn=document.createElement("button");
-    btn.innerText="X";
+    btn.innerText="✕";
+    btn.className="remove-btn";
+
     btn.onclick=()=>{
       order.splice(index,1);
       render();
     };
 
-    div.appendChild(btn);
-    box.appendChild(div);
+    row.appendChild(text);
+    row.appendChild(btn);
+    box.appendChild(row);
+
     total+=i.price;
   });
 
   document.getElementById("total").innerText="Ukupno: "+total+" KM";
+  document.getElementById("cart-count").innerText=order.length;
 }
 
 /* WHATSAPP */
 function sendOrder(){
 
-  if(order.length===0) return alert("Dodaj nešto");
+  if(order.length===0){
+    alert("Dodaj nešto u narudžbu");
+    return;
+  }
 
-  let msg="Narudžba:\n";
+  let msg="Narudžba:%0A";
 
   order.forEach(i=>{
-    msg+=`- ${i.name} ${i.price}KM\n`;
+    msg+=`- ${i.name} ${i.price}KM%0A`;
   });
 
   msg+="Ukupno: "+order.reduce((s,i)=>s+i.price,0)+"KM";
 
-  window.open("https://wa.me/38761015241?text="+encodeURIComponent(msg));
+  window.open("https://wa.me/38761015241?text="+msg);
 }
+
 </script>
 </body>
 </html>
