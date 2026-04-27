@@ -13,7 +13,6 @@
 <style>
 :root{
   --gold:#c6a55c;
-  --gold-soft:#e7c97f;
   --dark:#0f0a07;
 }
 
@@ -26,47 +25,86 @@ body{
   color:#fff;
 }
 
+/* HEADER */
+header{
+  position:fixed;
+  top:0;
+  width:100%;
+  display:flex;
+  align-items:center;
+  padding:15px 25px;
+  background:rgba(0,0,0,0.6);
+  backdrop-filter:blur(14px);
+  z-index:100;
+}
+header img{height:50px;margin-right:10px;}
+header h1{color:var(--gold);font-family:'Playfair Display',serif;}
+
+.menu-toggle{
+  margin-left:auto;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  cursor:pointer;
+}
+.menu-toggle span{
+  width:28px;height:3px;background:#fff;
+}
+
+/* NAV */
+nav{
+  position:fixed;
+  right:-320px;
+  top:0;
+  width:320px;
+  height:100vh;
+  background:#000;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  transition:.4s;
+}
+nav.active{right:0;}
+nav a{color:#fff;text-decoration:none;font-size:20px;margin:12px 0;}
+.close-menu{
+  position:absolute;
+  top:15px;
+  right:20px;
+  font-size:34px;
+  cursor:pointer;
+}
+
 /* HERO */
 .hero{
-  position:relative;
   height:100vh;
   background:url('dzigi2.jpg') center/cover no-repeat;
   display:flex;
   align-items:center;
   justify-content:center;
   text-align:center;
+  padding-top:80px;
 }
 .hero::after{
   content:"";
   position:absolute;
   inset:0;
-  background:linear-gradient(to bottom,rgba(0,0,0,0.6),rgba(0,0,0,0.85));
+  background:rgba(0,0,0,0.7);
 }
 
 .hero-content{
   position:relative;
   z-index:2;
-  animation:fadeIn 1.5s ease;
 }
 
 .hero h2{
-  font-size:64px;
+  font-size:60px;
+  color:var(--gold);
   font-family:'Playfair Display',serif;
-  background:linear-gradient(45deg,var(--gold),var(--gold-soft));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
 }
 
-.subtitle{
-  margin-top:10px;
-  font-size:22px;
-  opacity:.9;
-}
-
-.status{
-  margin-top:15px;
-  font-weight:bold;
-}
+.subtitle{margin-top:10px;font-size:20px;}
+.status{margin-top:10px;}
 
 /* CTA */
 .cta-main{
@@ -76,22 +114,16 @@ body{
   border:2px solid var(--gold);
   color:var(--gold);
   text-decoration:none;
-  letter-spacing:2px;
-  transition:.3s;
 }
 .cta-main:hover{
   background:var(--gold);
   color:#000;
-  box-shadow:0 0 20px rgba(198,165,92,0.6);
 }
 
-.cta-row{
-  margin-top:20px;
-}
 .cta-secondary{
   display:inline-block;
   margin:10px;
-  padding:12px 25px;
+  padding:10px 20px;
   border:1px solid var(--gold);
   color:var(--gold);
   text-decoration:none;
@@ -105,22 +137,30 @@ section{padding:80px 20px;text-align:center;}
   grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
   gap:20px;
 }
-.gallery img{
-  width:100%;
-  border-radius:12px;
-}
+.gallery img{width:100%;border-radius:10px;}
 
 /* REVIEWS */
-.reviews{
-  max-width:700px;
-  margin:auto;
-  font-style:italic;
+.reviews{max-width:600px;margin:auto;font-style:italic;}
+
+/* FORM */
+.form input{
+  display:block;
+  margin:10px auto;
+  padding:12px;
+  width:80%;
+}
+.form button{
+  margin-top:10px;
+  padding:12px 30px;
+  background:var(--gold);
+  border:none;
+  cursor:pointer;
 }
 
 /* MAP */
-.map{width:100%;height:400px;margin-top:40px;}
+.map{height:400px;}
 
-/* STICKY MOBILE BAR */
+/* BOTTOM BAR */
 .bottom-bar{
   position:fixed;
   bottom:0;
@@ -130,12 +170,8 @@ section{padding:80px 20px;text-align:center;}
   justify-content:space-around;
   padding:10px;
 }
-.bottom-bar a{
-  color:#fff;
-  text-decoration:none;
-}
 
-/* WHATSAPP FLOAT */
+/* WHATSAPP */
 .whatsapp{
   position:fixed;
   bottom:70px;
@@ -145,19 +181,30 @@ section{padding:80px 20px;text-align:center;}
   border-radius:50%;
   text-align:center;
   line-height:55px;
-  font-size:26px;
   color:#fff;
   text-decoration:none;
-}
-
-@keyframes fadeIn{
-  from{opacity:0;transform:translateY(20px);}
-  to{opacity:1;}
 }
 </style>
 </head>
 
 <body>
+
+<header>
+  <img src="image121.png">
+  <h1>Džigi2</h1>
+  <div class="menu-toggle" id="menu-toggle">
+    <span></span><span></span><span></span>
+  </div>
+</header>
+
+<nav id="menu">
+  <div class="close-menu" id="close-menu">&times;</div>
+  <a href="index.html">Početna</a>
+  <a href="menijela.html">Meni jela</a>
+  <a href="#rez">Rezervacije</a>
+  <a href="#rec">Utisci gostiju</a>
+  <a href="galerija.html">Galerija</a>
+</nav>
 
 <section class="hero">
   <div class="hero-content">
@@ -165,11 +212,11 @@ section{padding:80px 20px;text-align:center;}
     <p class="subtitle">Luksuz & Tradicija</p>
     <div id="status" class="status"></div>
 
-    <a href="#" class="cta-main">REZERVIŠI STO</a>
+    <a href="#rez" class="cta-main">REZERVIŠI STO</a>
 
-    <div class="cta-row">
-      <a href="tel:+38735818817" class="cta-secondary">📞 Pozovi</a>
-      <a href="https://wa.me/38761015241" class="cta-secondary">💬 WhatsApp</a>
+    <div>
+      <a href="tel:+38735818817" class="cta-secondary">📞</a>
+      <a href="https://wa.me/38761015241" class="cta-secondary">💬</a>
     </div>
   </div>
 </section>
@@ -184,10 +231,18 @@ section{padding:80px 20px;text-align:center;}
   </div>
 </section>
 
-<section>
+<section id="rec">
   <h2>Utisci gostiju</h2>
-  <div class="reviews" id="reviews">
-    “Najbolji restoran u gradu.”
+  <div class="reviews" id="reviews"></div>
+</section>
+
+<section id="rez">
+  <h2>Rezervacija</h2>
+  <div class="form">
+    <input id="ime" placeholder="Ime">
+    <input id="osobe" placeholder="Broj osoba">
+    <input id="datum" placeholder="Datum">
+    <button onclick="rezervisi()">Pošalji</button>
   </div>
 </section>
 
@@ -195,7 +250,7 @@ section{padding:80px 20px;text-align:center;}
   <h2>Lokacija</h2>
   <div class="map">
     <iframe src="https://www.google.com/maps?q=44.8818319,18.4202649&z=18&output=embed"
-    width="100%" height="100%" style="border:0;"></iframe>
+    width="100%" height="100%"></iframe>
   </div>
 </section>
 
@@ -212,23 +267,28 @@ section{padding:80px 20px;text-align:center;}
 </div>
 
 <script>
+// MENU
+menu-toggle.onclick=()=>menu.classList.toggle('active');
+close-menu.onclick=()=>menu.classList.remove('active');
+
 // STATUS
 const h=new Date().getHours();
-document.getElementById('status').innerText=
-(h>=8 && h<23)?"🟢 Otvoreni smo":"🔴 Zatvoreno";
+status.innerText=(h>=8 && h<23)?"🟢 Otvoreni":"🔴 Zatvoreno";
 
-// REVIEWS SLIDER
-const reviews=[
-"Najbolji restoran u Gradačcu!",
-"Ambijent i hrana top nivo.",
-"Uvijek se vraćamo ponovo.",
-"Preporuka svima!"
-];
+// REVIEWS
+const r=["Top restoran!","Hrana vrh!","Ambijent 10/10","Preporuka!"];
 let i=0;
-setInterval(()=>{
- i=(i+1)%reviews.length;
- document.getElementById('reviews').innerText=reviews[i];
-},3000);
+setInterval(()=>{reviews.innerText=r[i++%r.length]},3000);
+
+// REZERVACIJA
+function rezervisi(){
+ let ime=document.getElementById("ime").value;
+ let osobe=document.getElementById("osobe").value;
+ let datum=document.getElementById("datum").value;
+
+ let poruka=`Rezervacija - ${ime}, ${osobe} osoba, ${datum}`;
+ window.open(`https://wa.me/38761015241?text=${encodeURIComponent(poruka)}`);
+}
 </script>
 
 </body>
