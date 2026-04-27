@@ -12,7 +12,7 @@
 body{
   margin:0;
   font-family:Poppins;
-  background:linear-gradient(180deg,#f8f8f8,#eeeeee);
+  background:linear-gradient(180deg,#f5f5f5,#eaeaea);
 }
 
 /* HEADER */
@@ -31,11 +31,10 @@ nav{
   top:0;
   width:260px;
   height:100%;
-  background:#111;
-  transition:.3s;
+  background:#0a0a0a;
+  transition:.4s;
   padding:20px;
 }
-
 nav.active{ right:0; }
 
 nav a{
@@ -47,33 +46,57 @@ nav a{
 
 /* FORM */
 form{
-  background:#fff;
   margin:20px;
+  background:#fff;
   padding:20px;
-  border-radius:15px;
+  border-radius:20px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.1);
 }
 
 input, textarea{
   width:100%;
-  padding:10px;
+  padding:12px;
   margin-top:10px;
+  border-radius:12px;
+  border:1px solid #ddd;
+}
+
+button{
+  margin-top:15px;
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:30px;
+  background:linear-gradient(135deg,#d4af37,#f1d27a);
+  font-weight:bold;
+  cursor:pointer;
 }
 
 /* COMMENTS */
 .comment{
-  background:#000;
+  background:linear-gradient(145deg,#0a0a0a,#1a1a1a);
   color:#fff;
   margin:15px;
-  padding:15px;
-  border-radius:15px;
+  padding:18px;
+  border-radius:25px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.3);
+}
+
+.comment small{
+  color:#c9a96e;
+}
+
+.fake{
+  opacity:0.6;
 }
 
 .delete-btn{
-  background:red;
-  color:#fff;
-  border:none;
   margin-top:10px;
-  padding:5px 10px;
+  background:#c0392b;
+  border:none;
+  color:#fff;
+  padding:6px 12px;
+  border-radius:10px;
 }
 </style>
 </head>
@@ -141,8 +164,15 @@ fake.forEach(text=>{
 
 // 🔥 REAL KOMENTARI
 onSnapshot(collection(db,"comments"), snap=>{
-  commentsDiv.innerHTML="";
 
+  // 🔥 prvo ubaci FAKE (uvijek ostaju)
+  commentsDiv.innerHTML = `
+    <div class="comment fake">🇧🇦 Amir<br><small>Odlična hrana!</small></div>
+    <div class="comment fake">🇭🇷 Ivan<br><small>Top restoran!</small></div>
+    <div class="comment fake">🇷🇸 Marko<br><small>Preporuka svima!</small></div>
+  `;
+
+  // 🔥 onda pravi komentari
   snap.forEach(docu=>{
     const c=docu.data();
 
@@ -150,15 +180,15 @@ onSnapshot(collection(db,"comments"), snap=>{
     div.className="comment";
 
     div.innerHTML=`
-    ${c.country} ${c.name}<br>
-    ${c.text}
-    ${localStorage.getItem("admin")==="1" ? `<button class="delete-btn" onclick="deleteComment('${docu.id}')">Obriši</button>` : ""}
+      ${c.country || ""} ${c.name}
+      <br><small>${c.text}</small>
+      ${localStorage.getItem("admin")==="1" ? `<button class="delete-btn" onclick="deleteComment('${docu.id}')">Obriši</button>` : ""}
     `;
 
-    commentsDiv.appendChild(div);
+    commentsDiv.prepend(div); // NOVI GORE
   });
-});
 
+});
 // ADD
 document.getElementById("commentForm").onsubmit=async e=>{
   e.preventDefault();
