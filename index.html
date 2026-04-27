@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Restoran Džigi2 | Gradačac</title>
-
 <meta name="description" content="Džigi2 – luksuzni restoran u Gradačcu. Rezervacije, navigacija i kontakt.">
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
@@ -38,8 +37,12 @@ header{
   z-index:100;
 }
 header img{height:50px;margin-right:10px;}
-header h1{color:var(--gold);font-family:'Playfair Display',serif;}
+header h1{
+  color:var(--gold);
+  font-family:'Playfair Display',serif;
+}
 
+/* HAMBURGER */
 .menu-toggle{
   margin-left:auto;
   display:flex;
@@ -48,7 +51,21 @@ header h1{color:var(--gold);font-family:'Playfair Display',serif;}
   cursor:pointer;
 }
 .menu-toggle span{
-  width:28px;height:3px;background:#fff;
+  width:28px;
+  height:3px;
+  background:#fff;
+  transition:.3s;
+}
+
+/* ANIMACIJA HAMBURGER */
+.menu-toggle.active span:nth-child(1){
+  transform:rotate(45deg) translate(5px,5px);
+}
+.menu-toggle.active span:nth-child(2){
+  opacity:0;
+}
+.menu-toggle.active span:nth-child(3){
+  transform:rotate(-45deg) translate(6px,-6px);
 }
 
 /* NAV */
@@ -64,9 +81,15 @@ nav{
   justify-content:center;
   align-items:center;
   transition:.4s;
+  z-index:200;
 }
 nav.active{right:0;}
-nav a{color:#fff;text-decoration:none;font-size:20px;margin:12px 0;}
+nav a{
+  color:#fff;
+  text-decoration:none;
+  font-size:20px;
+  margin:12px 0;
+}
 .close-menu{
   position:absolute;
   top:15px;
@@ -91,18 +114,15 @@ nav a{color:#fff;text-decoration:none;font-size:20px;margin:12px 0;}
   inset:0;
   background:rgba(0,0,0,0.7);
 }
-
 .hero-content{
   position:relative;
   z-index:2;
 }
-
 .hero h2{
   font-size:60px;
   color:var(--gold);
   font-family:'Playfair Display',serif;
 }
-
 .subtitle{margin-top:10px;font-size:20px;}
 .status{margin-top:10px;}
 
@@ -137,10 +157,17 @@ section{padding:80px 20px;text-align:center;}
   grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
   gap:20px;
 }
-.gallery img{width:100%;border-radius:10px;}
+.gallery img{
+  width:100%;
+  border-radius:10px;
+}
 
 /* REVIEWS */
-.reviews{max-width:600px;margin:auto;font-style:italic;}
+.reviews{
+  max-width:600px;
+  margin:auto;
+  font-style:italic;
+}
 
 /* FORM */
 .form input{
@@ -192,6 +219,7 @@ section{padding:80px 20px;text-align:center;}
 <header>
   <img src="image121.png">
   <h1>Džigi2</h1>
+
   <div class="menu-toggle" id="menu-toggle">
     <span></span><span></span><span></span>
   </div>
@@ -267,27 +295,46 @@ section{padding:80px 20px;text-align:center;}
 </div>
 
 <script>
+const toggle = document.getElementById('menu-toggle');
+const menu = document.getElementById('menu');
+const closeMenu = document.getElementById('close-menu');
+const status = document.getElementById('status');
+const reviewsEl = document.getElementById('reviews');
+
 // MENU
-menu-toggle.onclick=()=>menu.classList.toggle('active');
-close-menu.onclick=()=>menu.classList.remove('active');
+toggle.onclick = () => {
+  menu.classList.toggle('active');
+  toggle.classList.toggle('active');
+};
+closeMenu.onclick = () => {
+  menu.classList.remove('active');
+  toggle.classList.remove('active');
+};
 
 // STATUS
-const h=new Date().getHours();
-status.innerText=(h>=8 && h<23)?"🟢 Otvoreni":"🔴 Zatvoreno";
+const h = new Date().getHours();
+status.innerText = (h>=8 && h<23) ? "🟢 Otvoreni smo" : "🔴 Zatvoreno";
 
 // REVIEWS
-const r=["Top restoran!","Hrana vrh!","Ambijent 10/10","Preporuka!"];
-let i=0;
-setInterval(()=>{reviews.innerText=r[i++%r.length]},3000);
+const r = [
+  "Najbolji restoran u Gradačcu!",
+  "Ambijent i hrana top nivo.",
+  "Uvijek se vraćamo ponovo.",
+  "Preporuka svima!"
+];
+let i = 0;
+setInterval(()=>{
+  reviewsEl.innerText = r[i++ % r.length];
+},3000);
 
 // REZERVACIJA
 function rezervisi(){
- let ime=document.getElementById("ime").value;
- let osobe=document.getElementById("osobe").value;
- let datum=document.getElementById("datum").value;
+  let ime = document.getElementById("ime").value;
+  let osobe = document.getElementById("osobe").value;
+  let datum = document.getElementById("datum").value;
 
- let poruka=`Rezervacija - ${ime}, ${osobe} osoba, ${datum}`;
- window.open(`https://wa.me/38761015241?text=${encodeURIComponent(poruka)}`);
+  let poruka = `Rezervacija - ${ime}, ${osobe} osoba, ${datum}`;
+  window.open(`https://wa.me/38761015241?text=${encodeURIComponent(poruka)}`);
 }
 </script>
 
