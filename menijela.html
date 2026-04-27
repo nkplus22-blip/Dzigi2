@@ -3,172 +3,160 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jelovnik | Restoran Džigi2</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<title>Jelovnik | Džigi2</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
-  .dish button {
-  padding: 10px 20px; /* veće dugme */
-  font-size: 16px;    /* veći tekst */
-  background-color: #ff9800; /* po želji, boja dugmeta */
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.dish button:hover {
-  background-color: #e68900; /* efekat kada prelaziš mišem */
-}
 :root{
-  --gold:#c9a14a;
-  --dark:#0e0a07;
-  --glass:rgba(255,255,255,0.07);
-  --text:#f5efe7;
-  --accent:#ffd7b5;
+  --gold:#c6a55c;
+  --dark:#0f0a07;
 }
 
-/* RESET */
-*{margin:0;padding:0;box-sizing:border-box}
+*{margin:0;padding:0;box-sizing:border-box;}
 
-/* BODY */
 body{
   font-family:'Poppins',sans-serif;
-  background:radial-gradient(circle at top,#2a1a12,#0e0a07);
-  color:var(--text);
-  overflow-x:hidden;
-  padding-bottom:120px;
-}
-
-/* FLOATING ICONS */
-.floating-icons{
-  position:fixed;
-  inset:0;
-  z-index:-1;
-  pointer-events:none;
-}
-.icon{
-  position:absolute;
-  font-size:34px;
-  opacity:.25;
-  animation:floatAnim 14s linear infinite;
-}
-@keyframes floatAnim{
-  0%{transform:translateY(100vh)}
-  100%{transform:translateY(-120vh)}
+  background:#0f0a07;
+  color:#fff;
 }
 
 /* HEADER */
 header{
   position:sticky;
   top:0;
-  z-index:50;
   display:flex;
   align-items:center;
-  gap:16px;
-  padding:14px 40px;
-  background:rgba(0,0,0,.55);
+  padding:15px 25px;
+  background:rgba(0,0,0,0.7);
   backdrop-filter:blur(12px);
-  border-bottom:1px solid rgba(255,255,255,.08);
+  z-index:100;
 }
-header img{height:60px}
-header h1{
-  font-family:'Playfair Display',serif;
-  font-size:30px;
-  color:var(--gold);
-  letter-spacing:2px;
-}
+header img{height:50px;margin-right:10px;}
+header h1{color:var(--gold);font-family:'Playfair Display',serif;}
 
-/* TOP ACTIONS */
-#top-actions{
-  position:fixed;
-  right:20px;
-  top:110px;
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-  z-index:60;
-}
-#top-actions a{
-  background:rgba(0,0,0,.7);
-  color:var(--gold);
-  padding:8px 14px;
-  border-radius:10px;
-  text-decoration:none;
-  font-weight:600;
+/* HERO */
+.hero{
   text-align:center;
-  border:1px solid rgba(255,255,255,.1);
-  transition:.25s;
+  padding:50px 20px;
 }
-#top-actions a:hover{
+.hero h2{font-size:40px;color:var(--gold);}
+.hero p{opacity:.8}
+
+/* FILTER */
+.filter-bar{
+  display:flex;
+  gap:10px;
+  overflow:auto;
+  padding:15px;
+  background:#000;
+}
+.filter-bar button{
+  padding:8px 15px;
+  border:1px solid var(--gold);
+  background:transparent;
+  color:var(--gold);
+  cursor:pointer;
+}
+.filter-bar button:hover{
   background:var(--gold);
   color:#000;
-  transform:translateX(-6px);
 }
 
-/* RESPONSIVE */
-@media(max-width:768px){
-  main{padding:30px}
-  .hero h2{font-size:36px}
-  #top-actions{right:10px}
-} 
+/* SEARCH */
+#search{
+  width:90%;
+  margin:20px auto;
+  display:block;
+  padding:12px;
+  border-radius:10px;
+  border:none;
+}
 
-/* Mobile menu */
-.mobile-menu {
-  position: fixed;
-  top: 64px; /* ispod header-a */
-  left: 0;
-  width: 100%;
-  background: var(--bijela);
-  border-bottom: 1px solid rgba(0,0,0,0.05);
-  transform: translateY(-100%);
-  transition: transform 0.25s ease;
-  z-index: 45;
+/* GRID */
+#menu-wrapper{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:20px;
+  padding:30px;
 }
-.mobile-menu.active {
-  transform: translateY(0);
+
+/* CARD */
+.dish{
+  background:rgba(255,255,255,0.05);
+  padding:18px;
+  border-radius:15px;
+  border:1px solid rgba(255,255,255,0.05);
+  transition:.3s;
 }
-.mobile-menu ul {
-  list-style: none;
-  padding: 10px 20px;
+.dish:hover{
+  transform:translateY(-6px);
 }
-.mobile-menu li {
-  margin: 8px 0;
+
+/* TEXT */
+.dish-name{font-weight:600;margin-bottom:10px;}
+.dish-price{color:var(--gold);margin-bottom:10px;}
+
+/* BUTTON */
+.dish button{
+  width:100%;
+  padding:10px;
+  background:var(--gold);
+  border:none;
+  cursor:pointer;
 }
-.mobile-menu a {
-  text-decoration: none;
-  color: var(--tamna);
-  font-weight: 600;
-  font-size: 16px;
+
+/* CATEGORY */
+.category-title{
+  grid-column:1/-1;
+  text-align:center;
+  margin-top:50px;
+  color:var(--gold);
+}
+
+/* ORDER */
+.order{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  width:280px;
+  max-height:60vh;
+  overflow:auto;
+  background:#000;
+  padding:15px;
+  border-radius:12px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="floating-icons" id="floating-icons"></div>
-
 <header>
-  <img src="image121.png" alt="Džigi2">
+  <img src="image121.png">
   <h1>Džigi2 Jelovnik</h1>
 </header>
 
-<div id="top-actions">
-  <li><a href="index.html">🏠 POČETNA</a></li>
-  <a href="#salads">SALATE</a>
-  <a href="#desserts">DESERTI</a>
-  <a href="#order-summary">NARUDŽBA</a>
-</div>
-
 <section class="hero">
-  <div class="hero-content">
-    <h2>Luksuz koji se pamti</h2>
-    <p>Kompletan jelovnik restorana Džigi2</p>
-  </div>
+  <h2>Jelovnik</h2>
+  <p>Izaberite i naručite</p>
 </section>
 
+<div class="filter-bar">
+  <button onclick="filterMenu('all')">Sve</button>
+  <button onclick="filterMenu('pizza')">Pizza</button>
+  <button onclick="filterMenu('ribe')">Ribe</button>
+  <button onclick="filterMenu('tjestenina')">Tjestenina</button>
+  <button onclick="filterMenu('salata')">Salate</button>
+  <button onclick="filterMenu('desert')">Deserti</button>
+</div>
+
+<input type="text" id="search" placeholder="Pretraži..." onkeyup="searchMenu()">
+
 <main>
+
+<!-- 🔴 OVDJE UBACUJEŠ SVOJ MENU (NE DIRAŠ NIŠTA) -->
+<div id="menu-wrapper">
 
 <div id="menu-container"></div>
 <h2 class="category-title">🔴JELA PO NARUDŽBI🔴</h2>
@@ -458,6 +446,8 @@ header h1{
 <div class="dish"><div class="dish-name">Zova/Limeta0% 0,33L</div><div class="dish-price">4 KM</div><button onclick="addItem('Zova/Limeta0% 0,33L',4)">Dodaj</button></div>
 </script>
 
+</div>
+
 <!-- Order Summary Section -->
 <section class="order">
   <h3>Vaša narudžba</h3>
@@ -466,86 +456,85 @@ header h1{
   <button id="send-whatsapp">Pošalji narudžbu</button>
 </section>
 
+</main>
+
+<section class="order">
+  <h3>Vaša narudžba</h3>
+  <div id="order-summary"></div>
+  <div id="total-price">Ukupno: 0 KM</div>
+  <button id="send-whatsapp">Pošalji narudžbu</button>
+</section>
+
 <script>
-  // Narudžba array
-  let order = [];
+// SEARCH
+function searchMenu(){
+  let input = document.getElementById("search").value.toLowerCase();
+  let dishes = document.querySelectorAll(".dish");
 
-  function addItem(name, price) {
-    order.push({ name, price });
-    updateOrder();
-  }
+  dishes.forEach(d=>{
+    d.style.display = d.innerText.toLowerCase().includes(input) ? "block" : "none";
+  });
+}
 
-  function updateOrder() {
-    const orderSummary = document.getElementById('order-summary');
-    orderSummary.innerHTML = ''; // reset
-    let total = 0;
+// FILTER
+function filterMenu(type){
+  let dishes = document.querySelectorAll(".dish");
 
-    order.forEach((item, index) => {
-      const itemDiv = document.createElement('div');
-      itemDiv.textContent = `${item.name} - ${item.price} KM`;
-      
-      const removeBtn = document.createElement('button');
-      removeBtn.textContent = 'Ukloni';
-      removeBtn.onclick = () => {
-        order.splice(index, 1);
-        updateOrder();
-      };
-      
-      itemDiv.appendChild(removeBtn);
-      orderSummary.appendChild(itemDiv);
-
-      total += item.price;
-    });
-
-    document.getElementById('total-price').textContent = `Ukupno: ${total} KM`;
-  }
-
-  // WhatsApp narudžba
-  document.getElementById('send-whatsapp').onclick = () => {
-    if(order.length === 0) {
-      alert('Dodajte artikle u narudžbu prije slanja!');
-      return;
+  dishes.forEach(d=>{
+    if(type === 'all'){
+      d.style.display='block';
+    } else {
+      d.style.display = d.innerText.toLowerCase().includes(type) ? "block":"none";
     }
+  });
+}
 
-    let message = 'Narudžba:\n';
-    order.forEach(item => {
-      message += `- ${item.name}: ${item.price} KM\n`;
-    });
+// ORDER
+let order=[];
 
-    const total = order.reduce((sum, item) => sum + item.price, 0);
-    message += `Ukupno: ${total} KM`;
+function addItem(name,price){
+  order.push({name,price});
+  updateOrder();
+}
 
-    const phone = '+38761015241'; // broj na koji ide narudžba
-    const whatsappUrl = `https://wa.me/${phone.replace('+','')}?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, '_blank');
-  };
+function updateOrder(){
+  let box=document.getElementById('order-summary');
+  box.innerHTML='';
+  let total=0;
+
+  order.forEach((item,i)=>{
+    let div=document.createElement('div');
+    div.innerText=item.name+" - "+item.price+" KM";
+
+    let btn=document.createElement('button');
+    btn.innerText="X";
+    btn.onclick=()=>{
+      order.splice(i,1);
+      updateOrder();
+    };
+
+    div.appendChild(btn);
+    box.appendChild(div);
+    total+=item.price;
+  });
+
+  document.getElementById('total-price').innerText="Ukupno: "+total+" KM";
+}
+
+// WHATSAPP
+document.getElementById('send-whatsapp').onclick=()=>{
+  if(order.length===0) return alert("Dodaj nešto!");
+
+  let msg="Narudžba:\n";
+  order.forEach(i=> msg+=`- ${i.name} ${i.price} KM\n`);
+
+  let total=order.reduce((s,i)=>s+i.price,0);
+  msg+="Ukupno: "+total+" KM";
+
+  window.open(`https://wa.me/38761015241?text=${encodeURIComponent(msg)}`);
+}
 </script>
 
-<!-- Opcionalno CSS za bolji prikaz -->
-<style>
-  .order {
-    margin-top: 30px;
-    padding: 20px;
-    border: 2px solid #ddd;
-    border-radius: 10px;
-  }
-  #order-summary div {
-    margin: 5px 0;
-  }
-  #order-summary button {
-    margin-left: 10px;
-  }
-  #send-whatsapp {
-    margin-top: 10px;
-    padding: 10px 20px;
-    background: #25D366;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-</style>
-</script>
-<footer>© 2025 Restoran Džigi2 — Sva prava zadržana.</footer>
 </body>
 </html>
+  
