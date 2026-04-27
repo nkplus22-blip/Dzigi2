@@ -176,6 +176,9 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 const commentsDiv = document.getElementById("comments");
+  const nameInput = document.getElementById("name");
+const countryInput = document.getElementById("country");
+const commentInput = document.getElementById("comment");
 
 // 🔥 FAKE KOMENTARI
 const fake = [
@@ -193,7 +196,7 @@ fake.forEach(text=>{
 });
 
 // 🔥 REAL KOMENTARI
-onSnapshot(collection(db,"comments"), snap=>{
+onSnapshot(collection(db,"test"), snap=>{
 
   // 🔥 očisti sve
   commentsDiv.innerHTML = "";
@@ -206,7 +209,7 @@ onSnapshot(collection(db,"comments"), snap=>{
     div.className = "comment";
 
     div.innerHTML = `
-      ${c.country || ""} ${c.name}
+      <div><b>${c.name}</b> • ${c.country}</div>
       <br><small>${c.text}</small>
       ${localStorage.getItem("admin")==="1" ? 
       `<button class="delete-btn" onclick="deleteComment('${docu.id}')">Obriši</button>` : ""}
@@ -239,18 +242,18 @@ onSnapshot(collection(db,"comments"), snap=>{
 document.getElementById("commentForm").onsubmit=async e=>{
   e.preventDefault();
 
-  await addDoc(collection(db,"comments"),{
-    name: name.value,
-    country: country.value,
-    text: comment.value
-  });
+ await addDoc(collection(db,"test"),{
+  name: nameInput.value,
+  country: countryInput.value,
+  text: commentInput.value
+});
 
   e.target.reset();
 };
 
 // DELETE
 window.deleteComment=async(id)=>{
-  await deleteDoc(doc(db,"comments",id));
+  await deleteDoc(doc(db,"test",id));
 };
 
 // MENU
