@@ -1,107 +1,342 @@
+
 <!DOCTYPE html>
 <html lang="bs">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Džigi2 | Restoran vrhunske gastronomije | Gradačac</title>
-    <meta name="description" content="Doživite vrhunski spoj tradicije i luksuza u srcu Gradačca. Restoran Džigi2 – vaša destinacija za nezaboravne ukuse.">
-    
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    
-    <style>
-        :root {
-            --gold: #c5a059;
-            --dark: #0a0a0a;
-            --glass: rgba(255, 255, 255, 0.03);
-            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; font-size: 16px; }
-        body { font-family: 'Poppins', sans-serif; background: var(--dark); color: #fff; line-height: 1.6; }
+<title>Restoran Džigi2 | Gradačac</title>
+<meta name="description" content="Džigi2 – luksuzni restoran u Gradačcu. Rezervacije, navigacija i kontakt.">
 
-        /* --- NAVIGATION --- */
-        header { position: fixed; top: 0; width: 100%; padding: 25px 8%; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: rgba(10,10,10,0.8); backdrop-filter: blur(15px); border-bottom: 1px solid rgba(197, 160, 89, 0.2); }
-        .logo { font-family: 'Playfair Display', serif; font-size: 28px; color: var(--gold); letter-spacing: 2px; }
-        
-        .hamburger { cursor: pointer; display: flex; flex-direction: column; gap: 5px; }
-        .hamburger span { width: 30px; height: 2px; background: #fff; transition: var(--transition); }
-        .hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-        .hamburger.active span:nth-child(2) { opacity: 0; }
-        .hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
-        nav { position: fixed; inset: 0; background: var(--dark); display: flex; flex-direction: column; align-items: center; justify-content: center; transform: translateX(100%); transition: var(--transition); z-index: 900; }
-        nav.active { transform: translateX(0); }
-        nav a { font-family: 'Playfair Display'; font-size: 2.5rem; text-decoration: none; color: #fff; margin: 20px; transition: var(--transition); }
-        nav a:hover { color: var(--gold); transform: scale(1.1); }
+<style>
+:root{
+  --gold:#c6a55c;
+  --dark:#0f0a07;
+}
 
-        /* --- HERO SECTION --- */
-        .hero { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('dzigi2.jpg') center/cover fixed; padding: 0 20px; }
-        .hero h1 { font-family: 'Playfair Display'; font-size: clamp(3rem, 10vw, 6rem); color: var(--gold); line-height: 1.1; }
-        .hero p { font-size: 1.2rem; margin: 20px 0; letter-spacing: 3px; text-transform: uppercase; }
-        
-        .btn { padding: 18px 40px; border: 1px solid var(--gold); color: #fff; text-decoration: none; font-weight: 600; display: inline-block; margin-top: 20px; transition: var(--transition); }
-        .btn:hover { background: var(--gold); color: #000; }
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
 
-        /* --- UTILITIES --- */
-        section { padding: 100px 8%; max-width: 1400px; margin: auto; }
-        h2 { font-family: 'Playfair Display'; font-size: 3rem; color: var(--gold); text-align: center; margin-bottom: 60px; }
+body{
+  font-family:'Poppins',sans-serif;
+  background:#0f0a07;
+  color:#fff;
+}
 
-        .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        .card { background: var(--glass); border: 1px solid #222; overflow: hidden; border-radius: 10px; }
-        .card img { width: 100%; height: 350px; object-fit: cover; transition: var(--transition); }
-        .card:hover img { transform: scale(1.05); }
+/* HEADER */
+header{
+  position:fixed;
+  top:0;
+  width:100%;
+  display:flex;
+  align-items:center;
+  padding:15px 25px;
+  background:rgba(0,0,0,0.6);
+  backdrop-filter:blur(14px);
+  z-index:100;
+}
+header img{height:50px;margin-right:10px;}
+header h1{
+  color:var(--gold);
+  font-family:'Playfair Display',serif;
+}
 
-        .footer { padding: 50px; text-align: center; border-top: 1px solid #222; }
+/* HAMBURGER */
+.menu-toggle{
+  margin-left:auto;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  cursor:pointer;
+}
+.menu-toggle span{
+  width:28px;
+  height:3px;
+  background:#fff;
+  transition:.3s;
+}
 
-        /* Mobile specific */
-        @media (max-width: 768px) { nav a { font-size: 1.8rem; } }
-    </style>
+/* ANIMACIJA HAMBURGER */
+.menu-toggle.active span:nth-child(1){
+  transform:rotate(45deg) translate(5px,5px);
+}
+.menu-toggle.active span:nth-child(2){
+  opacity:0;
+}
+.menu-toggle.active span:nth-child(3){
+  transform:rotate(-45deg) translate(6px,-6px);
+}
+
+/* NAV */
+nav{
+  position:fixed;
+  right:-320px;
+  top:0;
+  width:320px;
+  height:100vh;
+  background:#000;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  transition:.4s;
+  z-index:200;
+}
+nav.active{right:0;}
+nav a{
+  color:#fff;
+  text-decoration:none;
+  font-size:20px;
+  margin:12px 0;
+}
+.close-menu{
+  position:absolute;
+  top:15px;
+  right:20px;
+  font-size:34px;
+  cursor:pointer;
+}
+
+/* HERO */
+.hero{
+  height:100vh;
+  background:url('dzigi2.jpg') center/cover no-repeat;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding-top:80px;
+}
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0.7);
+}
+.hero-content{
+  position:relative;
+  z-index:2;
+}
+.hero h2{
+  font-size:60px;
+  color:var(--gold);
+  font-family:'Playfair Display',serif;
+}
+.subtitle{margin-top:10px;font-size:20px;}
+.status{margin-top:10px;}
+
+/* CTA */
+.cta-main{
+  display:inline-block;
+  margin-top:30px;
+  padding:16px 40px;
+  border:2px solid var(--gold);
+  color:var(--gold);
+  text-decoration:none;
+}
+.cta-main:hover{
+  background:var(--gold);
+  color:#000;
+}
+
+.cta-secondary{
+  display:inline-block;
+  margin:10px;
+  padding:10px 20px;
+  border:1px solid var(--gold);
+  color:var(--gold);
+  text-decoration:none;
+}
+
+/* SECTION */
+section{padding:80px 20px;text-align:center;}
+
+.gallery{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:20px;
+}
+.gallery img{
+  width:100%;
+  border-radius:10px;
+}
+
+/* REVIEWS */
+.reviews{
+  max-width:600px;
+  margin:auto;
+  font-style:italic;
+}
+
+/* FORM */
+.form input{
+  display:block;
+  margin:10px auto;
+  padding:12px;
+  width:80%;
+}
+.form button{
+  margin-top:10px;
+  padding:12px 30px;
+  background:var(--gold);
+  border:none;
+  cursor:pointer;
+}
+
+/* MAP */
+.map{height:400px;}
+
+/* BOTTOM BAR */
+.bottom-bar{
+  position:fixed;
+  bottom:0;
+  width:100%;
+  background:#000;
+  display:flex;
+  justify-content:space-around;
+  padding:10px;
+}
+
+/* WHATSAPP */
+.whatsapp{
+  position:fixed;
+  bottom:70px;
+  right:20px;
+  background:#25D366;
+  width:55px;height:55px;
+  border-radius:50%;
+  text-align:center;
+  line-height:55px;
+  color:#fff;
+  text-decoration:none;
+}
+</style>
 </head>
+
 <body>
 
 <header>
-    <div class="logo">DŽIGI2</div>
-    <div class="hamburger" id="navToggle">
-        <span></span><span></span><span></span>
-    </div>
+  <img src="image121.png">
+  <h1>Džigi2</h1>
+
+  <div class="menu-toggle" id="menu-toggle">
+    <span></span><span></span><span></span>
+  </div>
 </header>
 
-<nav id="navMenu">
-    <a href="index.html">Početna</a>
-    <a href="menijela.html">Meni jela</a>
-    <a href="rezervacije.html">Rezervacije</a>
-    <a href="galerija.html">Galerija</a>
+<nav id="menu">
+  <div class="close-menu" id="close-menu">&times;</div>
+  <a href="index.html">Početna</a>
+  <a href="menijela.html">Meni jela</a>
+  <a href="rezervacije.html">Rezervacije</a>
+  <a href="komentari.html">Utisci gostiju</a>
+  <a href="galerija.html">Galerija</a>
 </nav>
 
 <section class="hero">
-    <h1>Džigi2</h1>
-    <p>Autentični ukusi | Gradačac</p>
-    <a href="#rezervacija" class="btn">REZERVIŠI SADA</a>
+  <div class="hero-content">
+    <h2>Džigi2</h2>
+    <p class="subtitle">Luksuz & Tradicija</p>
+    <div id="status" class="status"></div>
+
+    <a href="#rez" class="cta-main">REZERVIŠI STO</a>
+
+    <div>
+      <a href="tel:+38735818817" class="cta-secondary">📞</a>
+      <a href="https://wa.me/38761015241" class="cta-secondary">💬</a>
+    </div>
+  </div>
 </section>
 
 <section>
-    <h2>Naš Ambijent</h2>
-    <div class="gallery">
-        <div class="card"><img src="ambijent1.jpg" alt="Ambijent"></div>
-        <div class="card"><img src="ambijent2.jpg" alt="Ambijent"></div>
-        <div class="card"><img src="ambijent3.jpg" alt="Ambijent"></div>
-    </div>
+  <h2>Ambijent</h2>
+  <div class="gallery">
+    <img src="ambijent1.jpg">
+    <img src="ambijent2.jpg">
+    <img src="ambijent3.jpg">
+    <img src="ambijent4.jpg">
+  </div>
 </section>
 
-<footer class="footer">
-    <p>&copy; 2026 Restoran Džigi2. Sva prava zadržana.</p>
+<section id="rec">
+  <h2>Utisci gostiju</h2>
+  <div class="reviews" id="reviews"></div>
+</section>
+
+<section id="rez">
+  <h2>Rezervacija</h2>
+  <div class="form">
+    <input id="ime" placeholder="Ime">
+    <input id="osobe" placeholder="Broj osoba">
+    <input id="datum" placeholder="Datum">
+    <button onclick="rezervisi()">Pošalji</button>
+  </div>
+</section>
+
+<section>
+  <h2>Lokacija</h2>
+  <div class="map">
+    <iframe src="https://www.google.com/maps?q=44.8818319,18.4202649&z=18&output=embed"
+    width="100%" height="100%"></iframe>
+  </div>
+</section>
+
+<footer style="text-align:center;padding:20px;background:#000;">
+© 2026 Džigi2
 </footer>
 
-<script>
-    const navToggle = document.getElementById('navToggle');
-    const navMenu = document.getElementById('navMenu');
+<a href="https://wa.me/38761015241" class="whatsapp">💬</a>
 
-    navToggle.onclick = () => {
-        navToggle.classList.toggle('active');
-        navMenu.classList.toggle('active');
-    };
+<div class="bottom-bar">
+  <a href="tel:+38735818817">📞</a>
+  <a href="https://wa.me/38761015241">💬</a>
+  <a href="https://www.google.com/maps?q=44.8818319,18.4202649">📍</a>
+</div>
+
+<script>
+const toggle = document.getElementById('menu-toggle');
+const menu = document.getElementById('menu');
+const closeMenu = document.getElementById('close-menu');
+const status = document.getElementById('status');
+const reviewsEl = document.getElementById('reviews');
+
+// MENU
+toggle.onclick = () => {
+  menu.classList.toggle('active');
+  toggle.classList.toggle('active');
+};
+closeMenu.onclick = () => {
+  menu.classList.remove('active');
+  toggle.classList.remove('active');
+};
+
+// STATUS
+const h = new Date().getHours();
+status.innerText = (h>=8 && h<23) ? "🟢 Otvoreni smo" : "🔴 Zatvoreno";
+
+// REVIEWS
+const r = [
+  "Najbolji restoran u Gradačcu!",
+  "Ambijent i hrana top nivo.",
+  "Uvijek se vraćamo ponovo.",
+  "Preporuka svima!"
+];
+let i = 0;
+setInterval(()=>{
+  reviewsEl.innerText = r[i++ % r.length];
+},3000);
+
+// REZERVACIJA
+function rezervisi(){
+  let ime = document.getElementById("ime").value;
+  let osobe = document.getElementById("osobe").value;
+  let datum = document.getElementById("datum").value;
+
+  let poruka = `Rezervacija - ${ime}, ${osobe} osoba, ${datum}`;
+  window.open(`https://wa.me/38761015241?text=${encodeURIComponent(poruka)}`);
+}
 </script>
 
 </body>
