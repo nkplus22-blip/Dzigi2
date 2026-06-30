@@ -1,325 +1,441 @@
 <!DOCTYPE html>
 <html lang="bs">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rezervacije - Restoran Džigi2</title>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-<style>
-:root {
-  --smedja: #5a3825;
-  --svijetla: rgba(255,248,240,0.01);
-  --bijela: rgba(255,255,255,0.2);
-  --tamna: #3b2415;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Utisci Gostiju | Restoran Džigi2 Gradačac</title>
+    <meta name="description" content="Pogledajte utiske i komentare naših gostiju. Saznajte zašto je Restoran Džigi2 sinonim za vrhunski luksuz i gastronomiju.">
 
-* { margin:0; padding:0; box-sizing:border-box; }
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,500&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-body {
-  font-family: 'Poppins', sans-serif;
-  background-color: var(--svijetla);
-  color: var(--tamna);
-  overflow-x: hidden;
-  position: relative;
-}
+    <style>
+        /* CSS Varijable za Fine Dining luksuzni osjećaj */
+        :root {
+            --gold: #c6a55c;
+            --gold-hover: #e5c47b;
+            --dark-main: #0a0705;
+            --dark-card: #14100d;
+            --text-light: #f5f5f5;
+            --text-muted: #a69e97;
+            --border-gold: rgba(198, 165, 92, 0.25);
+            --transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
 
-/* animirana pozadina */
-body::before {
-  content:"";
-  position: fixed;
-  inset:0;
-  background: linear-gradient(120deg, rgba(255,255,255,0.05), rgba(255,200,150,0.04), rgba(255,255,255,0.05));
-  animation: bgshift 25s ease-in-out infinite alternate;
-  z-index: -2;
-}
-@keyframes bgshift {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-10%); }
-}
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
 
-/* Floating icons */
-.floating-icons {
-  position: fixed;
-  top:0; left:0;
-  width:100%; height:100%;
-  overflow:hidden;
-  z-index:-1;
-  pointer-events:none;
-}
-.icon {
-  position:absolute;
-  font-size:40px;
-  opacity:0.85;
-  animation: floatAnim 14s linear infinite;
-  color: rgba(90,56,37,0.85);
-  text-shadow:0 0 8px rgba(255,255,255,0.3);
-}
-@keyframes floatAnim {
-  0% { transform: translateY(100vh) rotate(0deg); opacity:0; }
-  20% { opacity:1; }
-  50% { transform: translateY(0) rotate(180deg); opacity:1; }
-  80% { opacity:0.9; }
-  100% { transform: translateY(-100vh) rotate(360deg); opacity:0; }
-}
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--dark-main);
+            color: var(--text-light);
+            overflow-x: hidden;
+        }
 
-/* Header */
-header {
-  background-color: var(--bijela);
-  display:flex;
-  align-items:center;
-  justify-content:flex-start;
-  padding:10px 40px;
-  box-shadow:0 2px 8px rgba(0,0,0,0.1);
-  position:sticky;
-  top:0;
-  z-index:10;
-  backdrop-filter: blur(8px);
-}
-header img { height:70px; margin-right:15px; }
-header h1 {
-  font-family: 'Fredoka One', cursive;
-  font-size:40px;
-  color: var(--smedja);
-  text-shadow:2px 2px 6px rgba(0,0,0,0.3);
-}
+        /* --- ZAGLAVLJE (HEADER) --- */
+        header {
+            position: fixed; top: 0; width: 100%;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 15px 5%;
+            background: rgba(10, 7, 5, 0.6);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            z-index: 1000; transition: var(--transition);
+        }
+        .brand { display: flex; align-items: center; text-decoration: none; }
+        header img { height: 45px; margin-right: 15px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); }
+        header h1 {
+            color: var(--gold); font-family: 'Playfair Display', serif;
+            font-size: 1.8rem; letter-spacing: 1px; font-weight: 700;
+        }
 
-/* Hamburger menu */
-.menu-toggle {
-  display:none;
-  flex-direction: column;
-  justify-content: space-between;
-  width:26px; height:20px;
-  cursor:pointer;
-  margin-left:auto;
-}
-.menu-toggle span {
-  background: #000;
-  height:3px;
-  width:100%;
-  border-radius:2px;
-  transition:0.3s;
-}
+        /* --- HAMBURGER & MENI --- */
+        .menu-toggle { display: flex; flex-direction: column; gap: 6px; cursor: pointer; z-index: 1100; }
+        .menu-toggle span { width: 28px; height: 2px; background: var(--text-light); transition: var(--transition); }
+        .menu-toggle.active span:nth-child(1) { transform: rotate(45deg) translateY(6px); background: var(--gold); }
+        .menu-toggle.active span:nth-child(2) { opacity: 0; }
+        .menu-toggle.active span:nth-child(3) { transform: rotate(-45deg) translateY(-6px); background: var(--gold); }
 
-nav {
-  position:fixed;
-  top:0;
-  right:-280px;
-  width:280px; height:100vh;
-  background: var(--smedja);
-  color: white;
-  display:flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  transition:right 0.4s ease;
-  z-index:15;
-  padding-top:50px;
-}
-nav a {
-  color:white;
-  text-decoration:none;
-  font-size:20px;
-  margin:15px 0;
-  transition: color 0.3s;
-}
-nav a:hover { color:#ffd7b5; }
-.close-menu {
-  position:absolute;
-  top:10px;
-  right:20px;
-  font-size:36px;
-  cursor:pointer;
-}
-nav.active { right:0; }
+        nav {
+            position: fixed; right: -340px; top: 0; width: 340px; height: 100vh;
+            background: rgba(10, 7, 5, 0.98); backdrop-filter: blur(20px);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            transition: var(--transition); z-index: 1050; border-left: 1px solid var(--border-gold);
+        }
+        nav.active { right: 0; box-shadow: -20px 0 40px rgba(0,0,0,0.7); }
+        nav a {
+            font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--text-light);
+            text-decoration: none; margin: 15px 0; position: relative; transition: var(--transition);
+        }
+        nav a:hover { color: var(--gold); }
 
-/* Rezervacije sekcija */
-.rezervacije {
-  padding:80px 20px;
-  text-align:center;
-  max-width:700px;
-  margin:0 auto;
-  background-color: var(--bijela);
-  border-radius:16px;
-  backdrop-filter: blur(6px);
-  box-shadow:0 4px 10px rgba(0,0,0,0.1);
-  margin-top:60px;
-}
-.rezervacije h2 {
-  font-size:36px;
-  color: var(--smedja);
-  margin-bottom:20px;
-}
-.rezervacije p {
-  font-size:18px;
-  margin-bottom:30px;
-}
+        /* --- STRANICA KONTEJNER --- */
+        .main-container { padding: 140px 5% 80px; max-width: 1200px; margin: 0 auto; }
 
-form {
-  display:flex;
-  flex-direction:column;
-  gap:15px;
-  text-align:left;
-}
-label {
-  font-weight:600;
-  color: var(--smedja);
-}
-input, textarea, select {
-  width:100%;
-  padding:10px 12px;
-  border:1px solid rgba(90,56,37,0.3);
-  border-radius:8px;
-  font-size:16px;
-  background: rgba(255,255,255,0.6);
-  backdrop-filter: blur(4px);
-}
-button {
-  background-color: var(--smedja);
-  color:white;
-  font-size:18px;
-  padding:12px;
-  border:none;
-  border-radius:10px;
-  cursor:pointer;
-  transition:background 0.3s ease;
-}
-button:hover {
-  background-color:#7a4e34;
-}
+        /* --- STATISTIČKI PANEL (RATING BOX) --- */
+        .rating-summary {
+            display: grid; grid-template-columns: 1fr 2fr 1fr; gap: 30px;
+            background: var(--dark-card); padding: 40px; border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.03); margin-bottom: 5px;
+            align-items: center; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            position: relative; overflow: hidden;
+        }
+        .rating-summary::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+        .huge-number { font-family: 'Playfair Display', serif; font-size: 4.5rem; color: var(--gold); font-weight: 700; line-height: 1; }
+        .stars-display { color: var(--gold); font-size: 1.3rem; margin: 10px 0; letter-spacing: 2px; }
+        
+        .progress-bars { display: flex; flex-direction: column; gap: 10px; text-align: left; padding: 0 20px; }
+        .progress-line { display: flex; align-items: center; gap: 15px; font-size: 0.85rem; color: var(--text-muted); }
+        .progress-line span { width: 50px; }
+        .bar-bg { flex: 1; height: 6px; background: rgba(255,255,255,0.05); border-radius: 10px; overflow: hidden; }
+        .bar-fill { height: 100%; background: var(--gold); border-radius: 10px; }
 
-/* Footer */
-footer {
-  background-color: var(--smedja);
-  color:white;
-  text-align:center;
-  padding:20px 10px;
-  font-size:15px;
-  margin-top:60px;
-}
+        .recommend-box h4 { font-family: 'Playfair Display', serif; font-size: 2rem; color: #fff; margin-bottom: 5px; }
+        .recommend-box p { color: var(--text-muted); font-size: 0.9rem; }
 
-@media(max-width:768px){
-  .menu-toggle { display:flex; }
-  header h1 { font-size:28px; }
-  .rezervacije h2 { font-size:30px; }
-}
-</style>
+        @media (max-width: 992px) {
+            .rating-summary { grid-template-columns: 1fr; gap: 40px; padding: 30px 20px; }
+            .progress-bars { padding: 0; }
+        }
+
+        /* --- FILTERI --- */
+        .filter-bar { display: flex; justify-content: space-between; align-items: center; margin: 50px 0 30px; flex-wrap: wrap; gap: 20px; }
+        .filter-buttons { display: flex; gap: 10px; flex-wrap: wrap; }
+        .filter-btn {
+            background: rgba(255,255,255,0.02); color: var(--text-light); border: 1px solid rgba(255,255,255,0.08);
+            padding: 8px 20px; border-radius: 4px; cursor: pointer; transition: var(--transition); font-size: 0.85rem;
+        }
+        .filter-btn.active, .filter-btn:hover { background: var(--gold); color: #000; border-color: var(--gold); font-weight: 500; }
+        
+        .write-review-trigger {
+            background: transparent; color: var(--gold); border: 1px solid var(--gold);
+            padding: 10px 24px; border-radius: 4px; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 1px; font-size: 0.85rem; cursor: pointer; transition: var(--transition);
+        }
+        .write-review-trigger:hover { background: var(--gold); color: #000; }
+
+        /* --- STRUKTURA SVAKOG UTISKA (REVIEWS GRID) --- */
+        .reviews-layout { display: grid; grid-template-columns: 1.4fr 1fr; gap: 40px; align-items: start; }
+        .reviews-list { display: flex; flex-direction: column; gap: 25px; }
+        
+        .review-card {
+            background: var(--dark-card); padding: 35px; border-radius: 6px;
+            border: 1px solid rgba(255,255,255,0.02); display: flex; gap: 25px;
+            transition: var(--transition); animation: fadeInUp 0.6s ease forwards;
+        }
+        .review-card:hover { transform: translateY(-5px); border-color: var(--border-gold); box-shadow: 0 15px 30px rgba(0,0,0,0.5); }
+        
+        .author-avatar {
+            width: 55px; height: 55px; border-radius: 50%; background: rgba(198, 165, 92, 0.1);
+            color: var(--gold); border: 1px solid var(--border-gold); display: flex;
+            justify-content: center; align-items: center; font-weight: 600; font-size: 1.2rem; flex-shrink: 0;
+        }
+        
+        .review-main { flex: 1; }
+        .review-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+        .author-name { font-family: 'Playfair Display', serif; font-size: 1.25rem; color: #fff; font-weight: 600; }
+        .review-date { font-size: 0.8rem; color: var(--text-muted); }
+        .review-stars { color: var(--gold); font-size: 0.9rem; margin-top: 3px; letter-spacing: 1px; }
+        .review-text { color: #dddddd; line-height: 1.6; font-style: italic; font-size: 0.95rem; }
+
+        @media (max-width: 768px) {
+            .review-card { padding: 25px; gap: 15px; flex-direction: column; }
+            .review-header { flex-direction: column; gap: 5px; }
+            .review-date { align-self: flex-start; }
+            .reviews-layout { grid-template-columns: 1fr; }
+        }
+
+        /* --- FORMA ZA PISANJE RECENZIJA --- */
+        .form-sticky-panel { position: sticky; top: 120px; }
+        .write-card {
+            background: var(--dark-card); padding: 40px; border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.03); box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+        .write-card h3 { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--gold); margin-bottom: 25px; }
+        .form-group { display: flex; flex-direction: column; margin-bottom: 20px; }
+        .form-group label { font-size: 0.75rem; color: var(--gold); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 8px; }
+        .form-group input, .form-group textarea {
+            width: 100%; padding: 14px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 4px; color: #fff; font-family: 'Poppins', sans-serif; font-size: 1rem; outline: none; transition: var(--transition);
+        }
+        .form-group input:focus, .form-group textarea:focus { border-color: var(--gold); box-shadow: 0 0 12px rgba(198, 165, 92, 0.15); }
+        
+        /* Interaktivne Zvjezdice unutar Forme */
+        .star-rating-widget { display: flex; gap: 8px; font-size: 1.6rem; color: rgba(255,255,255,0.1); margin-bottom: 5px; }
+        .star-rating-widget span { cursor: pointer; transition: var(--transition); }
+        .star-rating-widget span:hover, .star-rating-widget span.active { color: var(--gold); transform: scale(1.1); }
+
+        .submit-review-btn {
+            width: 100%; padding: 16px; background: var(--gold); color: #000; border: none; border-radius: 4px;
+            font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 1rem; text-transform: uppercase;
+            letter-spacing: 1px; cursor: pointer; transition: var(--transition);
+        }
+        .submit-review-btn:hover { background: #fff; }
+
+        /* --- FOOTER --- */
+        footer {
+            background: #050302; text-align: center; padding: 30px 20px;
+            border-top: 1px solid rgba(255,255,255,0.02); color: var(--text-muted); font-size: 0.9rem; margin-top: 60px;
+        }
+
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
 </head>
 <body>
 
-<!-- Floating icons -->
-<div class="floating-icons" id="floating-icons"></div>
+    <!-- ZAGLAVLJE -->
+    <header id="navbar">
+        <a href="index.html" class="brand">
+            <img src="image121.png" alt="Logo Džigi2" onerror="this.style.display='none'">
+            <h1>Džigi2</h1>
+        </a>
+        <div class="menu-toggle" id="menu-toggle">
+            <span></span><span></span><span></span>
+        </div>
+    </header>
 
-<header>
-  <img src="image121.png" alt="Logo Džigi2">
-  <h1>Restoran Džigi2</h1>
-  <div class="menu-toggle" id="menu-toggle">
-    <span></span><span></span><span></span>
-  </div>
-</header>
+    <!-- BOČNI MENI -->
+    <nav id="menu">
+        <a href="index.html">Početna</a>
+        <a href="menijela.html">Meni jela</a>
+        <a href="rezervacije.html">Rezervacije</a>
+        <a href="komentari.html">Utisci gostiju</a>
+        <a href="galerija.html">Galerija</a>
+    </nav>
 
-<nav id="menu">
-  <div class="close-menu" id="close-menu">&times;</div>
-  <a href="index.html#pocetna">Početna</a>
-  <a href="index.html#meni">O nama</a>
-  <a href="galerija.html">Galerija</a>
-  <a href="menijela.html">Meni jela</a>
-  <a href="index.html#kontakt">Kontakt</a>
-  <a href="index.html#lokacija">Lokacija</a>
-  <a href="komentari.html">Utisci gostiju</a>
-</nav>
+    <!-- GLAVNI KONTEJNER -->
+    <main class="main-container">
+        
+        <!-- STATISTIČKI REZIME NA VRHU -->
+        <section class="rating-summary">
+            <div>
+                <div class="huge-number">4.9</div>
+                <div class="stars-display">★★★★★</div>
+                <p style="color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px;">Ukupna ocjena gostiju</p>
+            </div>
+            
+            <div class="progress-bars">
+                <div class="progress-line"><span>5 zvjezdica</span><div class="bar-bg"><div class="bar-fill" style="width: 92%;"></div></div><span>92%</span></div>
+                <div class="progress-line"><span>4 zvjezdice</span><div class="bar-bg"><div class="bar-fill" style="width: 6%;"></div></div><span>6%</span></div>
+                <div class="progress-line"><span>3 zvjezdice</span><div class="bar-bg"><div class="bar-fill" style="width: 2%;"></div></div><span>2%</span></div>
+            </div>
+            
+            <div class="recommend-box">
+                <h4>99%</h4>
+                <p>Gostiju preporučuje Restoran Džigi2 drugima.</p>
+            </div>
+        </section>
 
-<main>
-  <section class="rezervacije">
-    <h2>Rezervišite Sto</h2>
-    <p>Popunite formu ispod ili nas pozovite na <strong>+387 35 818-817</strong>.<br>
-    Nalazimo se kod kružnog toka u Gradačcu, preko puta CM Cosmetic.</p>
+        <!-- FILTERS & ACTIONS BAR -->
+        <section class="filter-bar">
+            <div class="filter-buttons">
+                <button class="filter-btn active" onclick="filterReviews('all')">Sve recenzije</button>
+                <button class="filter-btn" onclick="filterReviews('high')">Najviše ocjene (5★)</button>
+            </div>
+            <button class="write-review-trigger" onclick="document.getElementById('ime').focus();">Podijelite Vaš utisak</button>
+        </section>
 
-    <form id="rezForma">
-      <label for="ime">Ime i prezime:</label>
-      <input type="text" id="ime" name="ime" placeholder="Vaše ime i prezime" required>
+        <!-- GRID LAYOUT ZA LISTU I FORMU -->
+        <div class="reviews-layout">
+            
+            <!-- LISTA RECENZIJA -->
+            <div class="reviews-list" id="reviews-target">
+                <!-- Početne staticne luksuzne recenzije -->
+                <div class="review-card" data-rating="5">
+                    <div class="author-avatar">ST</div>
+                    <div class="review-main">
+                        <div class="review-header">
+                            <div>
+                                <h4 class="author-name">Samir T.</h4>
+                                <div class="review-stars">★★★★★</div>
+                            </div>
+                            <span class="review-date">Prije 2 dana</span>
+                        </div>
+                        <p class="review-text">"Najbolji restoran u Gradačcu i šire! Ambijent je nevjerovatno otmjen, a teletina ispod sača se doslovno topi u ustima. Konobari su izuzetno profesionalni i brzi. Svaka čast za kompletan menadžment."</p>
+                    </div>
+                </div>
 
-      <label for="telefon">Broj telefona:</label>
-      <input type="tel" id="telefon" name="telefon" placeholder="+387 ..." required>
+                <div class="review-card" data-rating="5">
+                    <div class="author-avatar">JM</div>
+                    <div class="review-main">
+                        <div class="review-header">
+                            <div>
+                                <h4 class="author-name">Jelena M.</h4>
+                                <div class="review-stars">★★★★★</div>
+                            </div>
+                            <span class="review-date">Prije 1 sedmicu</span>
+                        </div>
+                        <p class="review-text">"Ambijent i hrana su čisti top nivo. Dolazimo redovno porodično i svaki put usluga ostane besprijekorna. Topla preporuka svima koji cijene pravi kvalitet."</p>
+                    </div>
+                </div>
 
-      <label for="email">E-mail (opciono):</label>
-      <input type="email" id="email" name="email" placeholder="primjer@mail.com">
+                <div class="review-card" data-rating="4">
+                    <div class="author-avatar">EK</div>
+                    <div class="review-main">
+                        <div class="review-header">
+                            <div>
+                                <h4 class="author-name">Emir K.</h4>
+                                <div class="review-stars">★★★★☆</div>
+                            </div>
+                            <span class="review-date">Prije 2 sedmice</span>
+                        </div>
+                        <p class="review-text">"Uvijek se rado ponovo vraćamo. Hrana je fenomenalna, deserti su remek-djelo. Vikendom je poželjno rezervisati sto unaprijed jer je gužva, što samo dokazuje koliko su dobri."</p>
+                    </div>
+                </div>
+            </div>
 
-      <label for="datum">Datum rezervacije:</label>
-      <input type="date" id="datum" name="datum" required>
+            <!-- FORMA ZA OSTAVLJANJE UTISAKA -->
+            <div class="form-sticky-panel">
+                <div class="write-card">
+                    <h3>Ostavite Recenziju</h3>
+                    <form id="reviewForm" onsubmit="addLiveReview(event)">
+                        
+                        <div class="form-group">
+                            <label>Vaša ocjena</label>
+                            <div class="star-rating-widget" id="star-widget">
+                                <span onclick="setRating(1)">★</span>
+                                <span onclick="setRating(2)">★</span>
+                                <span onclick="setRating(3)">★</span>
+                                <span onclick="setRating(4)">★</span>
+                                <span class="active" onclick="setRating(5)">★</span>
+                            </div>
+                        </div>
 
-      <label for="vrijeme">Vrijeme dolaska:</label>
-      <input type="time" id="vrijeme" name="vrijeme" required>
+                        <div class="form-group">
+                            <label for="ime">Vaše Ime i Prezime</label>
+                            <input type="text" id="ime" placeholder="Npr. Edin H." required>
+                        </div>
 
-      <label for="osobe">Broj osoba:</label>
-      <select id="osobe" name="osobe" required>
-        <option value="">Odaberite broj osoba</option>
-        <option>1 osoba</option>
-        <option>2 osobe</option>
-        <option>3 osobe</option>
-        <option>4 osobe</option>
-        <option>5+ osoba</option>
-      </select>
+                        <div class="form-group">
+                            <label for="komentar">Vaš Utisak / Komentar</label>
+                            <textarea id="komentar" rows="5" placeholder="Podijelite vaše iskustvo sa hranom i ambijentom..." required></textarea>
+                        </div>
 
-      <label for="mjesto">Odabir mjesta:</label>
-      <select id="mjesto" name="mjesto" required>
-        <option value="">Odaberite zonu</option>
-        <option>Zona za pušače</option>
-        <option>Zona za nepušače</option>
-      </select>
+                        <button type="submit" class="submit-review-btn">Objavite recenziju</button>
+                    </form>
+                </div>
+            </div>
 
-      <label for="napomena">Posebne želje ili napomena:</label>
-      <textarea id="napomena" name="napomena" rows="3" placeholder="Npr. proslava rođendana..."></textarea>
+        </div>
+    </main>
 
-      <button type="submit">Pošalji rezervaciju</button>
-    </form>
-  </section>
-</main>
+    <!-- PODNOŽJE -->
+    <footer>
+        &copy; 2026 Restoran Džigi2 Gradačac. Sva prava zadržana.
+    </footer>
 
-<footer>
-© 2025 Restoran Džigi2 — Sva prava zadržana.
-</footer>
+    <!-- FUNKCIONALNE INTEKREATIVNE SKRIPTE -->
+    <script>
+        // Meni Kontrola
+        const toggle = document.getElementById('menu-toggle');
+        const menu = document.getElementById('menu');
 
-<script>
-// Hamburger menu
-const toggle = document.getElementById('menu-toggle');
-const menu = document.getElementById('menu');
-const closeMenu = document.getElementById('close-menu');
+        toggle.onclick = () => {
+            menu.classList.toggle('active');
+            toggle.classList.toggle('active');
+        };
 
-toggle.addEventListener('click', () => menu.classList.toggle('active'));
-closeMenu.addEventListener('click', () => menu.classList.remove('active'));
-document.querySelectorAll('nav a').forEach(link => link.addEventListener('click', () => menu.classList.remove('active')));
+        // Zatvori meni klikom sa strane
+        document.addEventListener('click', (e) => {
+            if (!menu.contains(e.target) && !toggle.contains(e.target)) {
+                menu.classList.remove('active');
+                toggle.classList.remove('active');
+            }
+        });
 
-// Floating icons
-const icons = ['🍕','🍔','🍰','🍷','🍾','🥃','🍽'];
-const container = document.getElementById('floating-icons');
-for(let i=0;i<25;i++){
-  const el = document.createElement('div');
-  el.classList.add('icon');
-  el.textContent = icons[Math.floor(Math.random()*icons.length)];
-  el.style.left = Math.random()*100 + 'vw';
-  el.style.animationDuration = (10+Math.random()*10)+'s';
-  el.style.fontSize = (20+Math.random()*30)+'px';
-  container.appendChild(el);
-}
+        // Promjena navigacije na scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if(window.scrollY > 50) {
+                navbar.style.background = 'rgba(10, 7, 5, 0.96)';
+            } else {
+                navbar.style.background = 'rgba(10, 7, 5, 0.6)';
+            }
+        });
 
-// WhatsApp poruka
-document.getElementById('rezForma').addEventListener('submit', function(e) {
-  e.preventDefault();
-  const ime = document.getElementById('ime').value;
-  const telefon = document.getElementById('telefon').value;
-  const email = document.getElementById('email').value;
-  const datum = document.getElementById('datum').value;
-  const vrijeme = document.getElementById('vrijeme').value;
-  const osobe = document.getElementById('osobe').value;
-  const mjesto = document.getElementById('mjesto').value;
-  const napomena = document.getElementById('napomena').value;
+        // Widget Ocjenjivanja (Zvjezdice u formi)
+        let chosenRating = 5;
+        function setRating(ratingValue) {
+            chosenRating = ratingValue;
+            const stars = document.getElementById('star-widget').children;
+            for(let i = 0; i < stars.length; i++) {
+                if(i < ratingValue) {
+                    stars[i].classList.add('active');
+                } else {
+                    stars[i].classList.remove('active');
+                }
+            }
+        }
 
-  const poruka = `Zdravo, želio bih rezervisati sto:%0A%0A👤 Ime: ${ime}%0A📞 Telefon: ${telefon}%0A📧 Email: ${email}%0A📅 Datum: ${datum}%0A🕒 Vrijeme: ${vrijeme}%0A👥 Broj osoba: ${osobe}%0A🏷 Zona: ${mjesto}%0A📝 Napomena: ${napomena}`;
-  
-  const broj = "38761015241"; // <<--- OVDJE STAVI SVOJ BROJ BEZ + ZNAKA
-  window.open(`https://wa.me/${broj}?text=${poruka}`, '_blank');
-});
-</script>
+        // Dinamičko dodavanje recenzije uživo bez reload-a
+        function addLiveReview(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('ime').value;
+            const text = document.getElementById('komentar').value;
+            const targetContainer = document.getElementById('reviews-target');
+
+            // Ekstrakcija inicijala za luksuzni avatar
+            const initials = name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0,2);
+
+            // Generisanje stringa zvjezdica
+            let starsString = '';
+            for(let k = 0; k < 5; k++) {
+                starsString += (k < chosenRating) ? '★' : '☆';
+            }
+
+            // Kreiranje nove kartice
+            const card = document.createElement('div');
+            card.className = 'review-card';
+            card.setAttribute('data-rating', chosenRating);
+            card.style.borderColor = 'var(--gold)'; // Istakni novu recenziju zlatnim rubom
+            
+            card.innerHTML = `
+                <div class="author-avatar">${initials}</div>
+                <div class="review-main">
+                    <div class="review-header">
+                        <div>
+                            <h4 class="author-name">${name}</h4>
+                            <div class="review-stars">${starsString}</div>
+                        </div>
+                        <span class="review-date">Upravo sada</span>
+                    </div>
+                    <p class="review-text">"${text}"</p>
+                </div>
+            `;
+
+            // Postavljanje na sami vrh liste sa laganim scroll-om
+            targetContainer.insertBefore(card, targetContainer.firstChild);
+            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+            // Resetovanje forme
+            document.getElementById('reviewForm').reset();
+            setRating(5);
+        }
+
+        // Tripadvisor Filteri (Sve / Samo najbolje)
+        function filterReviews(filterType) {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            const cards = document.querySelectorAll('.review-card');
+            cards.forEach(card => {
+                const rating = parseInt(card.getAttribute('data-rating'));
+                if(filterType === 'all') {
+                    card.style.display = 'flex';
+                } else if(filterType === 'high') {
+                    if(rating === 5) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                }
+            });
+        }
+    </script>
 
 </body>
 </html>
