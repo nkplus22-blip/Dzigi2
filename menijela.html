@@ -4,267 +4,403 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Džigi2 Jelovnik-Online narudžba</title>
+<title>Džigi2 Jelovnik - Online narudžba</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-
 /* RESET */
 *{
   box-sizing:border-box;
+  margin: 0;
+  padding: 0;
 }
 
 /* BODY */
 body{
-  margin:0;
-  font-family:Poppins, sans-serif;
-  background:linear-gradient(180deg,#f5f5f5,#eaeaea);
-  overflow-x:hidden;
+  font-family: 'Poppins', sans-serif;
+  background: #f8f9fa;
+  color: #333;
+  overflow-x: hidden;
+  /* Dodan prostor na dnu da plutajuća korpa ne prekriva zadnje artikle */
+  padding-bottom: 220px; 
 }
 
 /* HEADER */
 header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:15px;
-  background:#000;
-  color:#fff;
-  position:sticky;
-  top:0;
-  z-index:1000;
-  box-shadow:0 5px 20px rgba(0,0,0,0.3);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  background: #111;
+  color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+header div:first-child {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #e3c05c;
 }
 
 header div:last-child{
-  font-size:22px;
-  cursor:pointer;
+  font-size: 26px;
+  cursor: pointer;
+  transition: transform 0.2s;
 }
 
-/* OVERLAY (blur background kad je meni otvoren) */
+header div:last-child:hover {
+  transform: scale(1.1);
+}
+
+/* OVERLAY */
 .overlay{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,0.4);
-  backdrop-filter:blur(5px);
-  opacity:0;
-  pointer-events:none;
-  transition:0.3s;
-  z-index:1500;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.3s;
+  z-index: 1500;
 }
 
 .overlay.show{
-  opacity:1;
-  pointer-events:all;
+  opacity: 1;
+  pointer-events: all;
 }
 
 /* HAMBURGER MENU */
 .side{
-  position:fixed;
-  top:0;
-  left:0;
-  width:260px;
-  height:100%;
-  background:#0a0a0a;
-  color:#fff;
-  padding:20px;
-  transform:translateX(-100%);
-  transition:0.4s ease;
-  z-index:2000;
-  box-shadow:5px 0 30px rgba(0,0,0,0.6);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 280px;
+  height: 100%;
+  background: #111;
+  color: #fff;
+  padding: 24px;
+  transform: translateX(-100%);
+  transition: 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  z-index: 2000;
+  box-shadow: 4px 0 25px rgba(0,0,0,0.5);
 }
 
 .side.open{
-  transform:translateX(0);
+  transform: translateX(0);
+}
+
+.side-close {
+  font-size: 32px;
+  cursor: pointer;
+  text-align: right;
+  margin-bottom: 20px;
+  color: #aaa;
+  transition: 0.2s;
+}
+
+.side-close:hover {
+  color: #fff;
 }
 
 .side a{
-  display:block;
-  padding:14px;
-  color:#fff;
-  text-decoration:none;
-  border-bottom:1px solid #222;
-  font-size:15px;
+  display: block;
+  padding: 16px 0;
+  color: #ddd;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  font-size: 16px;
+  font-weight: 500;
+  transition: 0.2s;
 }
 
 .side a:hover{
-  background:#111;
+  color: #e3c05c;
+  padding-left: 8px;
 }
 
 /* FILTER */
 .filter{
-  display:flex;
-  gap:10px;
-  overflow:auto;
-  padding:12px;
-  background:#fff;
-  position:sticky;
-  top:60px;
-  z-index:900;
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding: 16px 20px;
+  background: #fff;
+  position: sticky;
+  top: 61px;
+  z-index: 900;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.03);
 }
 
 .filter::-webkit-scrollbar{
-  display:none;
+  display: none;
 }
 
 .filter button{
-  padding:8px 16px;
-  border:none;
-  background:#fff;
-  border-radius:30px;
-  cursor:pointer;
-  font-weight:500;
-  white-space:nowrap;
-  box-shadow:0 3px 10px rgba(0,0,0,0.1);
-  transition:0.2s;
+  padding: 10px 20px;
+  border: 1px solid #eee;
+  background: #fff;
+  color: #555;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 14px;
+  white-space: nowrap;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+  transition: all 0.3s ease;
 }
 
-.filter button:hover{
-  background:#000;
-  color:#fff;
+.filter button:hover, .filter button:active{
+  background: #111;
+  color: #fff;
+  border-color: #111;
 }
 
 /* SEARCH */
 #search{
-  width:90%;
-  margin:10px auto;
-  display:block;
-  padding:12px;
-  border-radius:25px;
-  border:1px solid #ccc;
-  outline:none;
-  box-shadow:0 3px 10px rgba(0,0,0,0.05);
+  width: calc(100% - 40px);
+  margin: 20px auto 10px;
+  display: block;
+  padding: 14px 20px;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  background: #fff;
+  outline: none;
+  font-family: inherit;
+  font-size: 15px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+  transition: border 0.3s, box-shadow 0.3s;
+}
+
+#search:focus {
+  border-color: #e3c05c;
+  box-shadow: 0 4px 15px rgba(227, 192, 92, 0.15);
 }
 
 /* MENU WRAPPER */
 #menu-wrapper{
-  padding:20px;
-  max-width:600px;
-  margin:auto;
+  padding: 10px 20px;
+  max-width: 650px;
+  margin: auto;
 }
 
 /* NASLOVI */
 .category-title{
-  margin-top:30px;
-  font-size:22px;
-  font-weight:700;
-  color:#111;
+  margin-top: 40px;
+  margin-bottom: 15px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #111;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #e3c05c;
+  display: inline-block;
+}
+
+.category-title-strong {
+  margin-top: 40px;
+  margin-bottom: 15px;
+  font-size: 24px;
+  font-weight: 800;
+  color: #111;
+  text-align: center;
+  display: block;
 }
 
 /* KARTICE */
 .dish{
-  background:linear-gradient(145deg,#0a0a0a,#1a1a1a);
-  color:#fff;
-  padding:18px;
-  border-radius:25px;
-  margin:15px 0;
-  box-shadow:0 10px 30px rgba(0,0,0,0.35);
-  transition:0.2s;
+  background: #fff;
+  padding: 20px;
+  border-radius: 16px;
+  margin: 15px 0;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+  border: 1px solid rgba(0,0,0,0.02);
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
 }
 
 .dish:hover{
-  transform:translateY(-3px);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.08);
+}
+
+.dish-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
 }
 
 .dish-name{
-  font-size:18px;
-  font-weight:600;
+  font-size: 16px;
+  font-weight: 600;
+  color: #222;
+  line-height: 1.4;
+  padding-right: 15px;
 }
 
 .dish-price{
-  color:#d4af37;
-  margin-top:5px;
+  color: #c49a21;
+  font-weight: 700;
+  font-size: 16px;
+  white-space: nowrap;
 }
 
 /* BUTTON */
 .dish button{
-  width:100%;
-  margin-top:12px;
-  padding:12px;
-  border:none;
-  border-radius:30px;
-  background:linear-gradient(135deg,#d4af37,#f1d27a);
-  color:#000;
-  font-weight:700;
-  cursor:pointer;
-  transition:0.2s;
+  align-self: flex-start;
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
+  background: #111;
+  color: #e3c05c;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.dish button:hover{
+  background: #222;
+  color: #fff;
 }
 
 .dish button:active{
-  transform:scale(0.97);
+  transform: scale(0.97);
 }
 
-/* CART */
+/* FLOATING CART */
 .cart{
-  position:fixed;
-  bottom:0;
-  width:100%;
-  background:#000;
-  color:#fff;
-  padding:10px;
-  box-shadow:0 -5px 20px rgba(0,0,0,0.3);
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 40px);
+  max-width: 600px;
+  background: rgba(17, 17, 17, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: #fff;
+  padding: 20px;
+  border-radius: 24px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+  z-index: 1000;
 }
-  /* CART HEADER */
+
+/* CART HEADER */
 .cart-header{
-  display:flex;
-  justify-content:space-between;
-  font-weight:600;
-  margin-bottom:5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  font-size: 16px;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
 /* COUNT BADGE */
 #cart-count{
-  background:#d4af37;
-  color:#000;
-  padding:2px 8px;
-  border-radius:10px;
-  font-size:12px;
+  background: #e3c05c;
+  color: #111;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 700;
 }
 
 /* ITEMS */
 .cart-item{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:6px 0;
-  border-bottom:1px solid rgba(255,255,255,0.1);
-  font-size:14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px dashed rgba(255,255,255,0.1);
+  font-size: 14px;
+  color: #ddd;
 }
 
 /* REMOVE */
 .remove-btn{
-  background:#d4af37;
-  border:none;
-  color:#000;
-  border-radius:50%;
-  width:22px;
-  height:22px;
-  cursor:pointer;
+  background: rgba(227, 192, 92, 0.2);
+  border: none;
+  color: #e3c05c;
+  border-radius: 50%;
+  width: 26px;
+  height: 26px;
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.2s;
 }
 
-/* BUTTON */
-.cart button{
-  width:100%;
-  margin-top:10px;
-  padding:12px;
-  border:none;
-  border-radius:25px;
-  background:linear-gradient(135deg,#d4af37,#f1d27a);
-  color:#000;
-  font-weight:700;
-  cursor:pointer;
+.remove-btn:hover {
+  background: #e3c05c;
+  color: #111;
+}
+
+/* CART TOTAL & BUTTON */
+#total {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 15px 0 10px;
+  color: #e3c05c;
+  text-align: right;
+}
+
+.cart > button{
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #e3c05c, #c49a21);
+  color: #111;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.cart > button:hover {
+  box-shadow: 0 5px 15px rgba(227, 192, 92, 0.3);
+}
+
+.cart > button:active {
+  transform: scale(0.98);
 }
 
 /* SCROLL CART */
 #order{
-  max-height:120px;
-  overflow:auto;
+  max-height: 140px;
+  overflow-y: auto;
+  padding-right: 5px;
 }
 
+#order::-webkit-scrollbar {
+  width: 5px;
+}
+#order::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.2);
+  border-radius: 10px;
+}
+
+/* Responzivnost */
+@media(min-width: 768px) {
+  #search { width: 100%; max-width: 610px; }
+  .cart { bottom: 30px; }
+}
 </style>
 </head>
 
@@ -278,8 +414,7 @@ header div:last-child{
 <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
 
 <nav class="side" id="sideMenu">
-  <div onclick="toggleMenu()" style="font-size:25px;cursor:pointer;">&times;</div>
-
+  <div class="side-close" onclick="toggleMenu()">&times;</div>
   <a href="index.html">Početna</a>
   <a href="menijela.html">Meni jela</a>
   <a href="rezervacije.html">Rezervacije</a>
@@ -301,7 +436,7 @@ header div:last-child{
   <button onclick="filterMenu('pice')">Piće</button>
 </div>
 
-<input id="search" placeholder="Pretraži..." onkeyup="searchMenu()">
+<input id="search" placeholder="Pretraži jelovnik..." onkeyup="searchMenu()">
 
 <div id="menu-wrapper">
 
@@ -312,41 +447,13 @@ NE DIRAŠ JS
 <div id="menu-container"></div>
 <h2 class="category-title" data-cat="jela">🔴JELA PO NARUDŽBI🔴</h2>
 
-<div class="dish">
-  <div class="dish-name">Juneći odrezak</div>
-  <div class="dish-price">18 KM</div>
-  <button onclick="addItem('Juneći odrezak',18)">Dodaj</button>
-</div>
+<div class="dish"><div class="dish-name">Juneći odrezak</div><div class="dish-price">18 KM</div><button onclick="addItem('Juneći odrezak',18)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Juneći medaljoni</div><div class="dish-price">22 KM</div><button onclick="addItem('Juneći medaljoni',22)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Pileći file na žaru</div><div class="dish-price">12 KM</div><button onclick="addItem('Pileći file na žaru',12)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Pohovana piletina</div><div class="dish-price">13 KM</div><button onclick="addItem('Pohovana piletina',13)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Teletina u sosu od gljiva</div><div class="dish-price">24 KM</div><button onclick="addItem('Teletina u sosu od gljiva',24)">Dodaj</button></div>
+<div class="dish"><div class="dish-name">Janjetina ispod sača</div><div class="dish-price">30 KM</div><button onclick="addItem('Janjetina ispod sača',30)">Dodaj</button></div>
 
-<div class="dish">
-  <div class="dish-name">Juneći medaljoni</div>
-  <div class="dish-price">22 KM</div>
-  <button onclick="addItem('Juneći medaljoni',22)">Dodaj</button>
-</div>
-
-<div class="dish">
-  <div class="dish-name">Pileći file na žaru</div>
-  <div class="dish-price">12 KM</div>
-  <button onclick="addItem('Pileći file na žaru',12)">Dodaj</button>
-</div>
-
-<div class="dish">
-  <div class="dish-name">Pohovana piletina</div>
-  <div class="dish-price">13 KM</div>
-  <button onclick="addItem('Pohovana piletina',13)">Dodaj</button>
-</div>
-
-<div class="dish">
-  <div class="dish-name">Teletina u sosu od gljiva</div>
-  <div class="dish-price">24 KM</div>
-  <button onclick="addItem('Teletina u sosu od gljiva',24)">Dodaj</button>
-</div>
-
-<div class="dish">
-  <div class="dish-name">Janjetina ispod sača</div>
-  <div class="dish-price">30 KM</div>
-  <button onclick="addItem('Janjetina ispod sača',30)">Dodaj</button>
-</div>
 <!-- ================= PIZZA ================= -->
 <h2 class="category-title" data-cat="pizza">🔴PIZZA🔴</h2>
 
@@ -393,6 +500,7 @@ NE DIRAŠ JS
 <div class="dish"><div class="dish-name">Juneći sendvič</div><div class="dish-price">10 KM</div><button onclick="addItem('Juneći sendvič',10)">Dodaj</button></div>
 <div class="dish"><div class="dish-name">Sendvič sa šunkom</div><div class="dish-price">6 KM</div><button onclick="addItem('Sendvič šunka',6)">Dodaj</button></div>
 <div class="dish"><div class="dish-name">Sendvič sa suhim mesom</div><div class="dish-price">8 KM</div><button onclick="addItem('Sendvič suho meso',8)">Dodaj</button></div>
+
 <!-- ================= OBROK SALATA ================= -->
 <h2 class="category-title" data-cat="salata" id="salads">🔴OBROK SALATA🔴</h2>
 
@@ -454,6 +562,8 @@ NE DIRAŠ JS
 <div class="dish"><div class="dish-name">Integralni</div><div class="dish-price">2 KM</div><button onclick="addItem('Integralni hljeb',2)">Dodaj</button></div>
 <div class="dish"><div class="dish-name">Lepinice iz krušne peći</div><div class="dish-price">2 KM</div><button onclick="addItem('Lepinice iz krušne peći',2)">Dodaj</button></div>
 <div class="dish"><div class="dish-name">Uštipci</div><div class="dish-price">2 KM</div><button onclick="addItem('Uštipci',2)">Dodaj</button></div>
+
+<!-- NASLOV ZA PIĆA -->
 <h2 class="category-title-strong" id="drinks">PIĆA</h2>
 
 <h2 class="category-title" data-cat="kafa">🧋KAFE I TOPLI NAPITCI🔽</h2>
@@ -575,7 +685,8 @@ NE DIRAŠ JS
 <div class="dish"><div class="dish-name">Jack Daniels 0,70L</div><div class="dish-price">100 KM</div><button onclick="addItem('Jack Daniels 0,70L',100)">Dodaj</button></div>
 <div class="dish"><div class="dish-name">Hennessy 0,70L</div><div class="dish-price">200 KM</div><button onclick="addItem('Hennessy 0,70L',200)">Dodaj</button></div>
 <div class="dish"><div class="dish-name">Ballentines 0,70L</div><div class="dish-price">90 KM</div><button onclick="addItem('Ballentines 0,70L',90)">Dodaj</button></div>
-<div class="dish"><div class="dish-name">Jägermaister 0,70L</div><div class="dish-price">80 KM</div><button onclick="addItem('Jägermaister 0,70L',80)">Dodaj</button></-
+<div class="dish"><div class="dish-name">Jägermaister 0,70L</div><div class="dish-price">80 KM</div><button onclick="addItem('Jägermaister 0,70L',80)">Dodaj</button></div>
+
 <h2 class="category-title" data-cat="pice">🍷VINA🔽</h2> 
 <div class="dish"><div class="dish-name">Kutjevo Graševina 0,75L</div><div class="dish-price">40 KM</div><button onclick="addItem('Kutjevo Graševina 0,75L',40)">Dodaj</button></div>
 <div class="dish"><div class="dish-name">Kutjevo Graševina 0,187L</div><div class="dish-price">8 KM</div><button onclick="addItem('Kutjevo Graševina 0,187L',8)">Dodaj</button></div>
@@ -594,15 +705,12 @@ NE DIRAŠ JS
 <div class="dish"><div class="dish-name">Jagoda0% 0,33L</div><div class="dish-price">4 KM</div><button onclick="addItem('Jagoda0% 0,33L',4)">Dodaj</button></div>
 <div class="dish"><div class="dish-name">Zova/Limeta0% 0,33L</div><div class="dish-price">4 KM</div><button onclick="addItem('Zova/Limeta0% 0,33L',4)">Dodaj</button></div>
 
-
 </div>
-
-
 
 <!-- CART -->
 <div class="cart">
   <div class="cart-header">
-    <span>🛒 Narudžba</span>
+    <span>🛒 Tvoja narudžba</span>
     <span id="cart-count">0</span>
   </div>
 
@@ -610,7 +718,7 @@ NE DIRAŠ JS
 
   <div id="total">Ukupno: 0 KM</div>
 
-  <button onclick="sendOrder()">Pošalji narudžbu</button>
+  <button onclick="sendOrder()">Pošalji narudžbu putem WhatsApp-a</button>
 </div>
 
 <script>
@@ -626,7 +734,7 @@ function searchMenu(){
   let val=document.getElementById("search").value.toLowerCase();
 
   document.querySelectorAll(".dish").forEach(d=>{
-    d.style.display = d.innerText.toLowerCase().includes(val) ? "block" : "none";
+    d.style.display = d.innerText.toLowerCase().includes(val) ? "flex" : "none";
   });
 }
 
@@ -638,11 +746,16 @@ function filterMenu(cat){
 
     if(el.classList.contains("category-title")){
       currentCat = el.dataset.cat;
-      el.style.display = (cat==="all" || currentCat===cat) ? "block":"none";
+      el.style.display = (cat==="all" || currentCat===cat) ? "inline-block":"none";
+    }
+    
+    // Za glavni naslov pića koji nema data-cat
+    if(el.classList.contains("category-title-strong")){
+      el.style.display = (cat==="all" || cat==="pice" || cat==="kafa") ? "block":"none";
     }
 
     if(el.classList.contains("dish")){
-      el.style.display = (cat==="all" || currentCat===cat) ? "block":"none";
+      el.style.display = (cat==="all" || currentCat===cat) ? "flex":"none";
     }
 
   });
